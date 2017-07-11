@@ -1,3 +1,4 @@
+### <center>技术专列</center >
 ### 一、ML内容
 ***
 1. 机器学习实验，关于CNN、ＲＮＮ、GAN等神经网络算法的入门、中级、高级运用，运用在图像处理或医疗诊断等领域
@@ -13,12 +14,12 @@
 
 
 ***
+
+### <center>有启示意义的博客</center >
 ***
-### 有启示意义的博客
-***
-1. - [研究生守则20条](http://blog.sciencenet.cn/home.php?mod=space&uid=220220&do=blog&id=444499)
-2. - [偏爱什么样的学生？](http://blog.sciencenet.cn/home.php?mod=space&uid=265898&do=blog&id=241678)
-3. - [王泛森院士：研究生和本科生的区别](http://www.folo.cn/user1/18593/archives/2009/79758.html)
+- [研究生守则20条](http://blog.sciencenet.cn/home.php?mod=space&uid=220220&do=blog&id=444499)
+- [偏爱什么样的学生？](http://blog.sciencenet.cn/home.php?mod=space&uid=265898&do=blog&id=241678)
+- [王泛森院士：研究生和本科生的区别](http://www.folo.cn/user1/18593/archives/2009/79758.html)
 - - -
 #### 这里不仅有技术还有诗和远方！
 [我的个人文章地址](http://www.lenhard.cf)
