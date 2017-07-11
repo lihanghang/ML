@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="Tensorflow" compareModeInSync="TIMESTAMP" showNewOnTargetInSync="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="Tensorflow" uploadOnCheckin="7a7979dc-e381-480b-817f-fe5b5be2d3e6" compareModeInSync="TIMESTAMP" showNewOnTargetInSync="false">
     <serverData>
       <paths name="Tensorflow">
         <serverdata>
@@ -10,6 +10,7 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="Tensorflow" />
     <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
