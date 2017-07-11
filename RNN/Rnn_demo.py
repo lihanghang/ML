@@ -33,7 +33,7 @@ def train_neural_network(X, Y):
     cost_func = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y,logits=predict))
     optimizer = tf.train.AdamOptimizer().minimize(cost_func)
 
-    epochs = 13
+    epochs = 5
     with tf.Session() as sess:
         sess.run(tf.initialize_all_variables())
         epoch_loss = 0
@@ -43,7 +43,7 @@ def train_neural_network(X, Y):
                 x = x.reshape([batch_size, chunk_n, chunk_size])
                 _, c = sess.run([optimizer, cost_func], feed_dict={X:x, Y:y})
                 epoch_loss += c
-            print(epoc,':', epoch_loss)
+            print(epoch,':', epoch_loss)
         correct = tf.equal(tf.argmax(predict, 1),tf.argmax(Y, 1))
         accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
         print('准确率：', accuracy.eval({X:mnist.test.images.reshape(-1,chunk_n, chunk_size), Y:mnist.test.labels}))
