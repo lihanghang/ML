@@ -1,4 +1,4 @@
-<center>技术专列</center >
+## &emsp;&emsp;&emsp;&emsp;技术专列
 #### 一、ML内容
 ***
 1. 机器学习实验，关于CNN、ＲＮＮ、GAN等神经网络算法的入门、中级、高级运用，运用在图像处理或医疗诊断等领域
@@ -15,7 +15,7 @@
 
 ***
 
-<center>有启示意义的博客</center >
+## &emsp;&emsp;&emsp;&emsp;有启示意义的博客
 ***
 - [研究生守则20条](http://blog.sciencenet.cn/home.php?mod=space&uid=220220&do=blog&id=444499)
 - [偏爱什么样的学生？](http://blog.sciencenet.cn/home.php?mod=space&uid=265898&do=blog&id=241678)
