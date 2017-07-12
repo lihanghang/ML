@@ -2,7 +2,6 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
-
 def weight_variable(shape):
     initial = tf.truncated_normal(shape, stddev=0.1)
     return tf.Variable(initial)
@@ -44,7 +43,6 @@ print h_pool1.get_shape()
 # two c
 W_conv2 = weight_variable([5, 5, 32, 64])
 b_conv2 = bias_variable([64])
-
 
 
 h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)

@@ -3,6 +3,8 @@
 import tensorflow as tf
 import numpy as np
 from tensorflow.examples.tutorials.mnist import input_data
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 print("tensorflow运行版本：" + tf.__version__)
 mnist = input_data.read_data_sets('../MINST_DATA', one_hot=True)
 

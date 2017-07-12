@@ -17,3 +17,4 @@ with tf.Session() as sess:
 #sava graph of compute
 writer = tf.summary.FileWriter(logdir="logs", graph=tf.get_default_graph())
 writer.flush()
+
