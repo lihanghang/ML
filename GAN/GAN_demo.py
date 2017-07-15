@@ -5,10 +5,8 @@ import datetime
 import matplotlib.pyplot as plt
 from tensorflow.examples.tutorials.mnist import input_data
 import os
-import matplotlib
-matplotlib.use('nbagg')
 import matplotlib.gridspec as gd
-import pydevd
+
 
 
 
