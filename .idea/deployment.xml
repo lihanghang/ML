@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" promptOnRemoteOverwrite="CHECK_CONTENT" serverName="Tensorflow" uploadOnCheckin="7a7979dc-e381-480b-817f-fe5b5be2d3e6" compareModeInSync="TIMESTAMP" showNewOnTargetInSync="false">
+  <component name="PublishConfigData" autoUpload="Always" promptOnRemoteOverwrite="CHECK_CONTENT" serverName="lab" uploadOnCheckin="7a7979dc-e381-480b-817f-fe5b5be2d3e6" compareModeInSync="TIMESTAMP" showNewOnTargetInSync="false">
     <serverData>
-      <paths name="Tensorflow">
+      <paths name="lab">
         <serverdata>
           <mappings>
-            <mapping deploy="/tensorflow" local="$PROJECT_DIR$" web="/" />
-            <mapping local="" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

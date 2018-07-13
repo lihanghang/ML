@@ -1,0 +1,2 @@
+model_checkpoint_path: "D:\\py_projects\\ML\\ML_Demo\\financial\\checkpoints\\predict.model"
+all_model_checkpoint_paths: "D:\\py_projects\\ML\\ML_Demo\\financial\\checkpoints\\predict.model"

@@ -1,20 +1,15 @@
-import tensorflow as tf
+import sys
+sys.setrecursionlimit(1000000) #例如这里设置为一百万
+def power_set(lst):
+    if lst == []:
+        return [[]]
+    rest = power_set(lst[1:])
+    result = []
+    for item in rest:
+        result.append(item)
+        result.append([lst[0]] + item)
+    return result
 
-a = tf.constant(12)
-b = tf.constant(54)
-#limit work filed
-with tf.Session() as sess:
-#sess = tf.Session()
-    print sess.run(a+b)
-c = tf.placeholder(tf.int16)
-d = tf.placeholder(tf.int16)
-add = tf.add(c, d)
-mul = tf.multiply(c, d)
-with tf.Session() as sess:
-    print(sess.run(add, feed_dict={c:2, d:3}))
-    print(sess.run(mul, feed_dict={c:5, d:6}))
 
-#sava graph of compute
-writer = tf.summary.FileWriter(logdir="logs", graph=tf.get_default_graph())
-writer.flush()
 
+print(power_set([1, 2, 3]))
