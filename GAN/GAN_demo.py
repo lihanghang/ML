@@ -1,14 +1,14 @@
 # _*_coding:utf-8 _*_
 import tensorflow as tf
 import numpy as np
-import datetime
 import matplotlib.pyplot as plt
 from tensorflow.examples.tutorials.mnist import input_data
 import os
 import matplotlib.gridspec as gd
 
 
-
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+print("tensorflow运行版本：" + tf.__version__)
 
 class GAN(object):
 

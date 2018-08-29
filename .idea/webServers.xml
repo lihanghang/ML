@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="94f75980-b7f8-4ea6-9a7f-758f12f96a6f" name="lab" url="http://124.16.71.33">
-        <fileTransfer host="124.16.71.33" port="22" rootFolder="/home/lihanghang/tensorflow" accessType="SFTP">
+        <fileTransfer host="124.16.71.33" port="22" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

@@ -7,6 +7,7 @@
 3. **ML中回归、分类问题实例：**
 * **PM2.5各成分影响比重分析及预测未来几日PM2.5浓度值**
 * **E-mail反欺诈预测**
+4. 记忆神经网络研究学习(0506)
 ***
 #### 二、入门级--- 各大neural network 算法在Mnist上的运用
 ##### (1)CNN
@@ -38,5 +39,6 @@
 - [偏爱什么样的学生？](http://blog.sciencenet.cn/home.php?mod=space&uid=265898&do=blog&id=241678)
 - [王泛森院士：研究生和本科生的区别](http://www.folo.cn/user1/18593/archives/2009/79758.html)
 - - -
-[我的个人文章地址](http://www.lihanghang.top)
-#### 更新于20180713
+#### 这里不仅有技术还有诗和远方！
+[我的个人文章地址](http://lihanghang.top)
+#### 更新于20180506

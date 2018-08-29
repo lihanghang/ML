@@ -4,7 +4,7 @@ import tensorflow as tf
 import numpy as np
 from tensorflow.examples.tutorials.mnist import input_data
 import os
-#os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 print("tensorflow运行版本：" + tf.__version__)
 mnist = input_data.read_data_sets('../MINST_DATA', one_hot=True)
 
@@ -15,7 +15,6 @@ n_output_layer = 10
 
 X = tf.placeholder('float', [None, chunk_n, chunk_size])
 Y = tf.placeholder('float')
-#launch of view  for python D://py_package_env/lib/site-packages/tensorboard/main.py --logdir=d://py_projects/ML/logs/
 
 def recurrent_neural_network(data):
     layer = {'w_':tf.Variable(tf.random_normal([rnn_size, n_output_layer])), 'b_':tf.Variable(tf.random_normal([n_output_layer]))}
@@ -51,5 +50,3 @@ def train_neural_network(X, Y):
         accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
         print('准确率：', accuracy.eval({X:mnist.test.images.reshape(-1,chunk_n, chunk_size), Y:mnist.test.labels}))
 train_neural_network(X, Y)
-writer = tf.summary.FileWriter(logdir="logs", graph=tf.get_default_graph())
-writer.flush()

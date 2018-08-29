@@ -1,19 +1,538 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f54859da-b344-47e3-929c-3a78ae233d1c" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/ML_Demo/financial/creditGrade_train_data.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/ML_Demo/financial/datas/test/Inertial_Signals/x_test.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/ML_Demo/financial/decisionTrees.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/ML_Demo/financial/test" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/SOM/SOMTest.ipynb" />
+    <list default="true" id="f54859da-b344-47e3-929c-3a78ae233d1c" name="Default" comment="pycharm update@Mason0715">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Credit-K-Means-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/.ipynb_checkpoints/creditPredict-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/.ipynb_checkpoints/up_creditPredict-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/MNIST_data/t10k-images-idx3-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/MNIST_data/t10k-labels-idx1-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/MNIST_data/train-images-idx3-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/MNIST_data/train-labels-idx1-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/checkpoints-cnn/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/checkpoints-cnn/creditGrade.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/checkpoints-cnn/creditGrade.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/checkpoints-cnn/creditGrade.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/cnn.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/creditGrade.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/creditGrades.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/creditPredict.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/dataSets/creditGrade_train_data.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/dataSets/credit_Grade_train_data.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/dataSets/test.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/dataSets/train.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1531454444.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1531902567.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1531904034.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1531904217.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1531904965.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534496349.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534497284.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534497601.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534497793.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534500459.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534728234.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534742228.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534743349.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534744269.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534744633.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534748805.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534752095.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534816273.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534816339.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534816373.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/test/events.out.tfevents.1534818024.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1531454443.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1531902555.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1531902564.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1531904033.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1531904216.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1531904963.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534496348.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534497283.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534497600.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534497792.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534500458.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534728232.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534736652.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534742226.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534743348.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534744268.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534744631.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534748805.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534752094.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534815008.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534815248.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534815268.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534815353.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534815476.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534815500.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534815584.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534815741.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534815823.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534815850.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534816013.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534816122.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534816272.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534816338.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534816371.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/logs/train/events.out.tfevents.1534818020.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/model2/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/model2/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/model2/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/up_creditPredict.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/utils/util.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/CNN/utils/utilities.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Credit-K-Means.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MDP/.ipynb_checkpoints/initial-eda-and-first-mdp-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MDP/dataSets/LeagueofLegends.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MDP/dataSets/_columns.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MDP/dataSets/bans.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MDP/dataSets/gold.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MDP/dataSets/kills.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MDP/dataSets/leagueoflegends.zip" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MDP/dataSets/matchinfo.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MDP/dataSets/monsters.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MDP/dataSets/structures.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MDP/initial-eda-and-first-mdp.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/MemNNs.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/Meme2e.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/LICENSE.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/README.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa10_indefinite-knowledge_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa10_indefinite-knowledge_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa11_basic-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa11_basic-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa12_conjunction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa12_conjunction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa13_compound-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa13_compound-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa14_time-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa14_time-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa15_basic-deduction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa15_basic-deduction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa16_basic-induction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa16_basic-induction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa17_positional-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa17_positional-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa18_size-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa18_size-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa19_path-finding_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa19_path-finding_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa1_single-supporting-fact_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa1_single-supporting-fact_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa20_agents-motivations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa20_agents-motivations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa2_two-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa2_two-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa3_three-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa3_three-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa4_two-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa4_two-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa5_three-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa5_three-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa6_yes-no-questions_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa6_yes-no-questions_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa7_counting_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa7_counting_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa8_lists-sets_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa8_lists-sets_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa9_simple-negation_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-10k/qa9_simple-negation_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa10_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa10_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa10_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa11_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa11_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa11_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa12_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa12_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa12_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa13_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa13_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa13_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa14_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa14_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa14_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa15_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa15_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa15_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa16_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa16_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa16_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa17_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa17_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa17_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa18_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa18_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa18_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa19_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa19_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa19_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa1_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa1_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa1_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa20_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa20_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa20_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa2_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa2_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa2_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa3_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa3_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa3_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa4_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa4_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa4_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa5_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa5_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa5_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa6_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa6_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa6_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa7_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa7_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa7_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa8_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa8_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa8_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa9_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa9_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid-10k/qa9_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa10_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa10_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa10_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa11_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa11_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa11_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa12_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa12_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa12_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa13_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa13_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa13_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa14_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa14_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa14_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa15_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa15_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa15_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa16_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa16_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa16_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa17_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa17_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa17_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa18_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa18_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa18_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa19_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa19_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa19_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa1_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa1_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa1_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa20_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa20_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa20_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa2_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa2_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa2_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa3_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa3_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa3_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa4_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa4_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa4_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa5_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa5_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa5_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa6_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa6_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa6_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa7_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa7_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa7_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa8_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa8_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa8_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa9_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa9_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en-valid/qa9_valid.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa10_indefinite-knowledge_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa10_indefinite-knowledge_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa11_basic-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa11_basic-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa12_conjunction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa12_conjunction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa13_compound-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa13_compound-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa14_time-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa14_time-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa15_basic-deduction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa15_basic-deduction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa16_basic-induction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa16_basic-induction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa17_positional-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa17_positional-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa18_size-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa18_size-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa19_path-finding_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa19_path-finding_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa1_single-supporting-fact_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa1_single-supporting-fact_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa20_agents-motivations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa20_agents-motivations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa2_two-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa2_two-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa3_three-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa3_three-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa4_two-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa4_two-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa5_three-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa5_three-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa6_yes-no-questions_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa6_yes-no-questions_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa7_counting_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa7_counting_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa8_lists-sets_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa8_lists-sets_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa9_simple-negation_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/en/qa9_simple-negation_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa10_indefinite-knowledge_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa10_indefinite-knowledge_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa11_basic-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa11_basic-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa12_conjunction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa12_conjunction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa13_compound-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa13_compound-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa14_time-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa14_time-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa15_basic-deduction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa15_basic-deduction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa16_basic-induction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa16_basic-induction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa17_positional-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa17_positional-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa18_size-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa18_size-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa19_path-finding_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa19_path-finding_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa1_single-supporting-fact_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa1_single-supporting-fact_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa20_agents-motivations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa20_agents-motivations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa2_two-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa2_two-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa3_three-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa3_three-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa4_two-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa4_two-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa5_three-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa5_three-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa6_yes-no-questions_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa6_yes-no-questions_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa7_counting_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa7_counting_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa8_lists-sets_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa8_lists-sets_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa9_simple-negation_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn-10k/qa9_simple-negation_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa10_indefinite-knowledge_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa10_indefinite-knowledge_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa11_basic-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa11_basic-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa12_conjunction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa12_conjunction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa13_compound-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa13_compound-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa14_time-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa14_time-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa15_basic-deduction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa15_basic-deduction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa16_basic-induction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa16_basic-induction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa17_positional-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa17_positional-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa18_size-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa18_size-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa19_path-finding_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa19_path-finding_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa1_single-supporting-fact_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa1_single-supporting-fact_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa20_agents-motivations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa20_agents-motivations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa2_two-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa2_two-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa3_three-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa3_three-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa4_two-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa4_two-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa5_three-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa5_three-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa6_yes-no-questions_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa6_yes-no-questions_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa7_counting_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa7_counting_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa8_lists-sets_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa8_lists-sets_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa9_simple-negation_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/hn/qa9_simple-negation_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa10_indefinite-knowledge_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa10_indefinite-knowledge_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa11_basic-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa11_basic-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa12_conjunction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa12_conjunction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa13_compound-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa13_compound-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa14_time-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa14_time-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa15_basic-deduction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa15_basic-deduction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa16_basic-induction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa16_basic-induction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa17_positional-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa17_positional-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa18_size-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa18_size-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa19_path-finding_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa19_path-finding_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa1_single-supporting-fact_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa1_single-supporting-fact_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa20_agents-motivations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa20_agents-motivations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa2_two-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa2_two-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa3_three-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa3_three-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa4_two-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa4_two-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa5_three-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa5_three-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa6_yes-no-questions_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa6_yes-no-questions_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa7_counting_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa7_counting_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa8_lists-sets_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa8_lists-sets_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa9_simple-negation_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled-10k/qa9_simple-negation_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa10_indefinite-knowledge_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa10_indefinite-knowledge_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa11_basic-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa11_basic-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa12_conjunction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa12_conjunction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa13_compound-coreference_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa13_compound-coreference_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa14_time-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa14_time-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa15_basic-deduction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa15_basic-deduction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa16_basic-induction_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa16_basic-induction_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa17_positional-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa17_positional-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa18_size-reasoning_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa18_size-reasoning_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa19_path-finding_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa19_path-finding_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa1_single-supporting-fact_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa1_single-supporting-fact_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa20_agents-motivations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa20_agents-motivations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa2_two-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa2_two-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa3_three-supporting-facts_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa3_three-supporting-facts_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa4_two-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa4_two-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa5_three-arg-relations_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa5_three-arg-relations_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa6_yes-no-questions_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa6_yes-no-questions_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa7_counting_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa7_counting_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa8_lists-sets_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa8_lists-sets_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa9_simple-negation_test.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data/shuffled/qa9_simple-negation_train.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/MemNN/data_utils.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/.ipynb_checkpoints/Gausian_RBM-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/.ipynb_checkpoints/Untitled-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/Gausian_RBM.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/MNIST_data/t10k-images-idx3-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/MNIST_data/t10k-labels-idx1-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/MNIST_data/train-images-idx3-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/MNIST_data/train-labels-idx1-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/RBM_logs/MNIST/events.out.tfevents.1531468887.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/RBM_logs/MNIST/events.out.tfevents.1531469748.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/RBM_logs/MNIST/events.out.tfevents.1531474088.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/Untitled.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/Utils/bas_data.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/Utils/batch.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RBM/rbm.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/ARIMA-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/Industry-Predict-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/ARIMA.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Industry-Predict.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/SP_model.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/checkpoints-lstm/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/checkpoints-lstm/predict.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/checkpoints-lstm/predict.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/checkpoints-lstm/predict.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/train-test.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/model.pkl" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/.ipynb_checkpoints/Risk-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/CZ_Model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/MNIST_data/t10k-images-idx3-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/MNIST_data/t10k-labels-idx1-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/MNIST_data/train-images-idx3-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/MNIST_data/train-labels-idx1-ubyte.gz" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/CZI_Model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/CZ_Model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/LD_Model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/QC_Model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Risk.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/dataSets/DEA三级到二级.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/dataSets/output_data.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/dataSets/raw_data.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/law_risk.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/risk.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/risk/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/risk/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/risk/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Sema/WikiSema.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dataSets/stock_train_data_20171125.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/logs/events.out.tfevents.1504602722.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/logs/events.out.tfevents.1512140682.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/logs/events.out.tfevents.1517644218.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/logs/events.out.tfevents.1535513315.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/000.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/001.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/002.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/003.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/004.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/005.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/006.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/007.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/008.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/009.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/010.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/011.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/012.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/013.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/014.png" />
       <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/tensorflow_files.iml" afterPath="$PROJECT_DIR$/.idea/tensorflow_files.iml" />
+      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" afterPath="$PROJECT_DIR$/.idea/webServers.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/CNN/Cnn_Minst.py" afterPath="$PROJECT_DIR$/CNN/Cnn_Minst.py" />
+      <change beforePath="$PROJECT_DIR$/GAN/GAN_demo.py" afterPath="$PROJECT_DIR$/GAN/GAN_demo.py" />
       <change beforePath="$PROJECT_DIR$/GAN/out/000.png" afterPath="$PROJECT_DIR$/GAN/out/000.png" />
       <change beforePath="$PROJECT_DIR$/GAN/out/001.png" afterPath="$PROJECT_DIR$/GAN/out/001.png" />
       <change beforePath="$PROJECT_DIR$/GAN/out/002.png" afterPath="$PROJECT_DIR$/GAN/out/002.png" />
@@ -29,10 +548,9 @@
       <change beforePath="$PROJECT_DIR$/GAN/out/012.png" afterPath="$PROJECT_DIR$/GAN/out/012.png" />
       <change beforePath="$PROJECT_DIR$/GAN/out/013.png" afterPath="$PROJECT_DIR$/GAN/out/013.png" />
       <change beforePath="$PROJECT_DIR$/GAN/out/014.png" afterPath="$PROJECT_DIR$/GAN/out/014.png" />
-      <change beforePath="$PROJECT_DIR$/ML Demo/PM2.5_prediction.ipynb" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ML Demo/data/data instruct.md" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ML Demo/data/test.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ML Demo/data/train.csv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ML_Demo/financial/creditPredict.ipynb" afterPath="$PROJECT_DIR$/ML_Demo/financial/creditPredict.ipynb" />
+      <change beforePath="$PROJECT_DIR$/ML_Demo/financial/decisionTrees.ipynb" afterPath="$PROJECT_DIR$/ML_Demo/financial/decisionTrees.ipynb" />
+      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change beforePath="$PROJECT_DIR$/RNN/Rnn_demo.py" afterPath="$PROJECT_DIR$/RNN/Rnn_demo.py" />
       <change beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
     </list>
@@ -45,18 +563,19 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/tensorflow$Cnn_Minst.coverage" NAME="Cnn_Minst Coverage Results" MODIFIED="1499852787868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CNN" />
-    <SUITE FILE_PATH="coverage/ML$Cnn_Minst.coverage" NAME="Cnn_Minst Coverage Results" MODIFIED="1529914148363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CNN" />
-    <SUITE FILE_PATH="coverage/tensorflow$test.coverage" NAME="test Coverage Results" MODIFIED="1499847898671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ML$boxplot.coverage" NAME="boxplot Coverage Results" MODIFIED="1529914889666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ML Demo" />
     <SUITE FILE_PATH="coverage/ML$GAN_demo.coverage" NAME="GAN_demo Coverage Results" MODIFIED="1529916296417" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GAN" />
-    <SUITE FILE_PATH="coverage/ML$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1529915391986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ML Demo/financial" />
     <SUITE FILE_PATH="coverage/tensorflow$GAN_demo.coverage" NAME="GAN_demo Coverage Results" MODIFIED="1499953234975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GAN" />
-    <SUITE FILE_PATH="coverage/ML$SemaWiki.coverage" NAME="SemaWiki Coverage Results" MODIFIED="1528701016756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ML$test.coverage" NAME="test Coverage Results" MODIFIED="1530023110171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ML_Demo/financial" />
+    <SUITE FILE_PATH="coverage/ML$test.coverage" NAME="test Coverage Results" MODIFIED="1534760645530" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ML_Demo/financial" />
     <SUITE FILE_PATH="coverage/tensorflow$Get_Mnist.coverage" NAME="Get_Mnist Coverage Results" MODIFIED="1499676547539" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CNN" />
     <SUITE FILE_PATH="coverage/tensorflow$Rnn_demo.coverage" NAME="Rnn_demo Coverage Results" MODIFIED="1499852606722" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RNN" />
     <SUITE FILE_PATH="coverage/ML$tensorflow_files.coverage" NAME="tensorflow_files Coverage Results" MODIFIED="1530150838882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/tensorflow$Cnn_Minst.coverage" NAME="Cnn_Minst Coverage Results" MODIFIED="1499852787868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CNN" />
+    <SUITE FILE_PATH="coverage/ML$Cnn_Minst.coverage" NAME="Cnn_Minst Coverage Results" MODIFIED="1529914148363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CNN" />
+    <SUITE FILE_PATH="coverage/tensorflow$test.coverage" NAME="test Coverage Results" MODIFIED="1499847898671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ML$test__2_.coverage" NAME="test (2) Coverage Results" MODIFIED="1535513286298" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ML$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1529915391986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ML Demo/financial" />
+    <SUITE FILE_PATH="coverage/ML$SemaWiki.coverage" NAME="SemaWiki Coverage Results" MODIFIED="1528701016756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -66,91 +585,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="utilities.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ML_Demo/financial/utils/utilities.py">
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1100">
-              <caret line="47" column="24" lean-forward="false" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="creditGrade_train_data.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ML_Demo/financial/creditGrade_train_data.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2275">
-              <caret line="91" column="359" lean-forward="false" selection-start-line="91" selection-start-column="359" selection-end-line="91" selection-end-column="359" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="creditPredict.ipynb" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ML_Demo/financial/creditPredict.ipynb">
-          <provider selected="true" editor-type-id="ipnb-editor">
-            <state>
-              <selected id="0" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ML_Demo/financial/train">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11350">
-              <caret line="454" column="17" lean-forward="false" selection-start-line="454" selection-start-column="17" selection-end-line="454" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ML_Demo/financial/test">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="126" selection-end-column="73" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ML_Demo/financial/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="decisionTrees.ipynb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ML_Demo/financial/decisionTrees.ipynb">
-          <provider selected="true" editor-type-id="ipnb-editor">
-            <state>
-              <selected id="0" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tree.dot" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ML_Demo/financial/tree.dot">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="financial_train.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ML_Demo/financial/financial_train.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11075">
-              <caret line="443" column="42" lean-forward="false" selection-start-line="443" selection-start-column="42" selection-end-line="443" selection-end-column="42" />
+            <state relative-caret-position="361">
+              <caret line="19" column="0" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="19" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -202,7 +641,6 @@
         <option value="$PROJECT_DIR$/GAN/GAN_demo.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/ML Demo/boxplot.py" />
-        <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/ML Demo/test.ipynb" />
         <option value="$PROJECT_DIR$/SOM/SOMTest.ipynb" />
         <option value="$PROJECT_DIR$/ML Demo/utilities/utilities.py" />
@@ -227,19 +665,27 @@
         <option value="$PROJECT_DIR$/ML_Demo/financial/utils/utilities.py" />
         <option value="$PROJECT_DIR$/ML_Demo/financial/creditGrade_train_data.csv" />
         <option value="$PROJECT_DIR$/ML_Demo/financial/creditPredict.ipynb" />
+        <option value="$PROJECT_DIR$/test.py" />
       </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
+    <option name="y" value="1" />
     <option name="width" value="1936" />
-    <option name="height" value="1100" />
+    <option name="height" value="1099" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -257,38 +703,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="ML" type="b2602c69:ProjectViewProjectNode" />
               <item name="ML" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ML" type="462c0819:PsiDirectoryNode" />
-              <item name="ML_Demo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ML" type="462c0819:PsiDirectoryNode" />
-              <item name="ML_Demo" type="462c0819:PsiDirectoryNode" />
-              <item name="financial" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ML" type="462c0819:PsiDirectoryNode" />
-              <item name="ML_Demo" type="462c0819:PsiDirectoryNode" />
-              <item name="financial" type="462c0819:PsiDirectoryNode" />
-              <item name="datas" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ML" type="462c0819:PsiDirectoryNode" />
-              <item name="ML_Demo" type="462c0819:PsiDirectoryNode" />
-              <item name="financial" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ML" type="b2602c69:ProjectViewProjectNode" />
@@ -299,11 +719,12 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
-    <property name="last_opened_file_path" value="F:/ML_git" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$" />
@@ -318,8 +739,8 @@
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
-      <console-settings module-name="tensorflow_files" sdk-home="D:\py_package_env\python.exe">
-        <option name="mySdkHome" value="D:\py_package_env\python.exe" />
+      <console-settings module-name="tensorflow_files" sdk-home="ssh://lihanghang@124.16.71.33:22/usr/bin/python">
+        <option name="mySdkHome" value="ssh://lihanghang@124.16.71.33:22/usr/bin/python" />
         <option name="myModuleName" value="tensorflow_files" />
       </console-settings>
     </option>
@@ -352,7 +773,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.test (2)">
     <configuration name="Unnamed" type="PyRemoteDebugConfigurationType" factoryName="Python Remote Debug" editBeforeRun="true">
       <module name="" />
       <option name="PORT" value="0" />
@@ -364,25 +785,6 @@
       </PathMappingSettings>
       <option name="REDIRECT_OUTPUT" value="true" />
       <option name="SUSPEND_AFTER_CONNECT" value="true" />
-    </configuration>
-    <configuration name="Cnn_Minst" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CNN" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="tensorflow_files" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CNN/Cnn_Minst.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
     </configuration>
     <configuration name="GAN_demo" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -400,6 +802,25 @@
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GAN/GAN_demo.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="tensorflow_files" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
@@ -441,6 +862,25 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="test (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="tensorflow_files" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -476,24 +916,6 @@
       <option name="additionalOptions" value="" />
       <option name="ipnbHost" value="127.0.0.1" />
       <option name="ipnbPort" value="8888" />
-    </configuration>
-    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="tensorflow_files" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Attests">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -608,19 +1030,19 @@
     <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Python Remote Debug.Unnamed" />
       <item index="1" class="java.lang.String" itemvalue="Jupyter Notebook.tensorflow_files" />
-      <item index="2" class="java.lang.String" itemvalue="Python.Cnn_Minst" />
-      <item index="3" class="java.lang.String" itemvalue="Python.GAN_demo" />
-      <item index="4" class="java.lang.String" itemvalue="Python.boxplot" />
-      <item index="5" class="java.lang.String" itemvalue="Python.test (1)" />
-      <item index="6" class="java.lang.String" itemvalue="Python.test" />
+      <item index="2" class="java.lang.String" itemvalue="Python.GAN_demo" />
+      <item index="3" class="java.lang.String" itemvalue="Python.boxplot" />
+      <item index="4" class="java.lang.String" itemvalue="Python.test (1)" />
+      <item index="5" class="java.lang.String" itemvalue="Python.test" />
+      <item index="6" class="java.lang.String" itemvalue="Python.test (2)" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.test" />
-        <item index="1" class="java.lang.String" itemvalue="Python.GAN_demo" />
-        <item index="2" class="java.lang.String" itemvalue="Python.test (1)" />
-        <item index="3" class="java.lang.String" itemvalue="Python.boxplot" />
-        <item index="4" class="java.lang.String" itemvalue="Python.Cnn_Minst" />
+        <item index="0" class="java.lang.String" itemvalue="Python.test (2)" />
+        <item index="1" class="java.lang.String" itemvalue="Python.test" />
+        <item index="2" class="java.lang.String" itemvalue="Python.GAN_demo" />
+        <item index="3" class="java.lang.String" itemvalue="Python.test (1)" />
+        <item index="4" class="java.lang.String" itemvalue="Python.boxplot" />
       </list>
     </recent_temporary>
   </component>
@@ -693,17 +1115,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1936" height="1100" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5379024" sideWeight="0.57995737" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281412" sideWeight="0.4978678" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36863968" sideWeight="0.4360341" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4064116" sideWeight="0.58315563" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4064116" sideWeight="0.41684434" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.53782386" sideWeight="0.57995737" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41554403" sideWeight="0.2113951" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32714137" sideWeight="0.49574015" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.36842105" sideWeight="0.42758253" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.53678757" sideWeight="0.5947817" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4041451" sideWeight="0.4052183" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24093817" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30617678" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -719,8 +1141,8 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960597" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" x="0" y="0" width="434" height="900" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3295082" sideWeight="0.19667171" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -757,34 +1179,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/GAN/out/010.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GAN/out/013.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="MarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="75">
-            <caret line="3" column="19" lean-forward="false" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ML Demo/data/test.csv" />
     <entry file="file://$PROJECT_DIR$/SemaWiki.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -809,13 +1203,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ML Demo/financial/data/train/y_train.txt" />
     <entry file="file://$PROJECT_DIR$/ML Demo/test.ipynb" />
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="15" lean-forward="false" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ML Demo/financial/data/train/x_train.txt" />
     <entry file="file://$PROJECT_DIR$/ML Demo/boxplot.py" />
     <entry file="file://$PROJECT_DIR$/ML Demo/financial/test.py" />
@@ -900,7 +1287,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
           <caret line="1" column="7" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -922,7 +1308,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="12" column="22" lean-forward="false" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -948,26 +1333,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ML_Demo/financial/financial_train.csv___jb_old___" />
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/tree.dot">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/tree.dot" />
     <entry file="file://$PROJECT_DIR$/ML_Demo/financial/train">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11350">
+        <state relative-caret-position="0">
           <caret line="454" column="17" lean-forward="false" selection-start-line="454" selection-start-column="17" selection-end-line="454" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/financial_train.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11075">
-          <caret line="443" column="42" lean-forward="false" selection-start-line="443" selection-start-column="42" selection-end-line="443" selection-end-column="42" />
           <folding />
         </state>
       </provider>
@@ -980,16 +1350,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/test.py">
+    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/test.py" />
+    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/creditGrade_train_data" />
+    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/Industry-Predict.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/decisionTrees.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/financial_train.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state relative-caret-position="568">
+          <caret line="443" column="42" lean-forward="false" selection-start-line="443" selection-start-column="42" selection-end-line="443" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/creditGrade_train_data" />
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/decisionTrees.ipynb">
+    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/creditPredict.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/creditGrade_train_data.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="91" column="359" lean-forward="false" selection-start-line="91" selection-start-column="359" selection-end-line="91" selection-end-column="359" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Credit-K-Means.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CNN/up_creditPredict.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
           <selected id="0" />
@@ -998,26 +1405,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ML_Demo/financial/utils/utilities.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1100">
-          <caret line="47" column="24" lean-forward="false" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
+        <state relative-caret-position="190">
+          <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/creditGrade_train_data.csv">
+    <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2275">
-          <caret line="91" column="359" lean-forward="false" selection-start-line="91" selection-start-column="359" selection-end-line="91" selection-end-column="359" />
+        <state relative-caret-position="361">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="19" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/creditPredict.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="0" />
         </state>
       </provider>
     </entry>
