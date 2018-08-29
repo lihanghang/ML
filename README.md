@@ -1,13 +1,13 @@
 ## &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;技术专列
-#### 一、ML内容
+#### 一、ML内容--工程测试代码
 ***
-#### 实例代码--[ML Demo](https://github.com/lihanghang/ML/tree/master/ML%20Demo)
+#### 实例代码--[ML Demo](https://github.com/lihanghang/ML/)
 1. 机器学习实验，关于CNN、RNN、GAN等神经网络算法的入门、中级、高级运用，运用在图像处理或医疗诊断等领域
 2. 机器学习基础0108（regression、classification）
 3. **ML中回归、分类问题实例：**
 * **PM2.5各成分影响比重分析及预测未来几日PM2.5浓度值**
-* **E-mail反欺诈预测**
-4. 记忆神经网络研究学习(0506)
+* **E-mail反究欺诈预测**
+4. 记忆神经网络研学习(0506)
 ***
 #### 二、入门级--- 各大neural network 算法在Mnist上的运用
 ##### (1)CNN
@@ -41,4 +41,4 @@
 - - -
 #### 这里不仅有技术还有诗和远方！
 [我的个人文章地址](http://lihanghang.top)
-#### 更新于20180506
+#### 更新于20180829
