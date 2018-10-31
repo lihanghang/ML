@@ -39,6 +39,5 @@
 - [偏爱什么样的学生？](http://blog.sciencenet.cn/home.php?mod=space&uid=265898&do=blog&id=241678)
 - [王泛森院士：研究生和本科生的区别](http://www.folo.cn/user1/18593/archives/2009/79758.html)
 - - -
-#### 这里不仅有技术还有诗和远方！
-[我的个人文章地址](http://lihanghang.top)
-#### 更新于20180829
+[个人文章地址](http://lihanghang.top)
+#### 更新于20181031
