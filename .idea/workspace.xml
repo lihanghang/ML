@@ -1,15 +1,243 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f54859da-b344-47e3-929c-3a78ae233d1c" name="Default" comment="pycharm update@Mason0829 add info">
-      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Risk.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
+    <list default="true" id="f54859da-b344-47e3-929c-3a78ae233d1c" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/ARIMA-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ARIMA.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/.ipynb_checkpoints/Sentiment-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/.ipynb_checkpoints/Untitled-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/LICENSE" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/README.md" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/evaluation/ana_eval_dense.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/evaluation/ana_eval_sparse.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/testsets/CA8/dataset_statistics.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/testsets/CA8/morphological.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/testsets/CA8/semantic.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/testsets/CA_translated/ca_translated.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/testsets/README.md" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Sentiment.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Untitled.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/ARIMAs-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/Untitled-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/信息技术服务业景气指数&amp;市场风险预警-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/信息技术服务业财务风险-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/房地产行业景气指数&amp;市场风险预警-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/房地产行业景气指数&amp;市场风险预警s-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/房地产行业财务风险-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/房地产行业财务风险s-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/汽车行业市场风险预警&amp;&amp;景气分析-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/汽车行业财务风险预测-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/ARIMAs.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRisk-lstm/caiwu_predict.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRisk-lstm/caiwu_predict.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRisk-lstm/caiwu_predict.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRisk-lstm/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_2/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_2/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_2/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_4/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_4/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_4/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-lstm/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-lstm/predict.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-lstm/predict.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-lstm/predict.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_1/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_1/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_1/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_2/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_2/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_2/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_3/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_3/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_3/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_4/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_4/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_4/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-lstm/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-lstm/predict.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-lstm/predict.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-lstm/predict.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_1/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_1/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_1/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_2/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_2/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_2/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_3/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_3/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_3/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-lstm/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-lstm/info_predicts.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-lstm/info_predicts.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-lstm/info_predicts.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_1/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_1/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_1/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_2/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_2/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_2/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_3/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_3/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_3/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_4/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_4/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_4/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/LeadingIndex.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-lstm/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-lstm/kuosan_predicts.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-lstm/kuosan_predicts.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-lstm/kuosan_predicts.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_1/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_1/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_1/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_2/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_2/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_2/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_3/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_3/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_3/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-lstm/car_predicts.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-lstm/car_predicts.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-lstm/car_predicts.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-lstm/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_1/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_1/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_1/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_2/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_2/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_2/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_3/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_3/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_3/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_4/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_4/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_4/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hecheng-lstm/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hecheng-lstm/kuosan_predicts.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hecheng-lstm/kuosan_predicts.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hecheng-lstm/kuosan_predicts.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_1/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_1/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_1/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_2/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_2/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_2/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_3/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_3/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_3/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_4/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_4/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_4/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/kuosan_predict.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/kuosan_predict.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/kuosan_predict.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/predict.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/predict.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/predict.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosan-lstm/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosan-lstm/kuosan_predicts.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosan-lstm/kuosan_predicts.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosan-lstm/kuosan_predicts.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_0/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_0/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_0/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_1/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_1/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_1/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_2/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_2/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_2/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_0/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_0/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_0/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_1/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_1/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_1/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_2/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_2/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_2/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_3/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_3/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_3/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Untitled.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/信息技术服务业景气指数&amp;市场风险预警数据.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/信息技术服务业财务风险数据.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/房地产行业景气指数&amp;市场风险预警.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/房地产行业财务风险数据.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/汽车制造企业财务风险评价.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/汽车行业市场风险预警&amp;&amp;景气分析.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/output/房地产行业景气指数&amp;市场风险预警预测数据.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/信息技术服务业景气指数&amp;市场风险预警.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/信息技术服务业财务风险.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/信息技术服务业财务风险预测结果值.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/信息服务业市场合成分析预测数据.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/信息服务业市场扩散分析预测数据.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/.ipynb_checkpoints/经济因子-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/lstm/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/lstm/predict.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/lstm/predict.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/lstm/predict.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_1/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_1/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_1/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_2/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_2/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_2/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_3/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_3/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_3/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_4/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_4/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_4/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_5/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_5/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_5/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/房地产投资潜力指数-北京.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/经济因子.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/经济因子预测数据.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/房地产行业景气指数&amp;市场风险预警.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/房地产行业景气指数&amp;市场风险预警s.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/房地产行业财务风险.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/房地产行业财务风险s.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/房地产行业财务风险预测数据.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/汽车行业市场扩散9分析预测数据.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/汽车行业市场扩散分析预测数据.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/汽车行业市场风险预警&amp;&amp;景气分析.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/汽车行业市场风险预警&amp;&amp;景气分析预测数据.xlsx" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/汽车行业财务风险预测.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/LD.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/chengzhang.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/chengzhang_Model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/chouzi.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/司法.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/经营力.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/test.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/.ipynb_checkpoints/creditPredict-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/creditGrade_train_data1.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/creditPredict.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/test1.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/utilities.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/.ipynb_checkpoints/knowledgePredict-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/checkpoints-cnn/checkpoint" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/checkpoints-cnn/creditGrade.ckpt.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/checkpoints-cnn/creditGrade.ckpt.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/checkpoints-cnn/creditGrade.ckpt.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/knowledgePredict.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/logs/test/events.out.tfevents.1540371146.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/logs/train/events.out.tfevents.1540371146.ccipk80" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/models/knowledgePredict-model/saved_model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/models/knowledgePredict-model/variables/variables.data-00000-of-00001" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/models/knowledgePredict-model/variables/variables.index" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/newdata.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/pred-model.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/utilities.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/CNN/dataSets/creditGrade_train_data.csv" afterPath="$PROJECT_DIR$/CNN/dataSets/creditGrade_train_data.csv" />
       <change beforePath="$PROJECT_DIR$/CNN/dataSets/credit_Grade_train_data.csv" afterPath="$PROJECT_DIR$/CNN/dataSets/credit_Grade_train_data.csv" />
       <change beforePath="$PROJECT_DIR$/CNN/dataSets/test.csv" afterPath="$PROJECT_DIR$/CNN/dataSets/test.csv" />
       <change beforePath="$PROJECT_DIR$/CNN/dataSets/train.csv" afterPath="$PROJECT_DIR$/CNN/dataSets/train.csv" />
-      <change beforePath="$PROJECT_DIR$/CNN/up_creditPredict.ipynb" afterPath="$PROJECT_DIR$/CNN/up_creditPredict.ipynb" />
       <change beforePath="$PROJECT_DIR$/MDP/dataSets/LeagueofLegends.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/LeagueofLegends.csv" />
       <change beforePath="$PROJECT_DIR$/MDP/dataSets/_columns.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/_columns.csv" />
       <change beforePath="$PROJECT_DIR$/MDP/dataSets/bans.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/bans.csv" />
@@ -20,11 +248,6 @@
       <change beforePath="$PROJECT_DIR$/MDP/dataSets/structures.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/structures.csv" />
       <change beforePath="$PROJECT_DIR$/RNN/SP_model.py" afterPath="$PROJECT_DIR$/RNN/SP_model.py" />
       <change beforePath="$PROJECT_DIR$/RNN/dataSets/train-test.csv" afterPath="$PROJECT_DIR$/RNN/dataSets/train-test.csv" />
-      <change beforePath="$PROJECT_DIR$/RiskPredict/.ipynb_checkpoints/Risk-checkpoint.ipynb" afterPath="$PROJECT_DIR$/RiskPredict/.ipynb_checkpoints/Risk-checkpoint.ipynb" />
-      <change beforePath="$PROJECT_DIR$/RiskPredict/Model/CZI_Model.pb" afterPath="$PROJECT_DIR$/RiskPredict/Model/CZI_Model.pb" />
-      <change beforePath="$PROJECT_DIR$/RiskPredict/Model/LD_Model.pb" afterPath="$PROJECT_DIR$/RiskPredict/Model/LD_Model.pb" />
-      <change beforePath="$PROJECT_DIR$/RiskPredict/Model/QC_Model.pb" afterPath="$PROJECT_DIR$/RiskPredict/Model/QC_Model.pb" />
-      <change beforePath="$PROJECT_DIR$/RiskPredict/Risk.ipynb" afterPath="$PROJECT_DIR$/RiskPredict/Risk.ipynb" />
       <change beforePath="$PROJECT_DIR$/RiskPredict/dataSets/output_data.csv" afterPath="$PROJECT_DIR$/RiskPredict/dataSets/output_data.csv" />
       <change beforePath="$PROJECT_DIR$/RiskPredict/dataSets/raw_data.csv" afterPath="$PROJECT_DIR$/RiskPredict/dataSets/raw_data.csv" />
     </list>
@@ -623,7 +846,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535518380324</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="pycharm update@Mason1031">
+      <created>1540983332992</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1540983332992</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -639,16 +869,16 @@
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284974" sideWeight="0.4978701" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.051502146" sideWeight="0.46112886" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32618025" sideWeight="0.5085197" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.023834197" sideWeight="0.33333334" order="16" side_tool="false" content_ui="tabs" x="0" y="0" width="434" height="900" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.051502146" sideWeight="0.53887117" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32618025" sideWeight="0.49361023" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5193133" sideWeight="0.53887117" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32618025" sideWeight="0.4914803" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="false" weight="0.36842105" sideWeight="0.42758253" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13897763" sideWeight="0.64744645" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39669862" sideWeight="0.64744645" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38197425" sideWeight="0.27209798" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17252396" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17252396" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -687,7 +917,8 @@
     <MESSAGE value="pycharm update@Mason0715" />
     <MESSAGE value="pycharm update@Mason0829 CCIP project code" />
     <MESSAGE value="pycharm update@Mason0829 add info" />
-    <option name="LAST_COMMIT_MESSAGE" value="pycharm update@Mason0829 add info" />
+    <MESSAGE value="pycharm update@Mason1031" />
+    <option name="LAST_COMMIT_MESSAGE" value="pycharm update@Mason1031" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

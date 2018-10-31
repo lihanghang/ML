@@ -1,0 +1,2 @@
+model_checkpoint_path: "caiwu_predict.ckpt"
+all_model_checkpoint_paths: "caiwu_predict.ckpt"
