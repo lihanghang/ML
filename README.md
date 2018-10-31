@@ -33,7 +33,7 @@
 
 ***
 
-## &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;有启示意义的博客
+## &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;博客
 ***
 - [研究生守则20条](http://blog.sciencenet.cn/home.php?mod=space&uid=220220&do=blog&id=444499)
 - [偏爱什么样的学生？](http://blog.sciencenet.cn/home.php?mod=space&uid=265898&do=blog&id=241678)
