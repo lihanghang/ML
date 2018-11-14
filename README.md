@@ -32,6 +32,11 @@
 3. ……
 
 ***
+#### 四、NLP情感分析实践
+##### (1)对企业舆情数据进行情感分析，目前能够进行正负向分析
+1. 实践过程中，一是语料库不是很多，即便有数据量也不够大。那么没有数据，我们也不能随意创造数据。只有去寻找了。随即自己写个爬虫去爬
+2. 基于TensorFlow的keras进行建模。主要使用jieba分词、word2vector、知乎已训练的词向量等。
+3. 主要[数据和代码](https://github.com/lihanghang/ML/tree/master/NLP)
 
 ## &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;博客
 ***
@@ -40,4 +45,4 @@
 - [王泛森院士：研究生和本科生的区别](http://www.folo.cn/user1/18593/archives/2009/79758.html)
 - - -
 [个人文章地址](http://lihanghang.top)
-#### 更新于20181031
+#### 更新于20181114
