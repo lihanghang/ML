@@ -1,0 +1,300 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+五星级酒店不换床单
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251591343,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251591343.html',
+				title:'五星级酒店不换床单'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251591343/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　五星级酒店，你们为什么不换床单？
+　　来源：蓝莓评测
+　　去年，InsideEdition对位于纽约的9家酒店进行了暗访，其中3家酒店在客人退房后未更换床单。
+图：InsideEdition视频截图
+　　对此，未更换床品的万豪酒店作出了回应。万豪酒店对自身的清洁标准非常有信心，并确保类似事件不再发生。
+　　图：http://www.insideedition.com/investigative/18622-for-sheets-sake-multiple-hotels-do-not-change-bedsheets-for-new-guests-investigation-reveals
+　　万豪酒店是否践行了自己的承诺？国内酒店行业是否也存在清洁不到位的现象？蓝莓评测对此进行了测试。
+
+
+　　此次测试视频
+
+　　我们发现，此次参与测试的5家酒店
+　　均未在客人退房后彻底更换床品
+
+　　5家酒店均未清洁浴缸
+
+　　马桶圈未彻底清洁
+　　部分酒店未更换浴袍
+
+　　3家酒店未清洁漱口杯
+
+　　对于这样的测试结果，我们感到非常震惊。作为独立的评测机构，我们希望通过对某类产品的评测、对比，为读者提供有帮助的消费决策，却在评测过程中发现了行业的乱象。借助本次测试，我们希望能够引起酒店行业的重视，注重卫生状况与用户体验。
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

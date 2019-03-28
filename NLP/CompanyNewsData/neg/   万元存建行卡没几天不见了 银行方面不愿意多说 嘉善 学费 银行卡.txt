@@ -1,0 +1,319 @@
+
+
+
+
+
+
+
+
+
+
+
+
+银华杯十佳银行理财师大赛，惊喜大奖至高荣誉等你来！
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+大学学费存进建行账户被转走，高中系统“圈”走了
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251574094,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251574094.html',
+				title:'大学学费存进建行账户被转走，高中系统“圈”走了'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251574094/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　一万六学费存进银行卡，怎么就“没了”？
+　　来源：微信公众号1818黄金眼
+　　嘉兴徐先生的女儿要上大学了，做父亲的就给女儿充了1万6用作学费。刚充进去没几天，卡里的钱没了。
+　　给女儿存的大学学费1万6，没几天钱不见了
+　　建行嘉善支行工作人员：“我们跟客户商量好，没有新闻点捕捉了（怎么商量好？）那我觉得是我们之间协商好，也不需要公开。”
+
+　　建行嘉善支行的工作人员说是商量好了。徐先生这边却想知道，一万六去哪里了。银行不愿说，我们就先听徐先生介绍介绍情况。女儿的这张储蓄卡，是上高中时办的，用作餐费不足自动缴费的。
+
+　　徐先生：“这个钱，原来是由于学校用的系统，存多少钱，余额不足，它会自动圈存50块。” 
+　　钱去了学校的系统，被圈存了？
+　　今年，女儿考上了北方的一所大学，考虑到账户安全，徐先生就想把之前那张卡注销掉，再重新办张卡。
+　　徐先生：“就是怕这种连带业务，专门把卡注销，他说这个卡可以正常使用，光用作存储业务。” 
+　　既然银行工作人员这么说了，那就继续用这张卡。这个月26号，徐先生分两笔存了一万六千多，用作女儿学费，结果到了28号，银行卡余额，只剩下8毛6。
+
+　　徐先生：“去哪了，具体我们也不清楚，最后他说去学校的系统了。”
+　　徐先生后来听说，钱被高中那套系统圈存了。在自动取款机上一查，发现确实有圈存的记录。
+　　徐先生：“他单笔只能圈存50，圈存了300多笔，两天，全没了。”
+　　钱为何会被圈走，银行方面不愿意多说
+　　记者查了下，圈存指的是消费者将银行户头中的钱直接圈存到ic晶片上。那徐先生的女儿已经高中毕业了，为何钱还被圈存走了呢？
+　　建行嘉善支行工作人员：“我觉得我们之前协商好了（到底什么原因圈存掉了呢？）这个是我们跟科技公司，跟学生的事情（确实存在圈存的事情？）你不用套我话。”
+
+　　对于徐先生女儿的银行卡怎么会被圈存这么多笔，银行工作人员并不愿多说。
+　　中国建设银行嘉兴市嘉善支行工作人员：“那么你现在就跟他说没这个事了。”
+　　徐先生：“问题是钱还没回来。” 
+　　旁边这位自称是行长，站边上也不愿意解释怎么回事。
+　　中国建设银行嘉兴市嘉善支行工作人员：“（他说她前因后果都知道，只是不方便接受我们的采访？）我知道的，我知道的怎么回事（就是不方便讲？）对，反正就是科技公司（的问题），你要全部确定一下。” 
+　　目前钱已退回，银行方表示，是电脑系统原因的误扣
+　　虽然对方不愿多说，但表示会妥善解决徐先生的问题。下午5点左右，徐先生反馈说，钱已经全部退回来了。而一万六怎么被圈存的，银行一位项经理打来了电话。 
+
+
+
+　　建行嘉善支行项经理：“这个属于个例，系统原因，电脑系统原因导致的误扣。”
+ 
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

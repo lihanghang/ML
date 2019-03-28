@@ -1,0 +1,369 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:257522494,
+				pid:1,
+				url:'http://finance.sina.com.cn/wm/2018-05-11/doc-ihaichqz9841809.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=257522494/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　原标题：央视记者卧底！云南旅游低价团：团费不足机票一半，“赔本的买卖”暗藏玄机！
+　　来源：央视财经公众号
+　　近两年，包括《消费主张》在内的许多媒体都报道过，云南一些旅游线路不合理低价游盛行，旅行社和导游强制诱导游客购物，然后再收取购物商店高额回扣的现象。
+　　可喜的是，去年4月15日，云南省出台了22条措施，严整旅游乱象。
+　　现在一年的时间过去了，云南旅游市场在经历了一系列整治的“阵痛”后，成效如何？
+　　△央视财经《消费主张》栏目视频
+
+　　五一节前，记者在网上搜索北京到云南的跟团游报价。以北京到腾冲芒市双飞五日游为例，多数旅行社给出的价格都在千元以上，甚至在2000元以上，千元以下的仅为从云南当地出发的旅行团。
+　　而在“马蜂窝”网上，一家名为“北京青旅直客中心”的商家，“北京直飞云南腾冲瑞丽双飞5日跟团游”的报价仅为999元一人！
+
+　　随后记者又搜索了五一期间从北京直飞云南芒市的机票，发现因为正值旅游旺季，仅仅往返机票的价格就要2000元左右。而这家旅行社的报价只是机票价格的一半，这赔本的买卖里面是不是暗藏玄机呢？
+
+　　记者又仔细查看了页面上的介绍，商家称只有2个购物项目，同时还有温泉等赠送项目，看上去还是比较划算的。这个999元的北京到芒市双飞五日游，究竟是“馅饼”还是“陷阱”？记者决定报名体验一番。
+
+　　导游变脸
+　　交费报名之后，记者顺利搭乘飞机到达芒市。下飞机后，记者见到了本次行程的导游“祥哥”。
+　　导游 祥哥：咱们不但要顺利，而且还要愉快地把这一次滇西之行走好，走完，谢谢大家。
+
+　　翔哥风趣幽默的一席话，很快就拉近了与游客们的距离，大家对他的第一印象都还不错。接下来的三天，丰盛的特色美食，舒适洁净的住宿，没有强迫购物，让许多人都沉浸在美景当中。
+
+　　但是第四天，按照行程安排，大家要去一个购买翡翠的地方，翔哥也换了一幅面孔。
+　　导游 祥哥：真有一种人，你们还别不相信，一分钱不消费，说难听点，叫导游骂一顿，云南导游骂他，就是骗吃、骗喝、骗玩。说好听点占便宜，说难听点，我就不评价了，我开不了口，那种人我只想问他一句，你心安吗？我们之所以用这种方法，低价格，真金白银，贴着钱把你们请过来，说难听点，我的理解就是赌，只不过赌的是人的良知。今天，我们把这个事情摆出来说开了以后，祥哥是个完美主义者，我希望看到的现象是咱们到买的时候，发自内心，我这么便宜的价格来玩了，舍得舍得，有舍才有得。
+　　翔哥开始对大家购买翡翠的金额做出了要求，建议大家要花两个月的薪水去买翡翠。
+　　导游 祥哥：假设你一个月薪水3000元钱，那么你最多只能花两、三个月的薪水去挑，去选一款属于自己的翡翠，这是对的。
+　　游客们在导购的带领下进入翡翠市场。这些穿黑色西服的工作人员就是导购，每位导购负责2-3名游客。游客们首先被带到一个柜台，由一名导购进行统一的讲解。
+
+
+　　接着游客们分散开进行选购。记者注意到，每组游客都有特定的导购全程跟随介绍。整个大厅导购人员一对一盯着自己的游客。
+　　游客：我们走到哪儿，她盯到哪儿，后来在那个柜台里，一个男的就过来了，感觉像打手一样，他说你买吧，你不买，我会批评（导购）。
+　　游客：别跟着我，我看好了我买，我叫你，（导购说）我不跟你，也有别人跟你。
+　　大厅里的游客纷纷掏钱购买翡翠，记者和一些导购闲聊，他说这里的生意非常好。
+　　翡翠店导购：这已经算人少的了，要是人多的时候，人挨人，走一条路，从这边走到那边要走十多分钟。
+　　在翡翠店里购物2个多小时后，游客们才回到大巴上。全团18位游客，一共有5人购买了翡翠，消费金额在2万多元左右。导游首先向购买翡翠的5位游客深深地鞠躬，表示感谢。
+　　导游 祥哥：有情有义，祥哥给你们鞠个躬，谢谢。这世上如果说什么东西是无价的，我觉得只有两个字，情义。
+
+　　但是，这位刚刚说完情义并且客客气气鞠躬的导游，又突然变脸了。
+　　导游 祥哥：我们贴着8万元钱，真金白银把你们请过来，你们花的钱算算，单程机票都不够，来这边吃得怎么样，喝得怎么样，玩得怎么样，看得怎么样，大家一目了然。乌鸦还懂得反哺之情，羊羔还有跪乳之恩，你们是天子脚下的人啊，或者下一站我们过去以后，我们换个地方，这个地方也许你没看上你喜欢的东西，那我们换个地方。不行再换，给我一个机会，也给大家一个机会。如果这个地方，你们还抱着那种心态，无所谓，导游不敢骂我，云南旅游规范得很，我可以投诉，还可以赔钱，那赚得更多，如果有这种心态的话，没关系，等一下我在车门口那边站着，你给我两嘴巴，我绝对不会还手，然后麻烦你有多远走多远，身份证就在你们手上，你爱去哪儿就去哪儿，我也管不着。
+　　翔哥的这一番话说完，全车的气氛又陷入了沉默。尽管旅游协议上明确写明，第四天上午只有一家购物场所，可是在这样的气氛下，翔哥又把大家带到了第二家翡翠店，车上没有一位游客敢于进行反抗和质疑。
+
+　　在这家翡翠店里，许多游客私下都在抱怨上当了。
+　　游客：那你明说，差多少钱，你开发票，我们给你补，给开得出发票就行，总额到8万元，我们得买多少才行。
+　　尽管游客们心怀不满，但是人生地不熟，此刻也是身不由己，不买的话，导游不知道还要说出什么难听的话来，更不知道什么时候能走，最后两天的行程也不知道会有怎样的遭遇。迫于种种压力，在这家店里所有人都购买了翡翠玉石。
+
+　　游客：没有不买的，我戴不戴的，花几百元钱，最起码有个交作业，我本来也是交业绩。
+　　终于游客们完成了购物任务，准备上车后见到导游给他一个“交待”时，戏剧性的一幕出现了，旅行团竟然将导游单方面更换了，这引起了游客更大的不满。
+　　游客：真的，如果（导游）走了我们就不买了，我买它干吗。
+　　最后一天了，新导游又带领游客去一家黄龙玉商店进行购物。在这里，不少游客又购买了黄龙玉。
+
+　　从黄龙玉店出来，同行的游客说看到了之前的导游祥哥，可是祥哥却像故意躲着游客一样快速消失了，这样的做法引起了游客的强烈不满。
+　　游客：你们丁导，翻脸比翻书还快，要把旅行社的方法改变，这是一种做事方法。
+　　新导游 阿玉：大家都组成一个价格的团，不用搞这些就好了。
+　　在与其他团的游客聊天中记者发现，像自己这个团，中途突然换导游的遭遇并不是个例，这位游客的经历就和记者如出一辙。
+　　游客：换了，就是第四天的时候，她是因为要接别的团去。第一个店，他们都主动买，我是实在没有看上的就没买，导游就说，你们三个，我看了半天，什么都没有买，你们来的这个团这么便宜，你们就不能消费点吗？你们的良心何在？我说，我的良心在不在不是你说了算的，再说我没有特别喜欢的，而且我们报团的时候没有说必须要买。
+　　“天下没有免费的午餐”、“买的永远没有卖的精”，看来这些老话放在低价游上，真是非常有道理。第一位导游先打温情牌，然后再撕破脸逼着大家购物。随后旅行社再换一位导游，既安抚了大家的情绪，而新导游又可以逼着大家继续购物。从外地到云南，经常都会出现一些很诱人的低价游，请一定擦亮眼睛，小心陷阱。
+　　另一路记者昆明旅游体验
+　　2018年五一假期前后，《消费主张》另一路记者来到昆明，以明察暗访的方式来体验云南旅游市场的低价游情况。记者走访了昆明市的多家景点和旅行社发现，以前街头上铺天盖地的不合理低价游的小广告已经明显见少了，而旅行社对相关线路的报价，和过去相比也越来越规范。
+　　比如石林一日游，云南省规定的诚信旅游指导价是每人260元，九乡一日游的指导价是每人205元，而旅游门店给记者的报价，也都接近于指导价。
+　　旅行社业务经理：是进购物店，回来之后进购物店。
+　　记者：那个多少钱？
+　　旅行社业务经理：石林（进）一个店，价格是230元，九乡价格是140元。
+　　旅行社业务经理：我有一个团是进一个购物店，但是买不买自愿，那个团，我可以给到你240元。
+　　记者：那是进什么样的购物店？
+　　旅行社业务经理：一般就是玉器或者茶叶这些。
+　　导游要拿人头费
+　　在暗访了多家旅游门店之后，一位在街头招揽生意的中年妇女向记者推销他们的石林一日游。
+　　旅行社业务经理：5A级景区，那你出个门票钱，也得175元，那我给你算一下，最少最少180元钱，门票钱你要出吧。
+　　记者在网上查到，石林景区的门票价格为175元钱，而这位中年妇女的团费只要180元，包含往返用车、门票、一顿午餐和导游费。那么这个低价团又会藏着什么样的陷阱呢？记者决定报名去体验一下。
+
+
+　　第二天早晨不到8点，记者来到发车点签订旅游合同。这份合同上标明本合同签约人最多只能是五人，而记者看到合同上满满的有近20位游客。更关键的是合同上也没有盖旅行社印章，基本上可以断定，这是一个非正规旅行社搞的非法一日游。
+
+　　在去往石林的路上，导游一直向车上的游客介绍云南的三样特产：鲜花饼、普洱茶和玉器。她甚至直接在车上向大家兜售鲜花饼和普洱茶。
+　　导游：鲜花饼，像这种的，一满箱子是5袋，一袋有8个饼，一个饼的净重是35克，一满箱子1.4千克。
+　　而根据国家旅游局第44号令中《导游管理办法》的第二十三条规定：导游在执业过程中不得向旅游者兜售物品。
+
+　　在结束完石林景区的游览之后，导游把大家带到了距离昆明火车站不远的一处居民楼内，如果不是有专人带路，一般人根本想不到这里还会有购物的场所。一上楼，记者所在的这个团的游客，就被统一带进了一个房间，一位自称是富二代的韦经理出现了。
+
+　　标价5800元的金镶玉，这位韦经理按1500元的批发价卖给大家，这让一些游客动心了。
+
+　　事实上，像刚才这种假冒富二代，然后再对珠宝玉石打折销售的场景，是景区购物店的常见套路，央视财经频道《消费主张》记者曾在云南、四川、北京的多个景区见识过这种套路，当然他们所推销的金镶玉、翡翠、黄龙玉，无一例外都是质次价高的产品。
+
+　　第二天，记者来到一家名为“康辉旅行社”的门店来报名参加一日游，最终以120元的价格报了九乡一日游，但是当记者来到发车点签合同时，意外碰上了第一天石林一日游时的那个导游，结果我们的跟团游被直接拒绝了。 
+
+　　记者：就是石林和九乡的购物点是一个？
+　　旅行社业务经理：对，同一个。
+　　这位旅行社门店负责人告诉记者，九乡石林一日游进的购物店是同一个，如果我们进了同一家购物店被发现了，导游就拿不到人头费了。
+　　旅行社业务经理：今天为啥不让你们去，导游她要人头费，如果你再重复进店了，不好意思，她没有人头费了，她不想不赚这40元钱，一个团队30多个人，她能赚到600元钱人头费。
+　　而《导游管理办法》第二十三条中规定：导游在执业过程中不得获取购物场所、另行付费旅游项目等相关经营者以回扣、佣金、人头费或者奖励费等名义给予的不正当利益。
+
+　　旅游乱象如何治理？
+　　五一期间，央视记者通过两条线路，对云南旅游市场中的低价游进行了体验，发现云南旅游市场和过去的乱象丛生相比，已经有了较大的改观，但是一些地下的低价游和购物团依然存在，这些现象又该如何彻底治理？ 
+
+　　云南省旅游发展委员会主任 余繁：我们云南不允许合同里面有签订购物事宜的，不管是我们自己招揽的团，还是上游旅行社给你转来的团，发现一个，打一个。
+　　余繁主任告诉记者，云南旅游市场整治一年以来，效果显著，原来铺天盖地、乔装打扮的低价游没有了，但个别经过伪装、具有隐蔽性的“不合理低价旅游团”仍偶有出现；原来普遍存在、明目张胆的强制购物现象没有了，但变相安排购物和有违诚信的欺诈行为还时有发生；原居高不下、此起彼伏的旅游投诉大幅下降。但是为了真正让云南旅游市场在良性发展轨道上持续行进，还需要更多的综合配套措施，和更严格的打击力度。 
+
+
+　　近一年来，云南旅游市场，有些令人可喜的转变，同时我们也应看到旅游市场存在的问题，冰冻三尺非一日之寒，具有顽固性反复性，希望相关部门抓长抓细，久久为功，持续努力。
+　　对“不合理低价游”说不！
+
+
+
+
+
+
+责任编辑：谢长杉
+

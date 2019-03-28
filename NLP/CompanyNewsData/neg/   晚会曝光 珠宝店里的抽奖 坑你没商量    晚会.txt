@@ -1,0 +1,358 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+视频：暗藏玄机!珠宝店里的抽奖
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255087567,
+				pid:1,
+				url:'http://video.sina.com.cn/view/255087567.html',
+				title:'视频：暗藏玄机!珠宝店里的抽奖'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255087567/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　“3·15”晚会曝光：珠宝店里的抽奖坑你没商量
+　　买珠宝，还能抽奖获得上千元的礼品？在各地的商业步行街、旅游景点、乃至商场超市，这一幕频频上演。然而消费者却不知，背后隐藏了一个个抽奖骗局！
+　　在成都市春熙路一家珠宝工艺礼品店，记者随意选购了一件纪念品，获得了免费领礼品和抽奖的机会。
+　　成都市春熙路珠宝工艺礼品店销售人员：“来，送您一条手链，还可以免费抽奖，你们买了多少钱的？”
+　　记者：“买了39元的。”
+　　销售人员：“39元呀，39元的话可以刮四张。”
+　　说着，玉石珠宝柜台的销售人员扔给了记者四张奖券。没想到，竟然刮出了一个一等奖，这让销售人员都感到非常意外。
+　　成都市春熙路珠宝工艺礼品店销售人员：“真是心想事成啊，你说你这手气不错呀，这个心想事成是我们公司的一等奖，一千张里面才两张的。”
+　　销售人员兴奋地告诉记者，刮到一等奖的幸运顾客可以在珠宝柜台任选一到三件珠宝，免费拿走。
+　　珠宝柜台销售人员：“不管珠宝是多少钱的，我们公司都给你报销。”
+　　真有这样的好事吗？记者随后挑选了一件标价5830元的金和田玉挂件。
+　　成都市春熙路珠宝工艺礼品店销售人员：“鉴定结果是和田玉，而且是足金的，这个上面都是黄金，主要是这个玉值钱，知道吗？”
+　　销售人员一再强调，每一件珠宝都是货真价实的好东西，正当记者暗自庆幸的时候，销售人员突然改口了。
+　　成都市春熙路珠宝工艺礼品店销售人员：“您自己只承担一个18%的鉴定费就可以拿走。”
+
+　　在缴纳1049元的鉴定费后，记者拿走了这件标价5830元的金和田玉挂件。临走时，销售人员一再热情地让记者戴上象征好运的这根红绳。
+　　成都市春熙路珠宝工艺礼品店销售人员：“戴一个，给你戴一个呗。”
+　　在桂林火车站附近的一家工艺品商店，记者又一次获得抽奖机会，一张奖券，居然就刮出了一等奖。
+　　桂林市中山南路某工艺礼品店销售人员：“一等奖，不可能吧，哪能那么容易中呢，中奖率它是1000个中只有3个的。但是需要承担它的手工费，就是按照珠宝原价承担8%的手工费。”
+　　难道真的有这么好的运气吗？记者发现，这些抽奖活动虽然地域不同，但抽奖方式、销售人员的说辞以及中奖的奖品几乎都是一样的。
+　　某工艺礼品店销售人员：“哎呦，怎么这么好运气。”
+　　在重庆市解放碑步行街，有一家同样做着珠宝抽奖活动的特产店，店面装潢甚是考究，巨龙雕塑、金鸾宝座、观音像以及震耳欲聋的音乐吸引了不少游客驻足拍照留念。一位工作人员直言不讳，这些精心设计是别有用心的。
+　　重庆某特产店工作人员：“你不揽回来客人，怎么玩儿套路？不招人，怎么有上当受骗的？”
+　　记者：“音响声音能开小点儿吗？”
+　　工作人员：“不能。”
+　　记者：“为什么？”
+　　工作人员：“因为卖珠宝玩套路的时候，你不能让其他人听到。”
+　　珠宝柜台到底有什么套路呢？记者发现，销售人员每天上班的第一件事就是趴在柜台上填写一些销售票据。老销售告诉记者，这些是非常重要的道具。
+　　重庆某特产店销售人员：做假票就是给顾客对比的，没有比较就不知道差距有多大。
+　　两个女孩儿来到了抽奖柜台，抽到了一等奖，挑选珠宝时有些犹豫不决，这时，早上开好的假票据派上了用场。
+　　重庆某特产店销售人员：“人家是6.8折买的，花了3000多元钱选的，和你价格差不多，你有一等奖奖券，只承担这个工费就可以了。”
+　　在巨大的价格差距面前，两个女孩很快就掏出400多元的加工费，拿走了标价4000多元的玉石吊坠。
+　　记者发现，店里每天都有几十个顾客能幸运地抽到一等奖。
+　　重庆某特产店销售人员：“一等奖想让他抽到，他就抽得到，不想让他抽到他就抽不到。”
+
+　　既然是随机的抽奖活动，一等奖又是如何被控制的呢？一位老销售道出了其中的玄机。
+　　重庆某特产店销售人员：“我这个包里都装着的全部都是一等奖，比如说，折一个小角但不要折太大，那样太明显了，然后就放在这里，消费了还可以刮奖，试一下手气。不管你怎么拿，肯定要把那个一等奖拿给他。”
+　　记者注意到，每次一等奖被抽走后，销售人员都会马上将另一张做好记号的一等奖奖券提前准备好。为了让顾客相信抽到的一等奖真实可信，老销售强调临场表演必须到位。
+　　重庆某特产店销售人员：“你就当做是他真的在兑奖，他就真的刮出来那个了。”
+　　果不其然，记者发现，每当一等奖被抽出来之后，销售人员的夸张表演往往让抽奖的顾客深信不疑。
+　　重庆某特产店
+　　销售人员1：“你看他刮的一等奖。”
+　　销售人员2：“真的假的？”
+　　销售人员1：“你看呀。”
+　　销售人员2：“你刮的吗？阿姨。”
+　　记者：“我妈刮的。”
+　　销售人员2：“手气这么好啊！刮几张刮出来的？”
+　　销售人员1：“她刮的第一个。”
+　　销售人员2：“你确定吗？你看到她刮了吗？”
+
+　　演技到位了，但最重要的还是看眼力，能够在众多顾客中，把心甘情愿为奖品买单的人挑出来。
+　　重庆某特产店销售人员：“看他傻傻的就行了，就一眼看，一看就不是那种精明的，一看就是傻傻的那种。”
+
+　　就这样，在一个个精心设计的圈套下，不少顾客真的以为自己幸运地抽到了一等奖。
+　　重庆某特产店销售人员：“四千元的单子都算小单，一单要搞七八千，特别爽。”
+　　重庆某特产店销售人员：“最好的时候，一天能赚三万块钱吧。”
+　　记者注意到，每一位掏钱购买了奖品的消费者都会被销售人员热情地系上一根代表幸运的红绳。
+　　重庆某特产店销售人员：“我们戴手链的目的性就是告诉其他卖珠宝的销售人员，这个人已经被搞过了，她带着手链，就不用再招待他了。”
+
+　　商家为什么处心积虑让顾客中奖？这些标价几千到上万的玉石珠宝是从哪里进的货？进价又是多少呢？
+　　记者：“这个价格是谁定的呀？”
+　　重庆某特产店销售人员：“随便乱定的，能忽悠一个算一个。”
+　　记者：“专门有自己的批发地方吗？”
+　　重庆某特产店工作人员：“对，珠宝城批发给我们珠宝。”
+
+　　记者来到了这位工作人员提到的珠宝城，果然找到很多玉石珠宝批发商，他们所批发的产品与抽奖柜台的奖品外形材质等大致相同。
+　　珠宝批发商：“顾客大部分做抽奖的多一点，抽奖好卖，全国各地都有。”
+　　在批发商为记者提供的产品目录上，抽奖柜台标价几千到上万元的玉石饰品，在珠宝城的批发价竟然只有几十元到一百多元。
+　　记者：“1折？”
+　　珠宝批发商：“再乘以0.8，是420元，42乘以0.8，33.6元”
+　　记者带着在抽奖柜台购买的金镶玉饰品，来到中国地质大学珠宝学院的实验室对其进行成分分析，分离后得到了玉片和薄薄一层金箔包裹的胶块，进一步将金箔与胶块分离后，经过称重，金箔重量仅有0.05克到0.1克左右。
+
+　　中国地质大学（北京）珠宝学院副院长郭颖：“像这样的和田玉，实际上在整个和田玉质量里应该是垫底的，质量是最差的那种和田玉。金虽然是纯度很高，但只有薄薄的一层的金箔，而中间那一大块，透明的无色的，是起到了胶结作用的胶，而更重要的是，它充填了金箔与底下基底的和田玉之间的空隙，再加上它这样的成品，基本上没有任何的工艺附加值，也没有什么设计、创意的附加值，所以它在市场的价格应该是不高的。”
+
+　　在一些商业步行街、旅游景点、乃至商场超市的抽奖柜台，一件件廉价珠宝被标以高价，一出出抽奖骗局时刻都在上演着。
+　　记者：“抽1张是吧？”
+　　珠宝抽奖柜台销售人员：“对，刮一下就好了，拿了几张，1张吗？”
+　　记者：“1张。”
+　　珠宝抽奖柜台销售人员：“4张，4张。”
+　　我们把刚才的镜头做回放，这位销售人员的右手从柜台下方拿出了另一张奖券，攥在手心，和盒子中的奖券混在一起，扔在了柜台上。
+
+　　珠宝抽奖柜台销售人员：“金鸡独立是我们的一等奖，1000张里面只有2张。”
+　　珠宝抽奖柜台销售人员：“这个1000里面就3张了，他们谁刮的呀？”
+　　珠宝抽奖柜台销售人员：“哇，美女，那你这厉害了，1000张里面才只有3张这个啊。”
+　　珠宝抽奖柜台销售人员：“为什么我说姐姐你把我们最高的这个立减券刮出来了，这个几百张里面就只有1张。”
+　　“
+　　小心骗局！
+
+
+
+
+
+责任编辑：王嘉源
+

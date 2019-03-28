@@ -1,0 +1,326 @@
+
+
+
+
+
+
+.ct_hqimg{margin:10px0;}.hqimg_wrapper{text-align:center;}.hqimg_related{position:relative;height:37px;overflow:hidden;background-color:#f6f6f6;text-align:center;font-size:0;}.hqimg_relatedspan{line-height:37px;padding-left:10px;color:#000;font-size:18px;}.hqimg_relateda{line-height:37px;font-size:15px;color:#000;}.hqimg_related.to_page{float:left;}.hqimg_related.to_pagea{padding-left:28px;}.hqimg_related.hotSe{display:inline-block;*display:inline;*zoom:1;width:11px;height:11px;padding-top:8px;background:url(http://n.sinaimg.cn/780c44e8/20150702/hqimg_hot.gif)no-repeat;}.hqimg_related.hqimg_client{position:absolute;right:25px;top:0;padding-left:18px;}
+
+
+
+
+
+
+
+热点栏目
+
+资金流向
+千股千评
+个股诊断
+最新评级
+模拟交易
+
+客户端
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+监拍海底捞老鼠爬进食品柜
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251542821,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251542821.html',
+				title:'监拍海底捞老鼠爬进食品柜'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251542821/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　看法新闻历时4个月卧底海底捞：老鼠爬进食品柜 火锅漏勺掏下水道（图）
+
+　　法制晚报·看法新闻（记者/暗访组）老鼠在后厨地上乱窜、打扫卫生的簸箕和餐具同池混洗、用顾客使用的火锅漏勺掏下水道……海底捞作为一家在各地拥有百余家直营餐厅的大型跨省餐饮品牌火锅店，法制晚报·看法新闻记者在海底捞两家门店暗访近4个月看到的却是如上情形。
+　　暗访海底捞劲松店
+　　后厨老鼠爬进装食品柜子
+　　今年5月初，记者通过面试和入职培训后进入海底捞劲松店。入职第一天，记者就在后厨的洗杯间发现了老鼠的踪迹。接下来的几天里，记者陆续在海底捞劲松店后厨的配料房、上菜房、水果房、洗碗间、洗杯间等各处均发现了老鼠的踪迹。有的老鼠会爬进装着食物的柜子里。
+　　在海底捞劲松店暗访近两个月的时间里，海底捞劲松店请除鼠公司清理过一次老鼠，但没过几天，又有老鼠出现。 
+2017年5月29日，凌晨3点26分，记者在海底捞劲松店初加工间拍摄的老鼠。
+　　扫帚簸箕抹布与餐具一同清洗
+　　当洗碗间工作并不是特别繁忙的时候，工作人员会一边打扫卫生，一边洗碗。用来清扫地面、墙壁和下水道的扫帚和簸箕，还会用作清理洗碗机和储物柜。
+　　清扫工作完成后，员工簸箕和抹布会被放入洗碗池内清洗，扫帚会被放在洗碗机传送带上面沥水。
+　　当记者认为此举不妥，向洗碗间工作人员时建议不要把工具和餐具混在一起的时候，工作人员这样告诉记者：“做好你自己的事情就好。”
+2017年5月26日凌晨5点31分拍摄，洗碗池内清洗簸箕
+　　洗碗机内部一层油污
+　　海底捞劲松店的洗碗机清洗餐盘采用高温消毒，洗碗机虽然每天都会打开清洗，但是只是清洗表层，内部的油污并没有祛除。“你看那上面沾的油，又清洗不了，能把人给臭死，你爬在里面闻，味儿可大了。”正在清理洗碗机表面的工作人员对记者抱怨道。
+　　记者想更深入地观察洗碗机内部，于2017年6月18日早7点打开了洗碗机的机箱盖，可以看到传送带一侧沾满了油渍，并散发出阵阵腐烂的恶臭。洗碗机内壁上沾满了油渍和腐烂的食物残渣，洗碗机内的蓄水池满是黄色的污水。记者把洗碗机蓄水池里的水排净后发现，蓄水池内壁上沾满了的油脂，用手可以刮下厚厚的一层。蓄水池内还可以清晰的看到一些掉落的碗盘，上面早已沾满了油脂。
+　　2017年6月18日凌晨4点20分于洗碗间拍摄，洗碗机蓄水池内沾满是油污和食物产渣，掉落在蓄水池内的盘子被油污覆盖，隐约可以看出轮廓。
+　　暗访海底捞太阳宫店
+　　火锅漏勺用作掏下水道垃圾的工具
+　　记者于2017年7月底进入海底捞太阳宫店工作，该店的洗碗流程与海底捞劲松店大体相同，满是油渍的转移箱并不清洗，与洗碗池清洗过的餐盘一起放入洗碗机内。洗碗机传出的餐盘上有清晰的黄色水渍。洗碗机内部大清洗，大概两三个月才会有一次。
+　　临近下班，后堂各组成员开始打扫卫生做收尾工作。后堂下水管道堵塞，配料房的工作人员打开了下水管道的挡板，清理堵塞的垃圾杂物。
+
+　　他们所使用的清理工具正是供顾客吃火锅使用的漏勺，这些漏勺是从顾客刚食用过的火锅里拿出来的。配料房的工作人员还用漏勺剔除粘在挡板底部的垃圾杂物。后堂过道处人来人往，没有一个员工站出来表示不满，就连后堂经理也只是看了一眼随后转身离开。记者与旁边的员工交谈被告知，这件事没什么好大惊小怪的。
+　　这些漏勺使用完毕后，会被放入装餐具的锅中一起清洗。
+　　相关法规
+　　根据《中华人民共和国食品安全法》第四章规定，食品生产经营应当符合食品安全标准，具有与生产经营的食品品种、数量相适应的食品原料处理和食品加工、包装、贮存等场所，保持该场所环境整洁，并与有毒、有害场所以及其他污染源保持规定的距离。
+　　另据，第三十三条第二款规定，具有与生产经营的食品应有相应的消毒、盥洗、防尘、防蝇、防鼠、防虫、洗涤等，以及处理废水、存放垃圾和废弃物的设备或者设施。
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

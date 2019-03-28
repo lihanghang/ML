@@ -1,0 +1,314 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+秒杀各路戏骨！这老太把神医演活了
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251322482,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251322482.html',
+				title:'秒杀各路戏骨！这老太把神医演活了'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251322482/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　来源：成都商报　
+　　“神医刘洪斌”如何钻进电视机？
+　　红星新闻调查多重身份的“专家”如何在“养生节目”频繁亮相
+　　“神医刘洪斌”终于走下神坛。
+　　近年，“刘洪斌”（有时为刘洪滨、刘洪彬）的名号曾在多个地方台的“养生”节目中频繁出现。
+　　她的身份非常多变：“中华中医医学会风湿分会委员”、“中华中医医学会镇咳副会长”、“北大专家”、“高级营养师”……
+　　视频中，“刘洪斌”满头银发，一脸严肃，先后为苗仙咳喘方、唐通5.0、天山雪莲、药王风痛方、苗祖定喘方、苗家活骨方、老院长祛斑方、蒙药心脑方、助眠晚餐“站台”。
+　　但是，这些身份被媒体一一证伪。网友不禁惊呼，“这老太太太太太神奇了！”并为其送上“老戏骨”的称号。
+　　那么，这些短则数十分钟，长则半小时的广告是如何呈现在观众眼前的？红星新闻记者 王春 沈杏怡
+　　销售者：自称姓刘的“马主任”，那些名号都是假的
+　　5月28日，一桩不愉快的事激怒了吉林长春网友“@验氛”。
+　　原来，她的父亲是“三高”患者。一日，在看到电视中播放的“刘洪斌”蒙药心脑方广告后，她母亲便拨打屏幕上的电话为老伴订购了一个疗程的药——3480元。不过，当药寄来后，她父亲坚决不要，只能退货。
+　　销售方面一位自称姓马的主任与老人对接，当得知对方要退货后，“马主任”瞬间变了脸，“一顿臭骂”。本以为此事就此结束，但谁知，几分钟后，电话再次打来，对方仍是辱骂，“此后几天也是。”
+　　21日下午，通过“@验氛”，红星新闻记者以买药者的身份联系到了这位马主任。马主任承认了自己在销售蒙药心脑方，但他称“我其实姓刘”。
+　　“刘姓”负责人称，“视频是广告公司做的。”然后他对红星新闻记者称：“刘洪斌去过很多地方，那些名号都是假的。对方说啥就是啥。”
+　　生产商：广告是经销商在做，我们不知道刘洪斌
+　　这位“刘姓”负责人告诉红星新闻记者，蒙药心脑方是他家祖传的药方，授权给辽宁阜新蒙药有限公司生产。
+　　而阜新蒙药有限公司方面则向红星新闻记者介绍，“我们是生产企业，广告不是我们公司做的，是经销商在做。而且，我们也不知道刘洪斌这个人。”制药公司工作人员称，其公司没有蒙药心脑方的说法，也不认识“刘洪斌”。
+　　监管者：广告存在诸多问题，罚药房负责人上万
+　　那么，视频制作好后，是如何被“运作”到了电视台进行播出？
+　　湖南新晃县市场和质量监管局的一份行政处罚决定书披露了视频的“登台”过程。
+　　早在去年2月5日，“刘洪斌”站台的“唐通5.0”在新晃被查。当时，新晃健康大药房解放路店通过新晃电视台多个频道发布“唐通5.0”的广告，“刘洪斌”出镜解说。
+　　经查，“唐通5.0”广告存在如下问题：
+　　1、“服用唐通15天血糖尿糖基本正常”、“告别并发症”、“一定会摆脱糖尿病”、“能彻底治好”……这是不科学的表示功效、安全性的断言或保证；
+　　2、“唐通是糖尿病最新特效国药，清毒再生绿色疗法”含有“最新技术、最先进制法、最高科学”等广告禁用语；
+　　3、该广告利用北大专家刘洪彬和患者的形象证明药品疗效推荐药品……
+　　21日下午，红星新闻记者联系到湖南新晃县市场和质量监管局，对方证实了决定书的真实性。对方称，这一广告是由药店负责人与新晃县电视台广播电视广告有限公司签订。包含唐通在内的6则药品（医疗器械）广告，在县级电视台播出，6个月广告费为7000元，但药房负责人因此被罚10500元。
+　　红星新闻记者进一步了解到，为了扩大影响，经销商一般会委托制作多个版本的广告片：30天版专为县城电视台打造，当天上广告，当天必卖货；100天版，专门为省台市台打造，日进线千条以上；审批版专为监播地区量身打造……但在“刘洪斌”走红不足12小时内，这些内容被纷纷撤下。
+　　电视台：工作人员称广告外包了，电视台会审手续内容
+　　“这种广告，怎么能在电视台上播出？”有网友提出了质疑。红星新闻记者看到，“刘洪斌”代言的“唐通5.0”，曾在河南有线电视台播出。
+　　“我们台的广告，都外包出去了。”该电视台广告部的工作人员告诉红星新闻记者， “那则广告我有印象，是很早之前播出的，曾经在广告部的一个记录文件上，看到过这个药的名字。”
+　　但红星新闻记者了解到，早在2014年，新闻出版广电总局就曾发布规定：自2015年1月1日起，电视养生节目不得由社会公司制作。也就是说，有“刘洪斌”出现的这档栏目，只能是河南有限电视台自己制作的一档养生节目，否则，将是违规。
+　　那么，为什么这则“节目”会出现在广告部的广告备案记录里，并被广告部的工作人员直接称呼为“广告”呢？
+　　说起由这位“神医”代言的“唐通5.0”，该工作人员表示，按照河南有线电视台的广告流程，应当由广告外包公司首先对这条广告进行审核，审核的主要内容包括：“首先必须要有食药监发布的广告播出许可证，然后还有其他相关资质和批文。”广告外包公司在初次审核之后，广告部的工作人员说：“广告还要交付电视台再次审查，主要是再次查看手续是否齐全，内容是否合格。”
+　　工商局：“没有前期审查的责任，可电话举报违规广告”
+　　随后，红星新闻记者与当地工商局取得联系，询问这则广告在当地电视台违规播出，是否应由工商部门监管时，河南工商的工作人员表示，新广告法出台后，“大多依照‘哪个平台播出，哪个平台审查’的原则，工商部门没有前期审查的责任。如果市民看到违规广告，可以立刻打电话向我们举报，并举证，工商部门将立即进行查处。”
+　　该工作人员透露，市民可以举报的限期是自违规广告播起算的两年之内，“电视台的广告行为，被视作是两个企业之间的商业行为，我们职能部门本着不干扰商业行为的原则，所以前期不会插手，如果一旦有违法行为，有关部门将立即介入。”
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

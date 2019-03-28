@@ -1,0 +1,299 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+外卖小哥吃客人饭菜又吐里面美团：正排查
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251822540,
+				pid:1,
+				url:'',
+				title:'外卖小哥吃客人饭菜又吐里面美团：正排查'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251822540/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　美团送餐员被曝偷吃客人饭菜又吐回
+　　作者：彭新
+
+　　日前，有网友在社交平台上匿名爆料称，一名美团外卖送餐员在送餐途中打开客人饭菜，吃了两口又吐在了里面，随后又正常派送。而这一切被电梯间的监控记录下来，并被发到网上。该网友质疑称，“美团不要再说外卖小哥不容易了，严格规范一下员工的职业操守好吗？”
+
+　　根据爆料中视频监控图像显示，事发10月21日凌晨0：50分左右，该送餐员在电梯间打开外卖餐盒，并动了其中的饭菜。
+　　对此，美团客服高级主管张红然回应表示，在美团外卖配送员行为规范中，明确规定送餐期间不得私自打开餐品，否则将视为触犯红线，配送员将会被辞退并永久拉黑。
+
+　　10月26日下午，美团对外公布了此事的调查结果。
+　　美团称：目前涉事配送员已经找到，按照美团外卖规章制度予以辞退。同时美团外卖相关负责人已向用户致歉并取得了谅解。这起事件也提醒我们：事关食品安全和配送卫生，作为平台要时时警醒。美团外卖将在全国配送站点加强外卖配送纪律的宣导和落地，同时，将进一步优化餐品封装方案来避免此类事件的发生，践行好我们的责任。
+　　对于美团、饿了么等送餐平台而言，规范送餐人员管理，一直是平台运营的难点。
+　　2017年9月，一段“外卖小哥颠勺”在网络流传，一位外卖送餐员嫌出餐速度慢亲自上阵炒菜。视频显示，该送餐员身穿美团外卖制服，带着美团骑手小黄帽，进入后厨与餐厅厨师一起炒菜。对此，美团回应称，根据美团外卖配送员行为规范，外卖配送员不能进入后厨，正调查事件原因。随后有媒体报道称，涉事送餐员已离职。
+　　外卖送餐员频繁上新闻的背后，是美团送餐的整体机制问题。
+　　一位美团外卖送餐员表示，在美团送餐机制驱动下，使得送餐员送餐时不得不赶时间：由于从接单起，美团就把时间定死了，为在指定的时间送达，行业普遍违反交通规则，不得不超速，闯红灯等，这也是这行事故频发的原因。
+　　由于送餐途中难免会碰到很多意外的情况，如商家改地方定位没及时更新，以及送餐地点地形复杂等因素，这就造成了本身可以在限定时间送达的餐食却超时了。
+　　此外，另一位送餐员提到，由于美团今年加强了送达时间的考核，订单没法在规定时间内送达，该单就没有报酬。此外，送餐员得到差评还会被除以罚款。
+　　物流配送是外卖的重要组成部分，外卖配送员则是伴随着外卖O2O诞生的一个新兴职业。根据美团点评数据研究院《2016中国外卖O2O行业洞察报告》中的调查数据显示，目前美团外卖已经拥有十万名骑手的配送队伍，总配送里程达到9亿多公里。
+　　随着外卖配送人员规模逐渐庞大，相关管理部门正在着手规范外卖送餐行业。9月1日，《外卖配送服务规范》新规实施，对商家、配送机构、配送员、配送装备等，都提出了相应规定，以填补管理制度空白。“规范”明确规定外卖配送机构应具备企业法人资质，且具有固定办公场所和规模化的配送队伍，同时配送箱、配送车和头盔等也应符合相关法律规定；在服务人员方面，要求配送人员宜年满18周岁，且应对配送人员进行身份审核。
+　　此外规范中也对一些实操层面的细节进行了规定，例如：外卖配送员到达消费者门口应轻声敲门，若无人响应，应电话或短信联系消费者。外卖配送员不应进入消费者家中、收取小费或有其他不文明举止。这些加强了对于外卖平台和配送员，有了统一的规范。
+
+
+
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

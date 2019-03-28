@@ -1,0 +1,70 @@
+
+
+
+
+
+
+
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'4275023802213752'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+　　房租飞涨，买不起房就算了，租房也快租不起了[摊手]长租公寓哄抬价格抢房源的，大家直呼“要吸干年轻人的血”。勉强租了一个房子，又遇到甲醛超标、诈骗贷款、违规隔断、退不了押金、投诉无门的糟心事。你的房租涨没涨？租房又遇到了哪些故事or事故？留言说说看？
+　　#我的租房故事#
+　　北亚蝙蝠：我自己的房子，挂网上二千五没人租，同样的价格租给了中介，这个事我想了很久都没想通。
+　　托马思杨LSY：最近北京房租涨得厉害，自己也不能幸免的被涨了500多，二话不说先甩给中介几个链接：自如、蛋壳利用融资资金高价拿房、住建部对高房租的“三不准”、“三严查”，成功砍下了300块，就问你怕不怕财经编辑。
+　　黄兔兔的小幸福：押一付三的时候，我说只住两个月，中介说想搬走随时可以走，能退剩下房租和押金，结果住了两个月要走的时候，房租押金都不退，明明住两个月交三个月的钱对他们有利没有理由扣押金，但是因为开学了就懒得扯，直到前几天看新闻发现那家中介按黑社会性质处理老板判了十九年。
+　　赵十凉：刚毕业，在学校附近租了个阁楼，一室一厅一卫，家具齐全，1700一个月。房东人很好，还会送吃的给我。坐标上海。
+　　有痔青年LG：我家以前租房给隔壁医院小护士时候，逢年过节都要给他们送吃的，因为我妈看人家一个小姑娘生活不易，到了我怎么这么倒霉。
+　　币圈币王：我北京的房子收的租金一年18万，我在县城住够吃喝玩乐一年的，不用工作，炒炒比特币而已。
+　　阿斯顿丶马丁一：完全是意料之中，只是来得早了一点，房价被抑制的时候，就是涨房租的时候，等大多数人租不起的时候只能离开这个城市，人才就这样会慢慢流失，然后会达到一个平衡。
+　　GrandSky大天空：我当时租的房子1800，两年到期后，房东直接加价到2800，说周围房子都这么贵，另外个房子，我租的3200，中途我退房了，二房东转手租给下一个租客4200还因为我提前退房扣了我的押金，这是上海16年的事情，那时候没有自如什么的就已经有这种专门收房加价租出去的中介了。
+　　AL黑色曼陀罗：租个自如房子，平台上明明写的14平方米，到了才发现只有11平方米，一直不给处理，投诉都没地方。
+　　刘可凡van：这个世界最无知的事情，就是信了中介的鬼话，我们都无知过。
+　　独为你天荒：朋友租一房子，房东俩退休教师，偶尔给我同学煲汤，送礼品！
+　　Hero_Bai：坐标北京-沙河，10平米的小卧室9月底到期美丽屋从1200涨到1500。
+
+
+
+
+
+责任编辑：梁斌SF055
+

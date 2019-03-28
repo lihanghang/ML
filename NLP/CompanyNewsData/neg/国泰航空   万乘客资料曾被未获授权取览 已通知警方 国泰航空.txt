@@ -1,0 +1,52 @@
+
+
+
+
+
+
+
+
+.ct_hqimg{margin:10px0;}.hqimg_wrapper{text-align:center;}.hqimg_related{position:relative;height:37px;overflow:hidden;background-color:#f6f6f6;text-align:center;font-size:0;}.hqimg_relatedspan{line-height:37px;padding-left:10px;color:#000;font-size:18px;}.hqimg_relateda{line-height:37px;font-size:15px;color:#000;}.hqimg_related.to_page{float:left;}.hqimg_related.to_pagea{padding-left:28px;}.hqimg_related.hotSe{display:inline-block;*display:inline;*zoom:1;width:11px;height:11px;padding-top:8px;background:url(//n.sinaimg.cn/780c44e8/20150702/hqimg_hot.gif)no-repeat;}.hqimg_related.hqimg_client{position:absolute;right:25px;top:0;padding-left:18px;}
+
+
+
+
+
+
+
+热点栏目
+
+自选股
+数据中心
+行情中心
+资金流向
+模拟交易
+
+客户端
+
+
+
+
+　　国泰航空发现940万乘客资料曾被未获授权取览，已通知警方
+　　澎湃新闻记者姚晓岚 
+　　10月25日，澎湃新闻记者从国泰航空有限公司（国泰航空，00293.HK）方面了解到，该公司发现包含约940万乘客资料的若干资讯系统曾被未获授权取览。
+　　这一情况是在国泰航空持续进行的资讯保安检测过程期间发现的。
+　　总部位于香港的国泰航空方面表示，发现事件后，公司已即时采取行动进行调查及阻止事件发展，并没有证据显示任何个人资料曾被不当动用。受影响的资讯系统与国泰航空的航班运作系统为两个完全独立的系统，此次事件不会对国泰航空的航班安全构成任何影响。
+　　国泰航空行政总裁何杲对此表示歉意称，已即时采取行动阻止事件发展，及由一间行业领先的网络安全公司协助下展开全面调查，同时进一步加强自身的资讯系统保安措施。
+　　何杲表示，国泰航空正在透过不同途径联络受影响的乘客，并向其提供保障个人资料的建议及步骤。
+　　他强调，“我们没有证据显示任何个人资料曾被不当动用。没有任何一位乘客的旅行及常客计划资料被全部取览，亦没有任何密码外泄。”
+　　据了解，此次事件中受到未获授权取览的个人资料可能包括：乘客姓名、国籍、出生日期、电话号码、电邮地址、住址、护照号码、身份证号码、飞行常客计划的会员号码、顾客服务备注及过往的飞行记录资料。
+　　此外，国泰航空还表示，有403张已逾期的信用卡号码曾被不当取览。另有27张无安全码的信用卡号码曾被不当取览。每位受影响的乘客被不当取览的资料有所不同。
+　　据悉，国泰航空已就事件通知香港警察，并正知会各有关当局。
+　　何杲表示，“我们向乘客保证，我们已采取措施并将继续致力加强我们的资讯保安。保障乘客的安全是我们的首要任务。”
+　　附：国泰航空方面提供了三条途径供认为可能受影响旅客与其联系：
+　　一是国泰航空为处理事件设立的专属网站（infosecurity.cathaypacific.com），顾客可于网站上获得有关事件的资讯及保障个人资料的建议。
+　　二是国泰航空为处理事件设立的顾客专线，将于10月25日香港时间12：30起启用。（免费客户服务热线号码详见于infosecurity.cathaypacific.com）
+　　三是发送查询电邮至infosecurity@cathaypacific.com
+
+
+
+
+
+责任编辑：陈永乐
+

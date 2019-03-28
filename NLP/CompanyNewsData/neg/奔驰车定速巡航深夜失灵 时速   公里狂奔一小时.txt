@@ -1,0 +1,335 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+奔驰定速巡航深夜失灵
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255115800,
+				pid:1,
+				url:'http://video.sina.com.cn/view/255115800.html',
+				title:'奔驰定速巡航深夜失灵'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255115800/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+
+　　【最新回应】
+　　奔驰回应巡航失控：目前不具备在后台干预车辆技术
+
+　　车主命悬一线！定速巡航深夜失灵奔驰车时速120公里狂奔一小时
+　　来源：河南商报
+　　河南商报首席记者李江瑞通讯员赵璇
+　　时隔数年后，“要命的定速巡航”于2018年3月14日晚，在河南通往陕西的连霍高速上再次上演。定速巡航深夜失灵，时速120公里的奔驰在高速路上狂奔近一个小时，豫陕交警全力营救，最后通过奔驰售后后台远程操作，结束了这惊魂的一幕。车主熬过了近1小时的生死考验后，奔驰终于结束“奔驰”……
+　　【失控】
+　　关不掉定速巡航车在高速路上狂奔
+　　2018年3月14日晚8点左右，焦作的薛先生驾驶豫H5L×××奔驰C200L轿车，沿连霍高速自东向西赴成都参加全国订货会。
+　　当时，他独自一人驾车从连霍高速洛阳段上高速，随后开启了车辆定速巡航模式，时速120公里一路向西。
+　　一路顺利的薛先生过了三门峡东站后，需要切换人工驾驶，却发现了一个要命的情况：刹车和挡位等系统无法正常运行，时速120公里的车，怎么也无法切换回去。
+　　刚买一个多月的车子出现问题，让他不知所措，车子已经无法减速、无法停下。这意味着，只要前方遇到任何需要降速的障碍，他都将面临生死考验。
+　　薛先生在行驶过程中多次电话咨询奔驰售后，依据其提供的多种解决方案进行操作，未果……
+　　晚上9点35分，绝望中的他拨打了110报警求助。灵宝市公安局110接警后，迅速将警情通报给了三门峡路警联合中心。
+　　【自救】
+　　想用剐蹭、追尾降速最终放弃冒险
+　　当晚9点40分，距离薛先生报警过去5分钟。
+　　三门峡市高速交警第二大队事故民警张建勇、张景博接到警情，根据大队长杨宏伟指示，他俩立即驾驶警车拉响警笛，一路“咬紧”这辆“问题奔驰车”。
+　　民警与薛先生取得联系，了解情况并开始协商应急措施。车辆仍在失控中飞驰，距离河南和陕西的省界站，越来越近。
+　　电话里，民警进一步安抚薛先生，让其稳定情绪，保持镇定，适时采取紧急避险措施。
+　　同时，警方也通知了省界秩序中队长柴海峰，在省界收费站安排警力全力以赴进行援助，打开一条生命通道，并通知沿线所有收费站，对上站车辆进行管控，减少路面车辆。
+　　失控的奔驰车还在狂奔。
+　　在民警的持续安抚下，命悬一线的薛先生保持了镇定，凭借过硬的驾驶技术，在一路险象环生的情况下继续前行。
+　　高速交警告诉河南商报记者，在这一段路途中，大家也想过紧急避险，比如剐蹭道路护栏、货车，或者追尾同向行驶的大货车来降速。但风险太大，放弃了。
+　　但前方不远处有一关，将再次考验各方。
+　　【尝试】
+　　打开车门迫使车辆时速降至60公里
+　　高速交警告诉河南商报记者，在从三门峡到豫陕界这一段，薛先生曾尝试过一个办法。
+　　那就是在车辆行驶过程中解开安全带并打开一点车门，这样可以迫使车辆降速。
+　　“车速确实降了，从120降低到了差不多60。”民警说，虽然速度降了，但是依然不算慢，而且车门打开一些后，车辆行驶很不稳，也很危险。于是薛先生又关上了车门。
+　　可门一关，车速很快就回到了120公里/时。
+　　“车主的驾驶技术确实很过硬，而且车又是奔驰，我们斯柯达警车在后边一路没能追到前边去。”
+　　【考验】
+　　豫陕交警通力开道让车驶过收费站
+　　省界收费站，就是考验各方的重要一关。如果这里不是完全通畅，将无法让狂奔的奔驰车顺利通过。
+　　而且，收费站的车道是分流的，也没有高速公路那样宽敞，薛先生需要以120公里的时速开车飞驰过去。这对任何人来说，都是一个考验。
+　　警方快速清空了收费站三个ETC车道，并保证了省界站中间广场畅通无阻。
+　　同时，警方与陕西高速交警沟通，打开了所有入陕车道。
+　　就这样，河南、陕西两省交警持续接力，用十分钟的时间，为薛先生开辟了一条畅通无阻的生命通道。
+　　一切准备就绪后不到1分钟，当晚10点25分，按照交警的引导指示，薛先生驾驶奔驰车风驰电掣地从豫陕界收费站ETC通道无障碍通过省界站，出了河南。监控画面上，一辆白车一闪而过，根本看不清车型。
+　　【制停】
+　　奔驰售后后台操作车终于不再失控
+　　距离薛先生报警已经快一个小时了，在失控的车上，除了等待和祈祷，薛先生别无他法。车究竟怎样才能停下？
+　　令人欣喜的消息很快传来：进入陕西后，奔驰售后终于通过后台操作，使这辆在高速公路上失控距离长达一百公里、失控时间近一小时的奔驰车，恢复正常控制，安全停靠在连霍高速923KM处路段，并从华阴站口被安全拖离高速。
+　　【对话】
+　　要不是交警我这次真的险了
+　　经历生死考验的薛先生，已经安全到达成都参会。
+　　薛先生本身是位业余赛车手，尽管驾驶技术比常人过硬，但经历了这场“生死时速”之后，仍心有余悸：“没有像赛车时那样的防护，要不是高速交警提前拦车，清理道路，腾出通道，我这次真的险了。”
+　　河南商报：途中奔驰售后提供过什么解决办法？
+　　薛先生：当时包括奔驰的高级技工也曾多次联系我，说该怎么断电、刹车、变空挡，等等（进行降速、停车的尝试），但是都无济于事，没反应。失控那会儿，全车只有方向盘可以操控。
+　　河南商报：途中有过紧急避险的想法吗？
+　　薛先生：一种是剐蹭路边护栏，但是高速行驶中用车门侧边摩擦，很危险。因为速度快、车又重，而护栏是软的、不完全直的，会特别容易失控，我没有把握。
+　　前方有同向行驶的大货车，如果撞击下去，力度不会特别大，我会有时间自救，所以我想真不行就追尾大货车，它们后方有防撞栏，我瞄着防撞栏去追尾。
+　　河南商报：目前奔驰方面有没有说失灵原因？
+　　薛先生：没有确切原因。他们说没出现过这种问题，连北京总部也说没有出现过这种问题。等回到焦作之后，再做一个全面检查。
+　　我急着去成都，车子停下后，重新启动，我等不及奔驰提供的备用车，又开着车到成都了，一路低速行驶，也没再用定速巡航。
+　　跑长途确实很累，平时我跑得多，有这功能的车，我开着一般都会用定速巡航。
+　　河南商报：期待奔驰方面给你个怎样的答复？
+　　薛先生：我只想知道失控到底是怎么发生的。我可以作为一个例子，等他们查出来是什么原因了，告诉大家并解决问题，避免别人遇到我这样的危险。厂商要对消费者有一个态度，既然出现问题了，就必须找出原因、解决问题。
+　　河南商报：回河南以后要做些什么？
+　　薛先生：必须感谢高速交警，太感谢人家了，那么多警力帮我。另外我快速通过收费站时撞了人家的横杆吧，我已经给交警说了，这个该赔。还有失控那段过路费没交，我也记着。
+
+
+
+
+
+
+责任编辑：李彦丽
+

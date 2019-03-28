@@ -1,0 +1,337 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+视频：3.15晚会曝光山寨饮品
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255086977,
+				pid:1,
+				url:'http://video.sina.com.cn/view/255086977.html',
+				title:'视频：3.15晚会曝光山寨饮品'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255086977/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　央视315晚会曝光第二枪，山东省枣庄市多家企业大量山寨核桃露、核桃花生饮料、杏仁露等市面上流行的饮品，有的甚至连包装设计也一并模仿。一些生产厂家负责人告诉记者，这些产品一般销往3、4线城市和农村市场。主持人表示：农民兄弟姐妹的收入往往低于城市，可以说每一分钱赚的都不容易。而当他们拿出自己的血汗钱准备进行消费的时候又常常被这些假冒伪劣产品坑骗。请问这些企业良心何在？
+
+
+
+　　在配料时徐经理一边称量各种添加剂，一边给记者做详尽的介绍：这是安赛蜜，增加甜味的阿斯巴甜、高梨酸甲。两袋白糖就670、680，这个东西便宜一袋400块钱。
+
+
+　　除了在产品类型上跟风模仿，有的公司在外包装上也是煞费苦心，产品都和某品牌核桃乳非常相似，6个纯核桃只多了一个字，6斤核桃还有6禾核桃只是一笔一划的差距，外装设计、构图也是他们模仿的对象，让人难以分辨。
+
+　　这是某品牌的红牛饮料，这是有的企业模仿的带有红牛字样，外包装设计和某品牌相似的跟风产品。这是某品牌的椰汁产品，这是模仿的，大都冠以正宗海南字样。
+文字实录：
+　　文字实录：
+　　王端端：期待着消费升级的不仅仅是城市的消费者，党的十九大报告中提出实施乡村振兴战略，加速突进农业、农村现代化建设，而今年的中央一号文件更是对乡村振兴战略做出了全面部署，提出到2050年要全面实现农业强、农村美、农民富的目标，让农村成为安居乐业的美丽家园。接踵而至的利好，极大地提振了农村市场的消费力，农村的消费者们也希望自己能够跟得上消费的潮流，让自己的品质生活再上一层楼。然而有一些这样的企业，他们专门主打农村市场，却是鱼目混珠、滥竽充数，让人防不胜防。
+　　解说：甘肃天水郊区的集市上记者看到一款红色饮品礼盒上面写着高钙核桃。记者在平安县看到名为承德杏仁露至少三种，县城上像销售承德杏仁露的商店至少10多家，每一家都把产品放在醒目的位置，这个产品和某个品牌的杏仁露都不一样。
+　　在山西大同市的一些县城的小超市里，也能看到一些名为承德杏仁露的礼盒产品。调查中一些生产厂家负责人告诉记者，这些产品一般销往3、4线城市和农村市场。
+　　负责人：商超、小超市，它就往县城卖得快。
+　　解说：这些核桃露、核桃花生饮料、杏仁露等模仿的是市面上流行的产品类型，有的甚至连包装设计也一并模仿，然而记者调查发现在这些产品的背后其实另有玄机。金顺源食品有限公司是山东枣庄众多食品加工厂的一家。公司经理告诉我们正在生产的这款核桃花生是他们春节期间的主打产品，主要销往三四线城市和乡村。进入公司调配车间之前，记者看到一个池子，徐经理说这里本应是用来给工作人员消毒的。
+　　徐经理：至少走两步，两只脚都得消毒，沾这个菌，你脚上的菌就没有了。
+　　记者：过这个池就没有用了。
+　　徐经理：没有用也得有。
+　　记者：消毒用的池子成了摆设，罐装车装的空气净化设备也同样成了摆设。
+　　徐经理：空气净化其要有四个，按照面积来。
+　　记者：咱这儿有几个？
+　　徐经理：有四个，两个是假的，那两个真的也不管用。
+　　解说：达不到要求的不仅仅是消毒池和空气净化器，按照规定调配车间应该是密封状态与外界相对隔离，但实际上也做不到。
+　　徐经理：申证的时候都是密封的，都是隔离开的，但是你一旦生产的时候必须得撤掉。
+　　解说：实际上我国饮料生产卫生规范对于饮料生产过程中的消毒、空气净化等都做出了详尽的规定。然而在金顺源公司按规定必须配备的一些设施均成了应对检查的摆设，地上脏乱随意堆放着产品包装及成品，这款核桃花生的原料究竟是什么呢？
+　　在配料时徐经理一边称量各种添加剂，一边给记者做详尽的介绍。
+　　徐经理：这是安赛蜜。，增加甜味的阿斯巴甜、高梨酸甲
+　　解说：：徐经理告诉记者，实际上并没有添加白沙糖。
+　　徐经理：两袋白糖就670、680。
+　　记者：如果加这个呢，加安赛蜜？
+　　徐：这个东西便宜一袋400块钱。
+　　解说：与两吨纯净水进行搅拌，最后还有一套重要工序就是添加核桃香精。
+　　徐经理：主要提味还是在香精上，没加香精呢？
+　　记者什么时候加香精？
+　　徐经理：临打料的时候再添加。
+　　解说：罐子里的料汁已经变成乳白色，罐装就可以打包销售了。既没有添加核桃也没有添加花生，但是包装上赫然写着核桃、花生，还印着滑套、花生的图片。根据预包装视频标签通则规定的基本要求，预报网视频包装应真实准确，不得以虚假、夸大，使消费者误解或欺骗性的文字图形等方式介绍食品，也不得利用字号大小或色差误导消费者。
+　　徐经理：标的核桃。
+　　徐经理承认产品中并没有添加核桃，核桃的味道靠的是核桃香精，一罐料汁生产8000瓶，成本非常低。
+　　徐经理：咱们卖的水，这个东西不会亏钱。
+　　解说：枣庄市康源食品有限公司主打的是这款高钙核桃，公司负责人坦诚这款产品也是用香精和添加剂调配出来的，里面没有核桃成分。
+　　负责人：它没有蛋白质，蛋白质是零。
+　　记者：等于里边没有核桃。
+　　解说：这家也是把蛋白质为零的指标标注在了产品包装上。除了各种添加剂调配核桃露，记者调查当中还有的企业生产核桃露是用花生酱调配的。
+　　销售员：基本用花生酱调，花生酱的量大。
+　　解说：国家标准规定核桃露或核桃乳是以核桃仁为原料，不得以除核桃仁以外的其他核桃制品和其它植物果实种子、果仁做其制品，这些人为什么用花生酱代替核桃酱呢？
+　　从业人员：花生酱比核桃酱编译，花生酱你想想花生多少钱？1吨核桃酱7.5元，开税票7.8。
+　　解说：原来之所以用花生酱代替核桃酱是因为花生酱的价格远远低于核桃酱。
+　　徐经理：打核桃浆，傻子才打核桃浆。
+　　解说：跟风模仿的产品虽然以花生酱为主，却还要大大字体强调核桃的概念。
+　　从业人员：在跟踪中模仿，模仿中创新。
+　　解说：除了在产品类型上跟风模仿，有的公司在外包装上也是煞费苦心，产品都和某品牌核桃乳非常相似，6个纯核桃只多了一个字，6斤核桃还有6禾核桃只是一笔一划的差距，外装设计、构图也是他们模仿的对象，让人难以分辨。
+　　杨经理：就是跟着明星转，它停咱就停，它走咱就走。
+　　解说：一些从业者告诉记者这些跟风模仿的产品主要是销往一些三四线城市给农村市场。
+　　国家知识产权局陶教授告诉记者，这些模仿涉嫌违规。
+　　实际上最后就是以假乱真，以可能就是成本比较低的质量比较差的来冒名顶替，归根结蒂它是企业是想把人家的商业转化为自己的商业资源。
+　　解说：记者调查发现这些跟风模仿的产品类型上偷梁换柱、混淆概念，产品外包装上打擦边球，跟风模仿的手段可谓五花八门。这是豆友豆豆奶、豆本豆奶，这些豆奶产品在包装上虽然大字突出豆牛的字样，但真正的产品类型不是豆奶，却是符合蛋白饮品、风味音频等等。
+　　企业：咱等于坐个顺风车。
+　　解说：这是某品牌的小明同学，这是枣庄初亢模仿的小茖同学。
+　　这是某品牌的旺仔牛奶，这是模仿的旺好牛仔，不仔细看看不初步统。
+　　解说：打这么一个擦边球就行了。
+　　解说：这是某品牌的红牛饮料，这是有的企业模仿的带有红牛字样，外包装设计和某品牌相似的跟风产品。这是某品牌的椰汁产品，这是模仿的，大都冠以正宗海南字样。
+　　记者正宗在哪儿？
+　　销售人员：天哪，哥们可捣乱了，你要这样说一板一言就没法卖了。
+　　王端端：我们注意到这些产品大都在农村销售，农村里一年大部分时间里只有老人和孩子呆在家里，农民兄弟姐妹的收入往往低于城市，可以说每一分钱赚的都不容易。而当他们拿出自己的血汗钱准备进行消费的时候又常常被这些假冒伪劣产品坑骗。请问这些企业良心何在？就在我们的节目播出之前国家食品药品监督管理总局成立了专案调查组，协同当地的食药监和公安等部门联合执法，对刚才曝光的三家食品企业进行现场调查，责令其停产整顿，相关部门还要进行相关后续调查，保证这些山寨产品不再流入市场，不再让这些善良的尤其是农村地区的消费者受到蒙骗。
+
+
+
+
+
+责任编辑：陈永乐
+

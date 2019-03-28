@@ -1,0 +1,130 @@
+
+
+
+
+
+
+
+
+
+
+　　事件始末：
+　　维珍航班女乘客遭辱骂中国猪求助空乘反被威胁指责
+
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'3954335170315122'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+　　维珍航空非常重视此次在VS250航班上所发生的事件，并向乘客承诺，我们的服务中决不会存在任何不尊重他人的行为。作为一家对种族歧视零容忍的跨国公司，维珍航空永远将乘客的安全和舒适体验放在首位。近两周来，我们正持续地与这名乘客进行直接沟通，并正彻查此事，以确保此事件得到妥善解决。
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论
+
+
+
+
+
+
+
+
+
+
+　　事件始末：
+　　维珍航班女乘客遭辱骂中国猪求助空乘反被威胁指责
+
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'3954335170315122'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+　　维珍航空非常重视此次在VS250航班上所发生的事件，并向乘客承诺，我们的服务中决不会存在任何不尊重他人的行为。作为一家对种族歧视零容忍的跨国公司，维珍航空永远将乘客的安全和舒适体验放在首位。近两周来，我们正持续地与这名乘客进行直接沟通，并正彻查此事，以确保此事件得到妥善解决。
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

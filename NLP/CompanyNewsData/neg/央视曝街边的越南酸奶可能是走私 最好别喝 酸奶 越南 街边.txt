@@ -1,0 +1,124 @@
+
+
+
+
+
+
+
+
+
+央视截图
+　　【重要提醒：街边的“越南酸奶”最好别喝小心是走私的！】从去年11月份开始，南京大小水果店基本都在卖“越南酸奶”。售价只有2.5元左右，口味新奇，俘获了不少消费者的心。但是，辽宁出入境检验检疫局的工作人员提醒：越南的酸奶是不允许进入我国的。这些没有中文标识的网红酸奶们，要么是国内的商家打着“越南酸奶”的旗号贴牌生产，要么就是未经检疫的走私货，而未经检疫的酸奶暗藏很多安全隐患。转发提醒！
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'3960546799267848'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论
+
+
+
+
+
+
+
+
+
+央视截图
+　　【重要提醒：街边的“越南酸奶”最好别喝小心是走私的！】从去年11月份开始，南京大小水果店基本都在卖“越南酸奶”。售价只有2.5元左右，口味新奇，俘获了不少消费者的心。但是，辽宁出入境检验检疫局的工作人员提醒：越南的酸奶是不允许进入我国的。这些没有中文标识的网红酸奶们，要么是国内的商家打着“越南酸奶”的旗号贴牌生产，要么就是未经检疫的走私货，而未经检疫的酸奶暗藏很多安全隐患。转发提醒！
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'3960546799267848'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

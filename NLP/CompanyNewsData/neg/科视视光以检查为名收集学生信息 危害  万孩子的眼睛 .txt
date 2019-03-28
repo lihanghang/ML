@@ -1,0 +1,330 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+“三无体检队”魔爪伸进几百所学校
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251059534,
+				pid:1,
+				url:'',
+				title:'“三无体检队”魔爪伸进几百所学校'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251059534/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　2017年央视315晚会在北京举行，央视曝光科视视光以视力检查为名，收集学生个人信息。
+　　“三无体检队”魔爪伸进几百所学校：危害13万孩子的眼睛
+　　（央视财经讯）郑州市科视视光技术有限公司在一家招聘网站上，招聘兼职体检员，工作内容是“郑州市中小学校学生视力体检”，工作地点是“郑州市各中小学”。没有任何医学背景，也没有经过任何面试，科视公司就直接与记者签订了一份兼职体检员的劳动合同。入职培训唯一的内容就是体检队队长教大家如何详细填写“河南省中小学生健康检查表”。
+　　郑州市科视视光技术有限公司体检队孙队长：几年级你就填几年级，一定不能填错了。
+　　第二天一早，记者来到了集合地，出发前，记者向此次体检带队的孙队长再次强调自己没有任何医学基础，孙队长对此毫不在意。
+
+　　郑州市科视视光技术有限公司体检队孙队长：谁是专业的，都不是专业的，你就随便指巴两下就算了，说句难听点我们就是出去玩儿。
+　　记者和一群体检员乘坐大巴来到了郑州市管城区的南曹小学，体检员们搬着体重秤，身高尺等体检器材进入了学校。
+　　准备工作就绪后，有的体检员从自己的包里取出白大褂穿上，然而包括记者在内的另外一些人的白大褂则是由孙队长一一发放的。视力检查组的五个人，都是科视公司招聘的。
+　　兼职体检员：我自由职业，啥都干过，面料设计，我学法律的。
+　　负责检查视力的竟然没有一个人有医学专业背景。体检队的孙队长告诉大家，如果有人问起体检单位，就称自己是黄河科技学院附属医院体检队的。
+　　记者发现每一位检查完视力的孩子，无论视力好坏，都会被科视公司的工作人员带到桌边填写一张“视力异常登记表”。孩子们要填写自己的姓名，家长手机号等信息。
+　　兼职体检员：填一下你父母的电话号，写下你自己的名字，写爸爸的还是写妈妈的，都可以。
+　　这一天南曹小学参加体检的一千多名学生都被要求填写了“视力异常登记表”。
+　　第二天体检的学校是管城区席村小学，这所小学五百多名学生在检查完视力之后，也都被要求填写了“视力异常登记表”。在这张“2016年管城区区属中小学校学生体检时间安排表”上，记者看到从2016年11月21号到12月26号，科视公司一共要为郑州市管城区42所学校的约五万名学生进行体检。
+　　早在2008年，教育部和卫生部联合制定的《中小学生健康体检管理办法》明确规定，体检机构必须是持有有效的《医疗机构执业许可证》、由政府举办的公立性医疗机构。科视公司是一家销售角膜塑形镜的企业，并不是一家医疗机构，那么，这样的体检到底是由谁来组织的呢？记者来到了孙队长提到的黄河科技学院附属医院，这家医院也只是一家民营医院。
+　　黄河科技学院附属医院体检中心负责人：它（科视公司）也是没有资质，科视我也是第一次合作。
+　　这位负责人称，科视公司正是因为没有体检资质，才来找他们合作的，她拿出了一份黄河科技学院附属医院与科视公司签订的合同。
+　　黄河科技学院附属医院体检中心负责人：体检一个孩子十块钱，科视给你们医院是，光用那个（资质）给一块五，光用你们的资质给一块五，对对。
+　　郑州市中小学常规健康体检，应由中小学卫生保健站负责，合同中科视公司自称是中小学卫生保健站的指定合作伙伴，一个学生的体检费是10元，最终由科视公司和黄河科技学院附属医院协商后进行分配。
+　　黄河科技学院附属医院体检中心负责人：它（科视公司）把别的都找好了，俺们就出个内科外科。
+　　记者了解到。科视公司在郑州市已经组织了多年的中小学生健康体检工作，那么科视公司为什么煞费苦心要组织这样的体检呢。
+
+　　郑州市科视视光技术有限公司体检队孙队长：我们现在这个公司，说白了和他们合作最主要的，就是拿小孩的信息，
+　　黄河科技学院附属医院体检中心负责人：咱严格地说，它（科视公司）是为了拉学生，在他那儿弄眼镜。
+
+　　郑州科视公司的总部位于郑州市金水区的一栋居民楼内，在这里，记者见到工作人员在将大量的“视力异常登记表”进行整理录入。
+　　郑州市科视视光技术有限公司客服人员：把这些资料，对应的学校，对应的班级，跟名字，电话都录进去。
+
+　　科视公司在电脑协同平台上建立了“河南学生资源池”，收录了十三万四千二百八十条学生个人信息，来自郑州市的几百所中小学，甚至包括开封、焦作等城市的学校，工作人员会挨个给有视力异常的学生家长打电话。
+　　郑州市科视视光技术有限公司客服人员：您好，是家长吧？
+　　您好，家长，我们这边是给一八联合国际学校，他们学校做体检的，郑州市中小学生近视防治中心
+　　郑州市科视视光技术有限公司客服人员：您好，是XXX的家长吗，您好，我们这边是（郑州市）中小学近视防治中心，我们在11月18日，郑州市实验高中体检视力。
+　　明明属于科视公司，却自称是郑州市中小学近视防治中心的工作人员，这是为什么呢？
+　
+
+　记者：这个近视防治中心是
+　　郑州市科视视光技术有限公司客服人员：是咱们的一个称呼，咱们是郑州市中小学近视防治中心，专门负责学校体检的，体检完了之后，咱同时也是科视视光中心，做角膜塑形镜的，但是不能给客户说，你直接说，我是美国科视角膜塑形镜的，那扣电话率绝对百分之九十以上，这第一通电话不牵扯任何的销售行为。
+　　原来，郑州市中小学近视防治中心只是用来博取学生家长信任的一个幌子，记者在科视公司的销售门店看到，每天都有不少家长带着孩子前来咨询和验配，经过简单的视力检查和眼部疾病检查后，工作人员就在门店里为孩子进行角膜塑形镜的试戴和验配。
+　　角膜塑形镜，市场上俗称OK镜，是一种用来矫治屈光不正的医疗器械，要通过与眼球直接接触改变角膜形态，2001年，《卫生部关于加强医疗机构验配角膜塑形镜管理的通知》中强调，患者在使用角膜塑形镜过程中出现不良反应的情况时有发生，有的甚至因此造成了严重后果。为保证医疗安全，维护患者权益，现就医疗机构验配角膜塑形镜的执业管理提出以下要求：角膜塑形镜必须在具有《医疗机构执业许可证》的二级及以上的医疗机构进行验配，并且要求该医疗机构验配人员中的医师应具有中级以上眼科执业医师资格，技师要求具有中级以上技师职称，并须在眼科医生的配合下完成验配工作。这些规定在科视公司工作人员的眼里形同虚设。
+　　记者：整个过程都是专业人是吧
+　　郑州市科视视光技术有限公司销售人员：对对
+　　记者：就是眼科医生
+　　郑州市科视视光技术有限公司销售人员：视光师不是眼科医生，眼科医生跟视光师是两个概念，是两个领域
+　　记者：也就是说咱们验配的过程，不用医生参与是吧，咱们的视光师看就行
+　　郑州市科视视光技术有限公司销售人员：对呀
+　　北京大学医学部眼视光研究中心教授谢培英：角膜塑形镜是一种第三类医疗器械，它（的验配）体现的，是一种严谨的科学的医疗行为才对，比如说眼压异常啊，或者其他异常的话，你配了塑形镜反而可能会加重。有可能你会出现比较大的，比较严重的角膜上皮脱落啊，更严重会出现炎性反应，最严重就是引起角膜感染的问题，所以我们认为要做角膜塑形镜的验配，必须要去有医疗资质的地方，必须要有医生在场。
+　　国家食品药品监督管理总局规定，目前我国已经批准上市角膜塑形镜的矫正屈光度最高为600度，并要求此类产品说明须标注8岁以下儿童禁用。但记者在科视公司看到了近视达到1300度以及年仅6岁9个月的验配者信息。
+　　郑州市科视视光技术有限公司销售人员：最高我们配，也就七八百度，一千来度也有，六到四十岁都可以。
+　　科视公司销售的是美国“欧几里得”角膜塑形镜，只有一种型号，而在科视公司的各个销售门店，“欧几里得”角膜塑形镜却是分成四种型号进行销售的，价格从5800元到13800元不等。
+　　郑州市科视视光技术有限公司销售人员：它越贵，戴着越舒服，安全性能就越高。
+　　一种产品，为什么分成四种型号销售呢？科视公司的一位副总道出了其中的玄机。
+　　郑州市科视视光技术有限公司副总经理：那是一种销售策略
+　　记者：那美国产的也是四种类型么？
+　　郑州市科视视光技术有限公司副总经理：不是，就这一种，我刚才给你讲了，是我们自己分的型号，是一种销售策略，销售一定是四型的啊，然后不要把自己知道的这个底线，给客户讲了。
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

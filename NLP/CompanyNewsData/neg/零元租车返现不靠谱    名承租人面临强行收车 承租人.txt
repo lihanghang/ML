@@ -1,0 +1,314 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:261845037,
+				pid:1,
+				url:'http://finance.sina.com.cn/wm/2018-08-21/doc-ihhzsnea1324531.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=261845037/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　零元租车返现不靠谱，182名承租人面临强行收车！
+　　来源：中国消费者报
+　　零元租车 免费使用三年
+　　是不是很具有诱惑力？
+　　但你可能想不到
+　　这些车辆经过层层转包
+　　又是庞氏骗局
+
+　　重庆永川区182名承租人花了8至11万元从重庆乐返汽车租赁有限公司（以下简称乐返租赁公司）租赁的新能源车，随时面临可能被另外一家公司（车辆产权所有者）强行收走，目前被收走的车辆有43辆之多。乐返租赁公司已人去楼空，租金有去无回，每月发放1000元“能源补贴”的承诺，也成了一纸空文。《中国消费者报》记者近日就此展开调查。
+　　零元租车
+　　2017年国庆节，在永川区人民广场上，乐返租赁公司推出的“新能源汽车 免费开三年”的宣传活动，吸引了众人的目光。新能源汽车有长安奔奔、长安逸动、荣威ERX5三款车型，长安逸动有营运资质，3年的租赁费为10.6万元。每月跑150公里，就能获得1000元的“能源补贴”。这样算下来，租用长安逸动3年，不产生任何费用，实现“零元租车”。
+
+
+
+　　随后，乐返租赁公司又在永川区体育中心举行新能源汽车推广会，宣称“新能源汽车三年免费开 补贴千元月月拿”，大量散发DM宣传单，聘请本土明星现场助阵。
+
+永川区的门户网站、出租车顶灯等平台，都大张旗鼓的宣传零元租车活动。
+
+　　45岁的陈明渝在10月8日，以8.9万元的租金，租了一辆长安逸动，用来跑滴滴快车业务，但车辆行驶证上的单位并非乐返租赁公司，而是“重庆永骏汽车租赁有限公司（以下简称永骏租赁公司）”。陈明渝当时准备通过转帐方式支付租金，乐返租赁公司却表示只收现金。《新能源汽车租赁合同》上载明的收款人为谢涛的私人帐户。
+　　11月20日，陈明渝收到谢涛的私人帐户转来的第一笔能源补贴1000元，之后他每个月都能准时收到这笔补贴，直至今年5月，乐返租赁公司人去楼空。
+　　强行收车
+　　6月28日凌晨6点，陈明渝发现停在车库的车不见了。向永川区公安局报案后，得知是被永骏租赁公司的人，用车辆的备用钥匙将车开走了。
+　　记者了解到，从4月份开始，就不断有承租人的车辆被强行开走。承租人雷晓华的车，被永骏租赁公司强收了3次。为了防止车辆被他人开走，雷晓华买了一把方向盘锁，将方向盘锁死。7月5日，他的车停放在他单位的车库，有两个人用备用钥匙将车门打开后，准备用铁钳将方向盘锁剪断。雷晓华发现后立即报警，并将对方手中的备用钥匙夺回。
+　　雷晓华告诉《中国消费者报》记者，7月10日，永骏租赁公司的10个人潜伏在车库里的角落，当看到他前来开车的时候，猛扑过来，想要抢夺车辆钥匙。雷晓华大声呼叫，并拼命抵抗，所幸车钥匙未被抢走。
+　　每次遇到强行收车，接到报案的警察前来处置时，永骏租赁公司的人都会出示车辆所有权证，以此证明车辆的实际所有人是永骏租赁公司，他们是合法收车。
+　　截止8月20日，永川区共有43辆车通过GPS定位，被强行收走或被“偷走”。其余车辆的承租人整天提心吊胆。为了保住车辆，他们将汽车GPS损毁，或将方向盘及轮胎锁死，有的还将轮胎卸掉，但收车人同样有对策，将车辆直接拖走。
+　　车辆属于谁
+　　乐返租赁公司出租的车辆所有人
+　　究竟是谁？
+　　《中国消费者报》记者调查了解到，乐返租赁公司出租给陈明渝、雷晓华等182人的新能源车，并非本公司的自有车辆，而是从“禾易汽车”“助飞汽车”“旭渝汽车”永骏汽车”“环球车享”“长安车联”等十余家公司，以3至6个月的时间短租过来的，然后，又以3年长租方式，将车辆转租给个人。
+　　而且，之间还有层层转租关系：“环球车享”将车租给“禾易汽车”，“禾易汽车”又将车转租给乐返租赁公司。
+　　“环球车享”于7月4日强行开走了承租人周运鸿的一辆车，“环球车享”在一份情况说明书里写道：“该车为我司车辆，租赁客户为魏继勇（“禾易汽车”负责人），我司近期发现该车GPS信号异常，终端遭破坏，多次联系客户均处于手机关机或被拒接状态，已违反双方签订的《会员守则》。为维护公司合法权益，维护车辆安全，防止国有资产流失，已经于7月4日将该车收回，并实际控制”。
+　　随着丢失的车辆越来越多，承租人群情激愤，不断向政府、公安、交通、工商等部门进行投诉、举报。永川区公安局由此明确：今后凡是强行来拿车、拖车的，警方只要接到报案，一律以寻衅滋事和偷盗处理。陈明渝的车是6月28日被偷走的，永川区公安局7月2日为其出具了一份“立案告知书”：陈明渝汽车被盗一案，我局认为符合立案标准，现立为刑事案件侦办。
+　　牵扯“云联惠”
+　　乐返租赁公司为什么突然关门？
+　　多位承租人告诉《中国消费者报》记者，乐返租赁公司将承租人的2500多万元租金，投放到“云联惠”传销平台获利。
+　　南岸区公安分局经侦支队负责人透露，调查显示，乐返租赁公司确实涉嫌将承租人的租金投放到了“云联惠”传销平台。
+　　4月份，该传销平台被公安机关捣毁，乐返租赁公司资金链由此断裂。
+　　据南岸区公安局介绍，乐返租赁公司在主城区、永川区、涪陵区等多地开展零元租车活动，全市初步查明涉案车辆200多台，永川区数量最多，达182台。
+　　乐返租赁公司在永川区的代理商——重庆乾坤投资有限公司也涉案。每租出一辆车，乐返租赁公司就给乾坤投资公司1至2万元的“中介代理费”。
+　　连日来，永川区消委会接到多起车辆被强行收走的投诉。5月9日，永川区消委会向区维稳办、区工商分局提交了一份报告：“低价租车返现不靠谱，或是又一庞氏骗局”。区工商分局联合区公安局，先后4次行政约谈了乾坤投资公司法定代表人，要求其经营场所不能关门，停止散发带有“新能源汽车、免费开三年”的DM单，停止“退款补贴”的宣传，对承租人提出的问题及时解答。
+　　然而，7月下旬，乐返租赁公司及乾坤投资公司负责人均处于失联状态，两家公司都人去楼空。《中国消费者报》将继续关注。（文中承租人均为化名）
+
+
+
+
+免责声明：自媒体综合提供的内容均源自自媒体，版权归原作者所有，转载请联系原作者并获许可。文章观点仅代表作者本人，不代表新浪立场。若内容涉及投资建议，仅供参考勿作为投资依据。投资有风险，入市需谨慎。
+
+
+责任编辑：王潇燕
+

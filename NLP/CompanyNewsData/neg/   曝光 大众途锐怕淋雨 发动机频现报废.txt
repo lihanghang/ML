@@ -1,0 +1,322 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+#315晚会#大众途锐怕淋雨
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255086703,
+				pid:1,
+				url:'http://video.sina.com.cn/view/255086703.html',
+				title:'#315晚会#大众途锐怕淋雨'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255086703/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　“大众途锐”怕淋雨，发动机频现报废！拿什么跟我谈越野？
+　　“发动机自动熄火，再也打不着了…”“方向盘也打不动，刹车也刹不住，那真的是听天由命…”近年来，一些“大众途锐”车主向4S店反映，发动机突然失灵．．．
+　　2016年10月，福建宁德的黄女士花费62万元，购买了一辆2017款大众途锐汽车，仅仅7个月后，这辆车突然无法启动了。
+　　福建宁德途锐车主黄女士：“车子刚刚打火的时候，发动机里面有异响，大概有三分钟自然熄火，再次打火，就已经打不着了。”
+　　福州进口大众盈众润达4S店维修人员经过检查，确认导致车辆熄火的原因是发动机进水。
+△被水浸湿的空气滤芯
+　　福建宁德途锐车主黄女士：“4S店总监说我的车肯定涉水了，要不然就是车子被水泡过了。”
+　　4S店认为是黄女士使用不当所导致发动机进水的，给出解决的方案是更换新的发动机，但面对二十多万的维修费用，黄女士无法接受。
+　　福建宁德途锐车主黄女士：“4S店给的回应是说，一定要说你没有涉水的话，就要讲出产品有什么问题。”
+
+　　黄女士回忆，出事前一天她的车只是在外面淋了一夜雨，难道和这有关系吗？为了找到原因，黄女士决定做一个试验，她把水从车前部浇下去，让她没有想到的是，水沿着引擎盖和右前大灯的缝隙流进了发动机的进气口。
+　　福建宁德黄女士：“都在往那边送水。”
+　　这个不正常的现象让黄女士怀疑发动机进水正是因此所致！她决定再去找4S店讨个说法。
+　　这一次4S店不再强调发动机损坏是黄女士涉水导致，但出现这样的问题只是小概率事件。
+　　福建福州盈众润达4S店店长：“总是有一定的小概率事件的，上帝造人都会有瑕疵，何况是车呢？”
+
+　　途锐出现发动机进水故障，真的属于小概率事件吗？
+　　2017年7月8日，广东东莞的罗先生驾驶自己的2017款途锐通过红绿灯十字路口时，发动机突然失去动力。
+　　广东东莞途锐车主罗先生：“因为那个方向盘也打不动，刹车也刹不住，真的是听天由命。”
+　　进口大众东莞宝瑞4S店维修人员检查发现，罗先生的这辆途锐出现了同样的问题——发动机进水。
+　　广东东莞途锐车主罗先生：“进气管道都拆解看了，发现里面确实有水。”
+　　无独有偶，2017年8月26日，陕西西安兰女士的途锐在行驶过程中突然熄火。
+　　陕西西安途锐车主兰女士：“类似于烧开水的声音，发动机就已经熄火了，再次尝试打火，车再没有打着。”
+　　4S店维修人员检查发现，导致兰女士这辆车熄火原因也是发动机进水。
+　　陕西西安途锐车主兰女士：“他们说车辆涉水要自己自费维修，4s店的态度非常坚决。”
+　　同样，上海的高先生发现，自己的途锐汽车虽然没有出现发动机严重损坏，但也存在进气口进水的问题。在向国家质检总局缺陷产品召回中心进行投诉时，高先生看到有一些车主也反映同样的问题。
+　　车主们注意到，车辆发生故障的时间都集中在6月份到9月份，这个时候正是多雨的季节，难道发动机进水真的和下雨有关系吗？上海的金先生决定像黄女士一样做一次试验。
+　　金先生用水枪模拟车辆淋雨的状态。10分钟后打开汽车引擎盖，金先生发现进气道末端原本干燥的空滤已经被水浸湿了三分之一。
+
+　　上海途锐车主金先生：“反面是最直观的，仅仅十分钟就进水了，太可怕了。”
+　　车主们认为，途锐汽车进气口位置的设计是导致发动机进水的重要原因。
+　　上海途锐车主金先生：“顺着这条沟一路通过这里缝隙最后进到进气口，进气管正好像个漏斗一样，把水全部集中进去。如果一旦发动机开机，直接从这边呼一口吸进去，就直接能把发动机闷熄火了。”
+　　金先生告诉记者，正是这个设计问题导致发动机存在进水、顶缸等安全隐患，与车主们自身驾驶行为没有关系。     
+△发动机进气管道灌满了积水
+　　上海途锐车主金先生：“如果出现顶缸失去动力，车灯没有了、方向盘助力没有了、刹车助力没有了，那时候就只能听天由命。”  
+　　随着维权人数的增多，车主们发现，4S店的态度已经悄然发生了变化，对所有回店保养的途锐直接拔掉进气管道下端的排水阀。
+　　4S店维修人员：“这个上面的标准是拆掉，不是我们说想干吗就干吗。”
+　　一位不愿透露身份的4S店工作人员提供了一份名为“途锐空滤进水或发动机进水TPI”的电子文件，其中指出“受大灯轮廓的限制，长时间在雨中行车时，水可能进入车外空气吸入口的管道中”对此售后解决方案是“拆下车外空气吸入口的排水阀”。记者注意到，这份文件下发的时间是2017年7月28日，很显然，途锐发动机进水的根本原因，进口大众早已心知肚明。
+　　一个月后，2017年8月22号，进口大众终于在其官方网站上发出声明。大众进口汽车会为已售的部分2015-2017年款途锐车型进行全面检测。并拆下进气管道的不必要排水阀以强化排水功能。然而面对这样的解决方案，车主们也表示了自己的担心。
+　　上海途锐车主金先生：“车子任何设计的零件你说不必要，你首先要告诉我们为什么不必要。”
+　　车主们认为，排水阀位于进气口管道的底部中间位置。一但拔掉排水阀，进气管道下端就形成了一个开放的小孔，虽然可以解决一部分进气管排水的问题，但同时也增加了底盘下方的水吸进来的风险，降低了途锐车的涉水深度。
+　　上海途锐车主金先生：“涉水深度，它宣传的是580毫米，拔掉这两个塞子会造成两个问题，一个是不敢越野了，第二个是也不敢涉水了，等于买这个车的意义就已经不存在了。”
+　　上海途锐车主高先生：“一般的车主买了这个车以后他不会去涉水，如果一旦涉水了，出了问题，发生安全事故的时候谁又对车主负责呢？”
+　　2018年1月23日，记者陪同途锐车主来到了大众汽车（中国）总部，售后服务部常经理表示，目前的解决方案是德国总部给出的，是全球通用的解决方案。至于途锐汽车进气口进水并不是设计缺陷。
+　　大众汽车（中国）销售有限公司售后服务部常经理：“SUV大型越野车，设计的时候是考虑到发动机是可以少量进水的，但是从工程师那边给到的信息是，不能说滴水不漏。”
+　　至于如何彻底解决车主们所担心的问题，常经理始终回答方案还在研究，让车主继续耐心等待。
+　　大众汽车（中国）销售有限公司售后服务部常经理：“现在具体的日期真给不到你，德国给的信息是早些时候，但是具体的时间点是没有明确说明的。”
+　　陕西兰女士的途锐车在4S店已经等了7个月了，广东罗先生的途锐汽车已经在4S店放了8个月了，福建的黄女士途锐汽车已经在4S店苦等了9个多月。
+　　福建宁德黄女士：“现在大半年过去了，车贷还在还，每个月还要还一万三，保险也浪费了大半年，这个损失谁来承担呢？”
+　　在质检总局启动缺陷调查，并多次约谈和敦促下，2018年3月7日，也就是“3·15”国际消费者权益日前夕，大众汽车（中国）销售有限公司发布召回声明并给出了解决方案，拆下车辆进气管道底部的排水阀，在发动机进气口处安装额外的导流板。从召回声明中，车主看到车企态度终于有所转变，但解决方案能否彻底解决车辆进气口进水的问题，维护消费者的权益，车主们还在拭目以待。
+△进气管道底部的排水阀
+
+
+
+
+
+责任编辑：孙剑嵩
+

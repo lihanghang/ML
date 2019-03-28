@@ -1,0 +1,286 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+杭州车辆失控严重事故已致3人死亡，碗口粗行道树被连根撞起
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:260900897,
+				pid:1,
+				url:'',
+				title:'杭州车辆失控严重事故已致3人死亡，碗口粗行道树被连根撞起'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=260900897/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　杭州车辆失控严重事故已致3人死亡，碗口粗行道树被连根撞起
+　　澎湃新闻记者张刘涛杨亚东
+　　7月30日，杭州市区的文二西路竞舟路路口发生车祸，1辆小型客车行驶途中突然失控冲撞行驶车辆及行人。视频编辑陈雅儒（00：39）
+　　澎湃新闻30日21时许从杭州警方获悉，当天19时许，杭州市区文二西路与竞舟路路口突发1起交通事故。1辆小型客车行驶途中突然失控，高速撞向路口行驶的车辆及行人。截至澎湃新闻发稿时，事故已造成3人死亡14人受伤。
+　　30日20时40分许，澎湃新闻记者在文二西路与竞舟路路口看到，事发的十字路口有数百名群众在围观，现场交警已将4个路口封闭，数十位民警在现场维持秩序。
+　　在发生碰撞事故的十字路口西南角，地面撒满了车体碎片。一辆道路清障车正将被撞变形的电动车和遮阳篷残骸拖离现场。现场一棵碗口粗的行道树被撞得连根拔起，旁边小区的一堵围墙被撞破损。
+事发现场。澎湃新闻记者杨亚东图 
+　　现场一位目击者告诉澎湃新闻，肇事车辆从北向南沿着竞舟路快速驶过，将路口西北角的自行车遮阳篷撞倒后又撞上了西南角的遮阳篷以及一棵行道树。当时很多人停在路口等绿灯，其中多人骑着电动车。
+　　7月30日21点多，@平安杭州通报：7月30日19时06分，陈某某（女）驾驶浙A87T97号小型客车在竞舟路由北向南行驶至文二西路口时车辆失控，冲撞在路口行驶的车辆和行人，造成后果严重的道路交通事故，目前致2人死亡、13人受伤，多辆车辆损坏。伤员均送医院救治，肇事者已被公安机关控制。
+　　目前，公安机关正勘查现场、调查取证。事故原因正在进一步调查中。
+警方正在调查事故现场。澎湃新闻记者杨亚东图
+　　从事故发生后目击者上传网络的图片看，警方公布车牌的事故小客车系一辆奔驰越野车。
+　　7月30日23点20多分，@平安杭州再次通报：7月30日19时06分，杭州市西湖区竞舟路文二西路口发生一起重大道路交通事故，截止目前已致3人死亡、14人受伤，伤员仍在全力救治。公安机关已对肇事驾驶人陈某某作酒精测试和尿样检测，初步排除其酒驾、毒驾嫌疑，事故原因目前仍在调查。
+　　此外，澎湃新闻从现场了解到，事故伤者在事发后被分别送往了就近的浙江省立同德医院和绿城心血管医院等医院进行急救。
+　　据收治伤员的绿城医院介绍，目前，共有5名伤者被送来救治。其中3人轻伤2人重伤。而重伤者中，有1人身体多处骨折，目前尚未脱离生命危险。
+
+
+
+
+
+责任编辑：李彦丽
+

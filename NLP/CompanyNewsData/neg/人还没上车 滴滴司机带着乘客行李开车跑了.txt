@@ -1,0 +1,293 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+人没上车行李被快车司机带走，滴滴客服一句话把乘客“整懵了”
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:259345978,
+				pid:1,
+				url:'',
+				title:'人没上车行李被快车司机带走，滴滴客服一句话把乘客“整懵了”'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=259345978/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　人还没上车滴滴司机带着乘客行李开车跑了
+
+　　来源：法制晚报·看法新闻
+　　5月6日凌晨，刘先生出差回来将车送到朋友家，然后叫了一辆滴滴快车准备回家，滴滴快车到达后，刘先生将自己车里的行李和包放在了滴滴快车上，然后便将自己驾驶的车还给朋友，正当他还车的时候，滴滴快车司机载着刘先生的行李和包内的5000元现金离开。等到刘先生发现时，滴滴司机已经关闭了订单。
+　　随后刘先生找到滴滴客服，希望滴滴能够帮助找到那位快车司机，要回行李和现金，但滴滴方面始终没有为其解决。直到6月21日，刘先生仍旧没有拿回自己的东西。
+　　财物放在滴滴快车上司机不告而别
+　　5月6日0点41分许，刘先生驾车来到朋友所住的大兴区枣园尚城南区北门，他把车停在小区门口后，便跟朋友约好来交接车辆，同时用电话叫了一辆滴滴快车，准备交车后乘坐滴滴回家。“我当时想反正滴滴快车过来也需要时间，等朋友来交接车辆，也需要时间，于是就提前叫的滴滴。”
+　　大约0点45分的时候，滴滴快车到达刘先生的地点。刘先生告诉记者，这辆滴滴快车是一辆广汽传祺SUV，司机是一名四五十岁的中年男人。
+　　当时，刘先生到自己的车里，将两个手提袋取出放在滴滴快车的后座上。据刘先生称，手提袋中是他出差带的衣服和鞋子，里面还有另一名朋友还给他的5000元现金。
+　　刘先生说，他把东西放在滴滴快车车上以后，朋友就给他打来电话，告诉他要去小区的东门交接车辆。于是他便跟滴滴快车司机说明情况。“我当时让他掉头跟着我的车走，那个司机可能觉得还需要等待，问我能不能现在就开始计费，我说可以。”
+　　于是，刘先生驾车掉头前往小区东门和朋友交接车辆。而那辆滴滴快车却并没有跟着刘先生一起掉头，而是直行驶离了现场。
+　　该小区的监控录像显示，刘先生的车开走后，滴滴快车也做出了掉头的样子，但是在马路中间愣了几秒钟后，便向前直行，没有前往刘先生所去的方向。
+　　待刘先生在小区的另一个门将车辆交给朋友后，他回头再找自己叫来的滴滴快车，却不见了踪影。刘先生赶快拿出手机联系滴滴快车，但因为滴滴客户端上显示的都是虚拟号码，他也联系不上司机，而他这次叫车的订单已经被司机关闭。
+　　刘先生赶快又联系滴滴客服，但客服告诉他暂时联系不上该订单的司机。无奈之下，刘先生只能又叫了另一辆车回家。
+　　滴滴客服沟通录音：无法分辨监控录像中是您本人
+　　从事发后至今一个多月的时间里，刘先生多次致电滴滴客服，但事情始终都没有解决。在刘先生和滴滴客服的沟通录音中，记者听到，滴滴客服先是告知刘先生无法联系司机，后来又希望刘先生能够提供监控视频作为证据。
+　　随后，刘先生从小区物业要来监控视频，并将视频传给滴滴方面。但滴滴客服回复他，无法分辨视频中的人是刘先生本人，也无法看到视频中滴滴快车的车牌号。
+　　“我听到这话当时就怒了，他们连我本人都没见过，怎么能判断视频里是不是我呢？如果我要是能找到那辆车的车牌，还用找滴滴干嘛？”刘先生说，为了这个事情，他给滴滴客服打了数十个电话，滴滴方面也没有与他当面沟通过，至今无法取回自己的行李和现金。
+　　刘先生目前已经向大兴分局清源路派出所报警，但目前也没有结果。滴滴方面则将刘先生的事情转交到“遗失部门”处理，但刘先生认为，自己的物品并不是遗失。“我连车都没上，怎么能算是遗失？分明是滴滴司机带着我的财物开车走了。”
+　　律师：司机涉嫌侵占滴滴有责任协助追讨
+　　北京颂通律师事务所主任宋通律师认为，刘先生遇到的事情，滴滴快车司机的行为已经构成非法侵占，但刘先生需要证明放入滴滴快车后座的行李中确实有大量现金。
+　　刘先生通过滴滴平台叫车形成订单，实际上就与滴滴平台产生服务合同关系，滴滴平台有责任保护客户的人身和财务安全，因此滴滴平台应主动协助刘先生追讨财物。
+　　如果刘先生通过滴滴无法找回财务，在证明有大量现金被侵占的情况下，可以提起诉讼。诉讼对象包括滴滴快车司机和滴滴平台，若无法得知滴滴快车司机的身份，可以直接起诉滴滴平台追讨财物。
+
+
+
+
+
+责任编辑：王嘉源
+

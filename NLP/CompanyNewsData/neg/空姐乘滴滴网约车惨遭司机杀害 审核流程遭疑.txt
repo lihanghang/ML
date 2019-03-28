@@ -1,0 +1,308 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+滴滴，请你给死去的空姐一个交代
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:257481284,
+				pid:1,
+				url:'http://video.sina.com.cn/view/257481284.html',
+				title:'滴滴，请你给死去的空姐一个交代'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=257481284/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+相关阅读：
+滴滴向乘客遇害家人道歉回应称正配合警方破案
+祥鹏航空回应员工遇害事件：将为其家人提供法务咨询
+
+　　滴滴，请你给死去的空姐一个交代
+　　来源：停机坪停哥
+　　相信很多人都看到了这个悲伤的消息：
+　　2018年5月5号晚上，祥鹏航空公司空乘明珠，执行完郑州-连云港-郑州-绵阳-郑州的航班后，在郑州航空港区通过滴滴叫了一辆网约车赶往市里，却惨遭司机杀害。
+图片来源：河南都市频道
+　　明珠于2016年9月14日加入祥鹏航空，作为空乘开始飞行，21岁正值花季的她本该有光明的未来，却惨被恶人所害。
+
+　　我无法想象在那种孤苦无依，人地两生，深更半夜，求救无门的境地下，明珠是多么的无助与绝望，也难以用语言来形容她的离去给家人带来了多少悲伤。
+图片来源：河南都市频道
+　　在这里，我想先对中国民航界近十万名空姐姑娘们说几句话：这个世界没有我们想象的那么可怕，但也绝对不像我们想象的那么美好，恶人一直都存在着。我想明珠在踏进那辆车之前也无法预料到这辆车将会把她带向死亡。但你们记住了：你们每个人都是家人的心肝宝贝，保护自己这件事，再刻意、再小心、再谨慎都不过分。
+　　而对于滴滴公司，我感到了愤怒。
+　　网约车在很大程度上确实提高人们出行的便利，但如何对司机进行监管，如何判断平台方滴滴公司的监管已经到位？这是滴滴公司必须要面对的问题，也是必须要给死者及其家属的交代。
+　　要知道，每当我们走进一辆网约车，在接下来的行程中，我的生命基本就算交给了驾驶员的手中，但是，我无法从任何渠道得知这名驾驶员的详细信息，他是否有过犯罪史？有无危险驾驶犯罪记录？甚至，我们连注册司机与驾驶司机是否为同一人都不得而知。
+　　换句话说：驾驶员有没有通过滴滴的审核，审核流程又是怎样做的？如果不是注册驾驶员，作为平台方，滴滴有没有什么措施防止司机擅自更换？而用户端又如何体现？
+　　如果这些都做不到，又怎么能让我们用户放心？
+　　自2015年滴滴与快的合并，并在2016年收购优步中国后，在美团宣布进入网约车市场之前，中国的网约车市场基本算是滴滴一家独大，不仅是独大，而且是太高太大，高到需要我们用户对打车感到祈求，大到需要我们对安全感到奢望。
+　　滴滴公司CEO程维先生，在2017年末，《财经》杂志对你的一次采访中，你曾这样说过：“整个人类交通正在面临一场大变革，它会改变整个汽车产业、能源产业。如果今天我不去思考这些问题，我们会错过一个很大的机会。”
+　　在这些采访中，我看到了你的视野格局和自信，但我想请问：你还记不记得当初为什么要创立滴滴？如今的你，重心还有多少放在了用户身上？作为普通用户，我们要的是什么？
+　　我们考虑的不是大变革，我们不关心你们能不能改变汽车和能源产业，我们最关心的是，当我们想打车，能不到打到车，我们最最关心的是，当我们踏上你的车，还能不能平平安安的下车。
+　　在这几年里，有关滴滴司机对乘客进行辱骂、骚扰以及威胁的新闻早已屡见不鲜，在网上用关键词都能搜出一片，可程维先生，在你们一次次疲于奔波进行公关之时，到底有没有考虑过这是为什么？
+　　作为互联网公司，你们总说给我们用户做画像，可按照现有的技术条件，你们对于旗下上千万的网约车司机有没有严格做画像，而这些画像在实际应用当中又起到了怎样的效果，给用户避免了多少麻烦，又保证了多少用户的出行安全？
+　　在今年4月，博主@孟婆在修行曾在微博撰文描述了她独自乘坐滴滴优享网约车时的可怕经历，上车后，她就感觉到了头晕，而司机每隔几秒就发生一阵令人不寒而栗的笑声，反复问她：“做一次多少钱？”，在她好不容易摆脱掉他，重新打车回酒店时，新的驾驶员却先将车掉了头，并告诉她，“刚才司机开的路都是错的。”
+　　而滴滴公司在后续的调查中却是这样反问她的：“你是不是给过他暗示，是不是他理解错了？”
+　　我真的无法理解这是一家超级独角兽企业在面对“女性安全”时的态度。
+　　是时候做些改变了。我的力量很小，改变不了什么，影响不了你们的估值，也没想让用户去卸载滴滴的app。我也认可仍然有无数心地善良的好司机在通过这份工作，依靠自己的勤劳和汗水获得收入。
+　　但是，你们做的不够，远远不够，真的不够。哪怕你们认为已经把所有能用的手段全都用尽了，那也不够。如果足够，那明珠现在在哪？
+　　在我们航空界，为了避免任何可能会出现的差错而导致空难，全世界民航系统每时每刻都在进行复盘，对有可能发生的任何突发状况都做了非常详细的预案。我们能做到，为什么你们做不到？如果没有办法，那你们就去想办法，这是你们的责任！
+　　你们一定要给明珠和她的家人一个交代。
+　　明珠啊明珠，同事们都说你是一个特别爱笑的姑娘，都夸你飞航班时特别认真，我看了你的照片，你很可爱。
+　　不知道在这飞行一年多的时间里，你有过多少悲伤，又有过多少快乐，也不知道你有看过我写的多少东西，很遗憾，今天却要用这种方式去纪念你。
+　　你走了，走的很委屈，很痛苦，但请你放心，等真凶被抓到，被判刑，被枪毙，我一定再写一封信告诉你。
+　　有些话不知道怎么说，唯有哽咽。
+　　我很难过。
+
+
+
+
+
+责任编辑：梁斌SF055
+

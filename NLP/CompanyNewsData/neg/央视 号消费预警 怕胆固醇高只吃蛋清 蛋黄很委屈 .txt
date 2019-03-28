@@ -1,0 +1,302 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+视频：3.15胆固醇高只吃蛋清不吃蛋黄
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255087817,
+				pid:1,
+				url:'http://video.sina.com.cn/view/255087817.html',
+				title:'视频：3.15胆固醇高只吃蛋清不吃蛋黄'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255087817/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　央视3·15晚会3号消费预警：
+　　中国农业大学食品科学和营养工程学院教授沈群表示，并不是吃了多少蛋黄将来就会吸收多少胆固醇，以后再吃鸡蛋的时候可以和着蛋黄一起吃，不必把蛋黄扔掉。
+　　她解释说，人体中的胆固醇大部分是自身合成的，只有一小部分来自于事物，而且我们人体对胆固醇的吸收是有调控能力的，当我们膳食中的胆固醇摄入比较高的时候人体的吸收率就会有所减少。所以也就是说并不是吃了多少蛋黄将来就会吸收多少胆固醇。
+　　第二点，实际上胆固醇是我们人体必需的营养成分之一，是我们维生素、性激素等重要的生理活性成分的合成原料。所以，我们也用不着谈胆固醇而色变。
+　　最后一点要跟大家说的是，蛋黄中除了有胆固醇之外还有卵磷脂，卵磷脂可以阻止胆固醇或者是脂肪在血管壁上沉积，所以对于正常人来讲，以后我们再吃鸡蛋的时候可以和着蛋黄一起吃，不必把蛋黄扔掉。
+　　我们现在所看到的乒乓球鸡蛋真的不是假鸡蛋。但是刚才其实实验者也给大家提供了一个重要的细节，就是我们的鸡蛋要经过冷冻然后煮熟之后剥出来，这个蛋黄才能够有弹跳力，才能够称之为所谓的乒乓球鸡蛋。中国农业大学食品科学和营养工程学院教授沈群表示，实际上鸡蛋在速冻之后蛋黄里的蛋白质还有其它一些成分会因为受冻而变性导致韧性增加而弹性，这就是能够弹跳的鸡蛋是这么回事。但不是假鸡蛋。那么还要有一点说明的是，鸡蛋受冻之后口感就会变差，所以对于我们消费者来讲，把买回来的鸡蛋放在储存的过程中要注意保持好温度。
+
+
+　　以下为文字实录：
+　　陈伟鸿：欢迎大家继续收看正在为您现场直播的中央电视台2018年3·15晚会。接下来我们将继续联合国家食品药品监督管理总局，为大家现场来发布今年3·15晚会的3号消费预警。
+　　首先我要请大家看一看我手里拿的是什么。大家看到的是一个小小的、圆圆的小黄球，我要告诉各位的是这个小黄球还有不错的弹跳能力，我们演示一下。是不是弹得还不错？这个小黄球到底是什么呢？看到刚才它的弹跳之后也许有人会说这该不会是一个迷你型的乒乓球吧。之前我在网上看到过一段视频，有人在演示了这个小黄球也就是我们现场的这个小黄球弹跳之后告诉大家这种乒乓球鸡蛋是人工造的假鸡蛋，千万别吃，但是现在我想告诉大家的是它不是乒乓球，它真的是煮熟了之后的鸡蛋黄。到底真相如何？它是乒乓球鸡蛋吗？它真的像我所说的是煮熟的鸡蛋黄吗？鸡蛋是我们老百姓事物当中重要的营养摄入来源，围绕着鸡蛋其实有不少说法，当然也有不少误读。祭天我们一块儿看一看到底围绕鸡蛋身上有哪些需要我们澄清的观点。我们首先看一看记者的调查。
+　　今天我们为大家请到了一位专家，他是中国农业大学食品科学和营养工程学院的教授沈群，欢迎沈教授。
+　　沈群：您好主持人，大家好。
+　　陈伟鸿：刚才我们记者调查的短片当中大家说到不太敢吃鸡蛋或者是多吃鸡蛋的重要原因是生怕鸡蛋当中的胆固醇影响了自己的身体健康。我们想问问沈教授，我们的鸡蛋这回是冤枉的吗？
+
+　　沈群：到底鸡蛋里的胆固醇高不高，我们来看一下表。从这个表中可以明显地看出蛋黄中的胆固醇确实是比较高，但是在这里我要有几点要说明一下，首先说明的是人体中的胆固醇大部分是自身合成的，只有一小部分来自于事物，而且我们人体对胆固醇的吸收是有调控能力的，当我们膳食中的胆固醇摄入比较高的时候人体的吸收率就会有所减少。所以也就是说并不是我吃了多少蛋黄将来就会吸收多少胆固醇。这是第一点。
+　　第二点，实际上胆固醇是我们人体必需的营养成分之一，是我们维生素、性激素等重要的生理活性成分的合成原料。所以，我们也用不着谈胆固醇而色变。
+　　最后一点要跟大家说的是，蛋黄中除了有胆固醇之外还有卵磷脂，卵磷脂可以阻止胆固醇或者是脂肪在血管壁上沉积，所以对于正常人来讲，以后我们再吃鸡蛋的时候可以和着蛋黄一起吃，不必把蛋黄扔掉。
+　　陈伟鸿：这次是我们的沈教授为蛋黄正名的一个时刻，其实围绕着鸡蛋的营养价值人们也引发了很多的讨论。比如说生活当中常常有人探讨柴鸡蛋更有营养还是普通鸡蛋羹有营养。沈教授对这样的争论有什么看法？
+　　沈群：同样我们待会儿把这个问题给大家讲一讲。讲之前我们先明确一个概念什么叫做柴鸡蛋。我们这里所说的柴鸡蛋，包括土鸡蛋、笨鸡蛋等等经常我们听到的一些名称，普通的鸡蛋我们在工业化生产笼养的鸡生产的蛋，柴鸡蛋是指在农家自然环境中野生的这种鸡所下的蛋。很多文献上也表明柴鸡蛋和普通鸡蛋确实在由于它的饲养环境不同，鸡蛋的营养成分有一些区别，同样看一下这张表。
+　　这张表上可以看出，柴鸡蛋和散养的鸡蛋在蛋白质、脂肪和水分上面确实是有一些差别的。但是对比我们人体对营养素的需求来讲，这些差别非常的少，
+　　陈伟鸿：所以大家不必在意它是柴鸡蛋还是普通的鸡蛋。
+　　沈群：对。
+　　陈伟鸿：还有一个问题要继续请教您，生活中有人说红皮的鸡蛋更好还是白皮的鸡蛋更好，关于鸡蛋皮的颜色都得讨论半天，这有科学依据吗？
+　　沈群：实际上弹壳的颜色取决于母鸡的种类，和其它因素没有关系。无论是白的鸡蛋还是红壳的鸡蛋，营养成分差别都不太大。所以，对于消费者来讲，我们在买鸡蛋的时候没有必要在蛋壳的颜色上纠结。
+　　陈伟鸿：再回到今天消费预警刚刚开始的时候给大家看到的会弹跳的乒乓球鸡蛋，它到底是不是像网上有人说的是假鸡蛋呢？我们看看下面这段短片。
+　　（短片）
+　　这是一颗普通的生鸡蛋我们把它放在冰箱里冷冻，需要4个小时。4个小时之后现在把鸡蛋拿出来煮熟，我们先看效果。这是我们刚刚煮熟的鸡蛋，我们敲开看看蛋黄是什么效果。我们现在剥开的这个经过冷冻煮熟后的鸡蛋，我们看看这个蛋黄弹起来有什么效果，现在看它像乒乓球一样弹性比较大，韧性增强。
+　　陈伟鸿：刚才的这个实验已经充分地告诉大家了，我们现在所看到的乒乓球鸡蛋真的不是假鸡蛋。但是刚才其实实验者也给大家提供了一个重要的细节，就是我们的鸡蛋要经过冷冻然后煮熟之后剥出来，这个蛋黄才能够有弹跳力，才能够称之为所谓的乒乓球鸡蛋。这当中有些什么样的原理。
+　　沈群：实际上鸡蛋在速冻之后蛋黄里的蛋白质还有其它一些成分会因为受冻而变性导致韧性增加而弹性，这就是能够弹跳的鸡蛋是这么回事。但不是假鸡蛋。那么还要有一点说明的是，鸡蛋受冻之后口感就会变差，所以对于我们消费者来讲，把买回来的鸡蛋放在储存的过程中要注意保持好温度。
+　　陈伟鸿：谢谢您给大家提供了这么多的建议。我想生活当中关于食品的谣言的确很多，但是我们想和各位说的是其实所有的谣言都是经不起科学验证的，希望每一位消费者都能够不信谣、不传谣真正擦亮自己的顺眼。掌声送给沈教授。
+
+
+
+
+
+责任编辑：陈永乐
+

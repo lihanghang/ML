@@ -1,0 +1,325 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+被吓跑！央视记者协同特警突袭违规公司人去楼空办公室电脑正在放315晚会
+
+
+
+
+
+play
+315晚会曝光后央视财经记者直捣郑州科视视光公司总部现场！（部分）
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251059629,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251059629.html',
+				title:'被吓跑！央视记者协同特警突袭违规公司人去楼空办公室电脑正在放315晚会'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251059629/s.swf"
+			},
+						{
+				video_id:251059551,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251059551.html',
+				title:'315晚会曝光后央视财经记者直捣郑州科视视光公司总部现场！（部分）'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251059551/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　新浪财经讯3月16日消息，昨晚315晚会曝光多个行业黑幕，耐克等多家企业做出回应，各部门也纷纷展开行动。
+
+　　事件一：互动百科成最大虚假广告垃圾站
+　　互动百科再回应315被曝光：个别员工追求销售业绩所为
+　　3月16日，互动百科再度发声回应称，节目报道后，公司董事会及时组织开展了自查工作。经过自查，公司发现此次事件为个别员工行为，在一定程度上也暴露出公司管理存在部分漏洞。
+　　互动百科成最大虚假广告垃圾站 已被工商局调查取证
+　　今年央视315晚会拉黑的第一家企业，新三板刚挂牌企业“互动百科网”，节目播出后不到半小时，北京海淀分局稽查大队已雷霆出击，对这次事件进行调查，执法人员介绍，现场发现的技术服务合同，能反映出一些企业是通过付费形式对自身的宣传。
+　　事件二：科视视光危害13万孩子的眼睛
+　　执法人员已到郑州科视视光调查总部存放许多纸质档案
+　　央视曝光科视视光以视力检查为名，收集学生个人信息。“三无体检队”魔爪伸进几百所学校：危害13万孩子的眼睛。曝光后，执法部门人员立即来到郑州科视视光有限公司总部进行调查，现场发现：验光室里一个写着更衣室的房间，存放着很多纸质的档案，员工称这些都是客户的资料。
+　　郑州紧急查封央视315曝光科视视光等三家企业
+　　郑州官方16日消息，该市已紧急查封了央视财经频道“3.15”晚会曝光的三家涉事企业，其中包括那家走进百所学校给数万名孩子进行体检的“三无”公司。
+　　事件三：日本辐射食品流入国内涉及永旺超市无印良品等
+　　无印良品回应央视315：所有食品无质量问题不会下架
+　　记者来到了朝阳门悠唐无印良品门店，店员说：“央视提到的商品我们门店已经卖完了，质量没有问题，而且公司也没要求下架。质检局今天来店里检查，结果也是没有问题的。”
+　　无印良品否认部分进口食品产自日本核污染区：是误解
+　　该公司表示，此次引起误解的原因是所销售的进口食品日文标识上所标示的“贩壳者株式会社良品计画RD01东京都丰岛区东池袋4-26-3”，而该信息为无印良品母公司名称及其法定注册地址，并无印良品所售进口食品的产地。
+　　执法部门连夜调查日本“核污染区”食品涉事企业
+　　央视315晚会曝光，无印良品、永旺超市等实体超市惊现日本“核污染区”食品。记者跟随稽查局的执法人员来到位于深圳龙港的深圳有棵树公司总部，发现深圳有棵树与深圳海豚两家公司其实就在一个地方办公，公司法人肖四清并未露面，而是由公司董事会秘书李志强出面配合调查取证工作。
+　　海豚供应链就315晚会曝光致歉称已着手赔付
+　　遭到315晚会曝光的海豚跨境科技（香港）有限公司发布声明，称对此前售出的不符合国家质检总局通报的卡乐比麦片进行追回，向客户表达诚挚的歉意，并已在着手进行赔付。
+　　有棵树登315晚会黑榜3公司躺枪下跌
+　　有棵树控股股东肖四清单方面撤销厦门金达威100%股份收购，金达威今早开盘下跌，截至发稿，跌5.16%，报14.33元。
+　　有棵树涉销售核污染地区食品金达威连夜终止收购股权
+　　值得注意的是，有棵树系新三板挂牌公司，其正在与金达威筹划进行股权收购事项。就在央视“3·15”晚会曝光当晚，金达威发布了终止重大事项公告。
+　　无印良品官微点赞央视财经微博网友：点赞也救不了你
+　　无印良品官方微博“MUJI无印良品官方”主页显示，无印良品在315晚会进行时曾点赞央视财经官微315相关博文。有网友评论称“实力打脸”，还有评论表示“点赞也救不了你”。
+　　事件四：耐克气垫鞋被曝没有气垫
+　　耐克中国发布致歉声明全额退款并补偿4500元
+　　耐克商业（中国）有限公司今天（3月17日）声明，称耐克Hyperdunk2008FTB鞋用错宣传资料。针对已购买该问题鞋的消费者，收回货品同时一次性全额退款并提供人民币肆仟伍佰元。这款问题鞋原售价1499元，已售出300多双。
+　　耐克涉嫌虚假宣传遭调查消费者进店就问气垫是真的吗
+　　记者前往央视报道中所提及的上海市徐汇区淮海中路耐克体验店，发现“气垫是真的吗？”几乎已成了每一个进店选购运动鞋的消费者必问的一句话。
+　　耐克承认315晚会曝光问题：赔偿七五折券拒绝三倍赔偿
+　　央视315晚会曝光NIKE品牌官网宣传中，称Hyperdunk2008FTB产品鞋后跟带有NIKE拥有专利的zoomair气垫，但是被消费者发现产品并没有宣传中的气垫。
+　　Nike中国对于消费者提出的三倍赔偿要求拒绝执行。只是承认产品在说明上出现了错误。“这不可能是一个虚假宣传，只能按照NIKE的政策来执行”。
+　　耐克股价高开任性涨近1%无惧央视315晚会点名
+　　刚刚遭到央视3•15晚会点名曝光的耐克，周三股价高开并领涨道指成分股，现报57.77美元，涨幅0.86%。
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

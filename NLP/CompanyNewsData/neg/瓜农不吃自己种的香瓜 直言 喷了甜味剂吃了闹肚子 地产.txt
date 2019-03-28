@@ -1,0 +1,320 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:260486918,
+				pid:1,
+				url:'http://finance.sina.com.cn/wm/2018-07-19/doc-ihfnsvza7336754.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=260486918/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　“嘎嘎甜”的香瓜瓜农自己却不愿吃原因是……
+　　眼下正值黑龙江省地产香瓜陆续上市的季节，有消费者向记者反映，在黑龙江省香瓜主产区绥化市兰西县，一些瓜农为了增加香瓜的甜度，会给正在生长期的香瓜喷洒增甜剂。
+　　喷洒所谓的增甜剂就能让香瓜变甜吗？这种增甜剂到底是什么？通过喷洒增甜剂变甜的香瓜会不会对人体有害呢？为了揭开真相，央视记者展开调查。
+
+　　瓜农直言：香瓜喷了甜味剂吃了闹肚子
+　　进入兰西县境内，记者看到在哈黑公路两旁，每隔几百米就有沿街售卖地产香瓜的摊位。摊位前大多都摆着地产香瓜“纯绿色、嘎嘎甜”的广告。为了证明瓜甜，瓜贩让记者随便挑了一个香瓜尝尝味道。
+
+　　当地的居民告诉记者，这些路边卖的瓜虽然甜，但是当地人却很少吃。
+
+　　居民：我们都不咋吃。瓜都喷药，吃完就难受，这瓜现在都是。
+　　记者：啥药啊？
+　　居民：都喷那些这个药那个药，生长的、甜蜜素（增甜剂）的，都那玩意。
+　　按照当地居民所说，路边卖的香瓜可能是喷过增甜剂的。随后，记者来到了兰西县康荣瓜菜大市场，这里的瓜贩也向记者表示，确实有瓜农喷洒甜蜜素。
+
+　　瓜贩：喷坐果（保果实）的、增甜的。
+　　记者：这瓜还能吃吗？
+　　瓜贩：哎呀，他们上化肥，打甜蜜素（增甜剂）乱码七糟，瓜一掰开里面水瓤子那个。
+　　记者：那样的（瓜）不好啊。（香瓜）还能打“甜蜜素”（增甜剂）呢。
+　　瓜贩：我的妈啊，高科技嘛。
+　　随后，记者又来到了兰西县康荣乡的一处瓜田，这里的香瓜即将成熟上市，在瓜地的旁边有很多用过的农药、化肥包装袋。瓜农告诉记者，由于今年入夏以来黑龙江连续多雨，为了给香瓜增甜，一些瓜农还需要专门给香瓜喷一种增甜的肥料。一般是在瓜秧结果的时候开始喷洒，直到果实成熟。每隔7到10天喷一遍，整个生长期大致要喷洒3到4遍。瓜农告诉记者，喷洒过增甜剂的香瓜，有些人吃了可能会产生不适。
+
+　　瓜农：今年雨水大，比往年能勤（频次高）一点儿。
+　　记者：咱这个瓜打了药，你们农民吃自己家种的瓜吗？
+　　瓜农：我们吃得少。
+　　记者：有啥不良反映吗？
+　　瓜农：有的不适应的吃了闹肚子。
+　　记者：那为啥还用呢？
+　　瓜农：不用它，口感上不去，不好卖。
+
+　　涉嫌违规“增甜剂”充斥市场
+　　记者在采访中了解到，所谓增甜剂其实就是一种水溶性的叶面肥，而这种增甜剂在兰西县的农资市场随处可见。记者仅走访了5家农资商店，就发现了十几种具有增甜功效的瓜果增甜剂。有的甚至是未经农业部门批准的涉嫌违规产品。
+　　在位于兰西县西城街的一家农资商店，记者发现，这家不大的农资商店仅增甜剂就有好几种。
+
+　　记者：兰西用哪个品牌的增甜剂用的多啊？
+　　农资销售员：哪个用的都多这玩意，那都卖没七八样了增甜剂。
+　　记者：现在都用这玩意呗。
+　　农资销售员：一般瓜农都用。这玩意就是为了增甜的、转色的、色好的，好卖瓜。喷这个。
+
+　　在相邻的另一家农资商店，销售人员对于增甜剂可能对健康造成的潜在危害直言不讳。
+　　记者：姐，现在种瓜都用增甜剂吗？
+　　农资销售员：（用增甜剂）不是为了好卖瓜吗。
+　　记者：（增甜剂）是不是对身体不太好。
+　　农资销售员：那当然是，我这个增甜剂还行呢，对人体没那么大伤害，你看他们那个强力增甜的更吓人。吃完闹肚子，吃完肚子疼。
+
+　　按照我国《农业肥料登记管理办法》第五条规定，实行肥料产品登记管理制度，未经登记的肥料产品不得进口、生产、销售和使用，不得进行广告宣传。那么在兰西县农资市场上这些增甜肥料，是否是经过相关部门批准的合格农资产品呢？记者随机从兰西县西城街5家农资商店分别购买了5样不同厂家的增甜剂，并找到了当地农业主管部门进行鉴定。
+
+　　黑龙江省绥化市兰西县农业行政执法大队杨永旺：
+　　未查到此数据。就是说在咱们执法的网上没有查到这款农肥的数据，就说明它，要么是过期的，再一个可能就是违规的，自己编个登记号。就是这么样的性质。
+　　经过农业执法人员鉴定，记者购买的5种不同厂家、不同品牌的增甜剂均未查询到登记信息。   
+
+
+
+
+
+
+责任编辑：万露
+

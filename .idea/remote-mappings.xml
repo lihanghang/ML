@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteMappingsManager">
+    <list>
+      <list>
+        <remote-mappings server-id="python@ssh://lihanghang@124.16.71.33:22/usr/bin/python">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/home/lihanghang/tensorflow" />
+            </list>
+          </settings>
+        </remote-mappings>
+        <remote-mappings server-id="python@ssh://lihanghang@124.16.71.33:22/home/lihanghang/anaconda3/envs/TensorFlow/bin/python3.5" />
+      </list>
+    </list>
+  </component>
+</project>

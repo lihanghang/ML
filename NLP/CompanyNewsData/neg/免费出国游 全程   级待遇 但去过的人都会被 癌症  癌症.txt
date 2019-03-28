@@ -1,0 +1,290 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+免费海外体检设“癌症”圈套诈骗“一条龙”
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:268237201,
+				pid:1,
+				url:'',
+				title:'免费海外体检设“癌症”圈套诈骗“一条龙”'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=268237201/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　免费出国游：下飞机走国宾通道、安排高端派对但去过的人都会被"癌症"…
+　有这样一种出国旅游：
+　　全程VIP级待遇，打您下飞机的那一刻起，专人服侍、专车接送、比您自己还更关心您的健康，赠送免费体检，这样的出国旅游一个人得花多少钱？
+　　怎么着也得好几万吧。
+　　不，这样的出国旅游免费。
+　　只不过，旅行最后会有个所谓的知名“教授”，亲自为您诊断，跟您谈谈您的体检报告。
+　　颜女士：他当时拿体检报告说什么都是超标的，咱们也不懂那个指标，人家解读说，得癌的可能性是最高的。
+　　记者：光吃药就可以解决问题？
+　　颜女士：有打吊瓶。
+　　50多岁的颜女士长期在当地一家美容院做美容，去年1月份，美容院老板张某伙同西安某公司的邵某，以赠送优质客户免费泰国豪华游，引诱受害人颜女士到泰国做免费的医疗体检服务。
+　　颜女士说，当时她到了泰国被安排的是国宾级接待，连下飞机也走的是国宾通道，之后由专人直接带她去医院做体检，晚上又带她参加高端派对。直到第二天体检结果出来，却被告知她有癌症风险，当时的心情落差特别大，就想着要赶紧治疗。
+　　免费体检查出癌症治疗费用超百万
+　　一位所谓的“知名教授”告知颜女士患有宫颈癌倾向的疾病，建议尽快治疗，回国内就没有机会预防这个病了，就这样，担心自己身体健康的颜女士心甘情愿地先拿出了49.5万元的高额治疗费。
+　　陕西西安市公安局鄠邑分局人民路派出所民警王建飞：这个公司在国内聘请了一些年龄比较大的老人，冒充国际知名的教授，由这些假教授来解读报告。这些所谓的报告，都是委托公司前一天伪造打印出来，并不是医院的体检结果。
+　　如果受害人有所犹豫，陪同人员会在旁边劝说，国外的检测水平高，治疗条件好，回到国内就没有机会预防治疗了，经不住劝说的受害人多数都会上当受骗。
+　　陕西西安市公安局鄠邑分局人民路派出所民警王建飞：受害人在医院进行治疗之后回到国内，一些客服冒充这个医院的国际客服给受害人打电话，提醒他们要按时吃药，还会询问吃完药，有没有身体不适的地方。如果有不适的地方，他们会回头对这些三无的药品进行更换。最主要的是，还提醒顾客三个月之后要按时到他们医院进行复诊，以便他们牟取更大效益。
+　　2017年4月，颜女士再次被张某和邵某诱骗到泰国复诊，又被骗走治疗费52.6万元。目前，西安警方帮颜女士追回骗资68万元，该案仍在进一步审理之中。
+　　根据警方的调查，该公司涉嫌海外医疗诈骗金额竟高达6亿多元，受害人最高被骗资金超过了千万。
+　　在此给大家提醒：天下没有免费的午餐，如果遇到什么组织机构或者个人有赠送的免费项目，一定要多加小心，不要掉进骗子的圈套。
+
+
+
+
+
+责任编辑：陈合群
+

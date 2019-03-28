@@ -1,0 +1,328 @@
+
+
+
+
+
+
+
+
+
+
+
+
+银华杯十佳银行理财师大赛，惊喜大奖至高荣誉等你来！
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+来伊份橱窗内惊现老鼠监管部门责令停业整顿
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251531874,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251531874.html',
+				title:'来伊份橱窗内惊现老鼠监管部门责令停业整顿'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251531874/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　夏丹、张晓荣
+　　来源：绿松鼠
+　　最近老鼠可是惹祸不断，先是面包爬上了面包新语的食品柜，又是蹿到了海底捞的后厨，这几天媒体报道称“来伊份”也发现了老鼠！
+　　据媒体报道，8月23日上海一市民在来伊份上海曹杨路店的橱窗内发现了一只老鼠，当时老鼠正“漫步”在各种零食间。不过，当时店铺尚未营业，也没有员工在店里。
+
+　　事发后下架产品，整顿门店
+　　来伊份是一家连锁休闲食品企业，成立于1999年，主营休闲食品，产品覆盖炒货、肉制品、蜜饯等九大系列。
+　　对于该店面零食间出现老鼠，店铺营业后，店员称老鼠是进门时才溜进来的，并拒绝进一步说明情况。同时，对于是否有除鼠装备、措施也没有回应。当日，上海市普陀区市场监管执法人员已责令该店立即停业整顿，彻底清除鼠患。
+　　据媒体报道，来伊份公司方面已将门店所有产品下架，并成立内部调查小组，对此事作调查检核与整治，在消除鼠患的同时对货架进行消毒，称整治完毕才会恢复营业。
+
+　　8月28日绿松鼠致电来伊份，该门店一店员说，门店已经整顿完毕，已于昨日开业。
+　　就来伊份曹杨门店此次出现鼠患的原因，绿松鼠致电来伊份董事会秘书，截至发稿，暂未收到回复。
+　　食品多次上黑榜，3年召回70余吨
+　　2016年，来伊份在上交所A股主板上市。这家逐渐崛起的休闲食品企业，因食品安全问题曾吃过大苦头。
+　　2012年，来伊份供应商生产的蜜饯疑似甜蜜素超标一事被炒的沸沸扬扬。尽管其产品最终被证实合格，但也影响了其第一次IPO失败。
+　　绿松鼠梳理以往信息发现，来伊份这这几年多次被食药监局通报，涉及的食品包括膨化食品、肉制品等多个种类。此外，消费者投诉来伊份的案例也比较常见，包括产品霉变、吃出虫子、老鼠屎等。
+
+　　2016年6月15日，江苏省食药监局通报，标称江苏德盛食品有限公司生产的1批次来伊份脆薯薯（原味薯条）（40克/杯，2016/3/6），被检出大肠菌群超标。
+　　2015年5月13日，国家食药监总局通报，标称漳州市珍桂食品有限公司生产的“来伊份”手撕肉条（计量称重，2014/9/1）在天津抽样时查出菌落总数超标。
+　　2013年3月，江苏省食安办发布，标称上海莱达林实业有限公司康康食品厂生产的来伊份牛轧糖（散装，2012/11/26）大肠菌群超标。
+　　此外，绿松鼠在来伊份公开的招股书上查询到，2013年至2016年上半年，来伊份共召回不合格产品70250公斤，不合格产品涉及到肉制品、水产品、糕点、果蔬等。
+
+　　截图来自来伊份2016招股书
+　　重销售，轻员工培训、管理
+　　2017年7月27日，来伊份发布2017年半年度业绩快报，数据显示2017年上半年实现营收17.92亿元，同比增长5.18%，净利润8655.3万元，同比增长24.99%。
+　　中国食品产业分析师朱丹蓬表示，像来伊份这样的店长负责制企业，门店更为注重营收、利润而忽略员工培训、食品安全的执行，应该把食品安全放在比营收、利润更为重要的考核位置。
+　　以上说法可以从以下数据中得到印证。2016年招股书显示，来伊份有人员培训计划，包括开展各中心岗位培训、新员工入职培训等。但与销售费用相比，公司管理费用占营收比较小，数据显示2013年、2014年、2015年、2016年1-6月管理费用占营业收入的比重分别是9.85%、9.49%、9.05%和9.11%。而2013年、2014年、2015年、2016年1-6月销售费用占营业收入的比重分别为31.69%、31.12%、31.16%和29.45%。
+
+　　来伊份对门店商品检查有具体的要求。区域经理、大区经理要每周对门店服务、商品质量管理方面进行带教、检查；品控相关人员要从商品质量管理角度每月进行专项抽检，检验项目包括商品新鲜度、标签标识合格证、商品陈列保管与库存，环境和员工个人卫生等。
+　　不过，制度归制度，一些门店的执行情况恐怕不太乐观。绿松鼠以应聘店员为由致电涉事门店上海曹杨路店，一店员说应聘很简单，只要年龄在18-48岁之间来应聘就行，员工培训及管理跟招股书上描述类似。此外，这名员工告诉绿松鼠，新员工一般一两个月培训一次，一次就几个小时，一共两次。但来伊份北京八角南路店店员告诉绿松鼠，应聘成功后就可以直接去门店入职，一般由老员工带新员工。
+　　而当记者询问到是否需要健康证才能上岗时，该店员表示入职后去办一个就行，要是等不及，也可以先把办健康证的收据交到门店，先工作。同时，来伊份北京总部也告诉记者，健康证办理期间可以先试工。
+　　门店快速扩张带来经营风险
+　　据来伊份2016年年报显示，截止至2016年底，来伊份连锁门店全国有2260家，其中，直营门店2091家，加盟门店169家，新增加盟商10家。其门店覆盖上海、江苏、浙江等16个省、市，遍布全国百余个大中城市，其中上海最为集中，有1056家。
+　　门店数量增多带来成本上升，扩大经营风险。绿松鼠发现，来伊份2016年招股书及年报中均提到了门店租金提高、人力成本上升所带来的经营风险，来伊份直营门店绝大部分为租赁经营，而近年来租赁价格呈持续上涨趋势。
+
+　　数据显示，2013年、2014年、2015年和2016年的门店租赁费总额分别为2.81亿、2.83亿、2.95亿和3亿。对此，来伊份表示，虽然公司现有租赁合同租赁期限通常为3年，在此期间将锁定租金价格，但公司在未来仍将面临营业场所租金提高的风险，可能导致公司利润下降。
+　　租金费用提升的同时，人力成本也不断提高。一般来伊份门店配备两名及以上店员，数据显示，截至2016年6月底，来伊份共有员工8593人，而门店销售人员人数占比较多，人力成本支出较大。2013年、2014年、2015年和2016年1-6月公司人力成本分别为4.87亿、4.91亿、5.33亿和2.85亿。就此情况，来伊份称，如果未来我国企业的用工成本继续上升，可能对公司的业绩造成较大的影响，导致公司盈利能力下降。
+　　来伊份2016年招股书显示，公司已建立起商品及服务质量管理控制体系，从采购至销售进行全程控制。
+　　但对于销售的终端，庞大的门店数量带来的管理难题，来伊份招股书中没有明显风险提示。仅显示，公司商品的质量仍不可避免的受限于农产品原料供应、管理水平等因素影响，无法完全避免一些不可预见原因导致产品质量发生问题的风险。
+　　绿松鼠门店管理难题询问董事会秘书，截至发稿未得到回复。
+　　采写/夏丹、张晓荣
+　　编辑/ 张晓荣
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

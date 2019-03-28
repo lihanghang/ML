@@ -1,0 +1,288 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+视频：3.15别让孩子穿洞洞鞋乘电梯，当心脚趾卷入缝隙
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255088133,
+				pid:1,
+				url:'http://video.sina.com.cn/view/255088133.html',
+				title:'视频：3.15别让孩子穿洞洞鞋乘电梯，当心脚趾卷入缝隙'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255088133/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+
+　　说完电动车的事再看看这样一款鞋，大家看看我手中这款鞋俗称洞洞鞋，再到夏天这种鞋会很多。因为轻便、舒适、柔软，很多家长也会给孩子来上一双。我们的这个消费预警就要从孩子穿上洞洞鞋说起。
+　　当小朋友穿洞洞鞋乘坐手扶电梯，您可能从来没有想过，危险也就悄然而至。
+
+　　我身旁这位是国家电梯质量监督检验监督高级工程师佘昆，刚才我们看到的画面的确触目惊心，无一例外出事的小朋友都穿着洞洞鞋，为什么小孩子穿上这样的鞋子在坐电梯特别容易发生事故呢？
+　　佘昆：洞洞鞋的材质柔软，极易变形，摩擦系数又大，小朋友又活泼好动，加上好奇心又强，这样乘坐扶梯的时候脚下动来动去，一不小心就容易发生意外。我们模拟了小朋友穿着洞洞鞋乘坐扶梯的场景做了实验。
+image
+　　龙洋：接下来一起看看这个模拟的场景。
+　　这是一部在公共场所常见的手扶电梯，我们给脚步模型穿上洞洞鞋，鞋子卷入了电梯缝隙，接下来……
+　　龙洋：我相信观众朋友们在看的时候可能不约而同地都会忍不住叫出一句“哎呀，太可怕了”。还好这只是一个模拟实验，但是我们想象一下如果真的这是孩子，那柔嫩的小脚得是多么恐怖的一件事。刚才通过画面我们也注意到好像出现事故的位置主要出现在电梯的侧面，为什么这个位置是格外容易发生事故？
+
+　　佘昆：是的，这个位置我们通常叫做机器与平板之间的间隙，这个间隙一般不超过4毫米。这个间隙虽然很小，但是小朋友的脚还是存在被卷入的风险。如果扶梯没有长期检修，会导致这个间隙扩大，更加容易夹住小朋友的脚。
+　　龙洋：一旦遇到这样的情况我们应该怎么施救是正确的方法。
+　　佘昆：扶梯上下出入口的地方有一个紧急开关，发生任何危险和意外的情况，我们要果断按下这个紧急开关，使扶梯自停下来。
+　　另外，小朋友尽量不要穿着洞洞鞋乘坐扶梯，家长要履行监护的职责，提醒小朋友站在安全的区域范围内，不要乱动。
+　　龙洋：：这个提醒真的非常及时很有必要。生活中有很多家长带着孩子坐电梯的时候可能自己还看手机，这时危险也就悄悄来临了。其实我们看到洞洞鞋本身没有质量问题，运行当中的电梯也有定期的维护没有问题。可是当洞洞鞋遇上了电梯，再遇上孩子这三个因素一绑定，危险和问题可能就来了。虽然为此很多洞洞鞋品牌做出了一定的安全提示，在电梯的旁边我们也看到设有一定的警示标志，在这里我们还是要借由3·15晚会如此重要的时机，向所有的朋友说上一句“格外注意安全，一定要警惕事故发生，保护好您的孩子。”
+　　再次谢谢佘昆。
+
+
+
+
+
+责任编辑：陈永乐
+

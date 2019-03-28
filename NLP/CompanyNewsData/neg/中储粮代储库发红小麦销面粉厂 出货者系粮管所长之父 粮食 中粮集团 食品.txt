@@ -1,0 +1,339 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+暗访中储粮代储库发红小麦销往面粉厂
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251073731,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251073731.html',
+				title:'暗访中储粮代储库发红小麦销往面粉厂'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251073731/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+
+
+　　【推荐阅读】
+　　发红小麦销往面粉厂中储粮回应：配合主管部门核查
+
+　　中储粮郑州代储库发红小麦销往面粉厂：出货者系粮管所长之父
+　　来源：澎湃新闻
+　　中国储备粮管理总公司（简称中储粮）郑州直属库代储粮库——中牟县八岗粮管所一批含有红籽的小麦日前被运往面粉厂，此事经澎湃新闻暗访报道后，引起社会关注。 
+　　河南理工大学一位不愿具名的粮食专家向澎湃新闻证实，小麦由于储存不当，受潮之后会发红（俗称“红籽”），不及时处理可能会产生呕吐毒素等有害物质。 
+　　另有多名粮食界专家、生产企业相关负责人、食药监执法人员均告诉澎湃新闻，如果小麦里含有发红的颗粒，这批小麦必须先按照国家标准进行检验，只有检验合格，才能加工为面粉。 
+　　而接收这批含有红籽小麦的郑州博大面粉有限公司的食品安全员告诉澎湃新闻，这批小麦里红籽的比例高达百分之十几，按标准不能使用，但经领导签字后收下。 
+　　虽然博大负责面粉生产的负责人樊春潮3月20日否认从八岗粮管所进过货，但澎湃新闻拿到的《郑州博大面粉有限公司小麦检验单》显示，送来这批含有红籽小麦的货主为石彦明，总计57250公斤。樊春潮还多次强调，在博大，红籽是禁收的。 
+　　石彦明3月21日则向澎湃新闻证实，他是八岗粮管所前所长，也是八岗粮管所现任所长石武强的父亲。 
+　　3月21日，中储粮郑州直属库监管科负责人刘仁利向澎湃新闻表示，八岗粮管所的小麦确实存在发红的状况。 
+　　但他多次强调，“红籽小麦”不属于国家专项检测的项目，因此，对于八岗粮管所粮库里小麦中红籽含量的多少，并没有专门检测结果。他还称，如果整仓抽检合格，可以进入面粉生产企业加工使用。 
+接收这批含有红籽小麦的郑州博大面粉有限公司的食品安全员告诉澎湃新闻，这批小麦里红籽的比例高达百分之十几。 视频截图 
+　　发红的粮库小麦 
+　　中储粮官网显示，该公司具体负责中央储备粮（含中央储备油）的经营管理，同时接受国家委托执行粮油购销调存等调控任务。 
+　　澎湃新闻此前接到投诉，称中储粮郑州直属库的一家代储库——中牟县八岗乡粮管所的粮库里有一批小麦受潮之后发红，且销往面粉生产企业。 
+　　3月17日，中储粮郑州直属库监管科一名刘姓工作人员向澎湃新闻证实，八岗粮管所确为其代储仓库。“是下边的委托库点。”该工作人员在电话中进一步表示，八岗粮管所的小麦也是归郑州直属库所有。 
+　　澎湃新闻随后暗访发现，八岗粮管所有大大小小16个仓库，每个仓库门口的粮权公告牌均显示，其粮仓存储的是中央事权粮食，任何个人和单位不得用于抵押、质押、担保和清偿债务。当时存有小麦的仓库为11号仓和12号仓，库容量为1500吨左右，粮管所一名职工称这两个仓库里的小麦均为2014年入库。 
+　　在12号粮仓内，部分墙皮受潮脱落，覆盖在小麦上，散发着刺鼻的味道。粮管所门卫王某称，八岗粮库建于上个世纪八十年代，年久失修，造成库内小麦受潮。 
+　　在八岗粮管所门卫王某和粮贩袁某看来，八岗粮管所仓库内小麦受潮变质，还跟仓库的建设缺陷有很大的关系。两个仓库共用一面墙，而这面墙的上方有一条排水道。 
+　　“这个粮库的麦子之前受潮了，受潮了之后麦子就会发红，就是有红籽儿，有的甚至都发霉了，可是它还卖给面粉厂。”投诉人程耳（化名）指着八岗粮管所的一间粮食仓库告诉澎湃新闻，他是郑州粮食系统一名内部人士。 
+　　山东一家知名面粉生产企业负责生产的于姓厂长告诉澎湃新闻，小麦在受潮之后会发热，之后会发红，俗称红籽。 
+　　程耳称，八岗粮管所这批发红的小麦被卖到郑州当地的面粉生产企业，他担忧如果处理不慎磨成面粉被食用之后，会对人的健康造成伤害。 
+　　从粮库到面粉厂 
+　　3月2日，八岗粮管所院内，三辆大货车正在装车这批含有红籽的小麦。拉货人员之一的刘某表示，知道这些小麦质量有问题。“（红籽）最少得百分之十几吧。”刘某告诉澎湃新闻，他的两车小麦将销往山东与河北。 
+　　澎湃新闻选择跟踪三辆车中车牌为“豫HC2636”的货车，当晚21时许，这辆货车从八岗粮管所驶出，接近零点时，驶入位于郑州市下属县级市的荥阳市道南路14号的郑州博大面粉有限公司。 
+　　豫HC2636的司机老罗告诉澎湃新闻，博大的检验程序非常简单，抽检完之后就卸车。 
+　　次日，博大面粉的食品安全检验员房某告诉澎湃新闻，发红小麦是有质量问题的。“就是粉的太多，筛出的杂质就大了，虫（吃过的）粮了，出粉率就低了。” 
+　　房某称，豫HC2636货车送来的小麦红籽比例有百分之十几。这一说法和上述刘某所说的数字相当。 
+　　房某还称，近期原料紧张，“前几天没有麦，就搭配着用了，都是经过领导签字的”。 
+　　但3月20日，博大面业负责面粉生产的负责人樊春潮向澎湃新闻否认称，博大近期没有从八岗粮管所进过小麦。他还多次强调，在博大，红籽是禁收的。 
+　　然而，澎湃新闻拿到的《郑州博大面粉有限公司小麦检验单》显示，豫HC2636货车在3月2日确实送来了上述一批小麦，送货量总计57250公斤，扣除了230公斤。而博大员工称，扣除原因正是上述房某所说的粉的太多、杂质太多。 
+　　工商查询结果显示，博大面业集团是郑州博大面粉有限公司的股东。博大面业集团销售部一李姓经理证实，博大面业集团的面粉生产基地是郑州博大面粉有限公司，正位于上述的荥阳市道南路14号。 
+　　公开资料显示，博大面业集团是中国前三大的挂面生产企业，是一家以生产、销售挂面、面粉为主的农产品加工企业。博大面业的官网显示，其拥有国内最先进的自动化挂面、面粉生产线，是国家守合同重信用企业及农业产业化国家龙头企业， “博大”标志荣获中国驰名商标。 
+　　无法筛除的红籽 
+　　发红小麦是否可以用于加工成供人食用的面粉？ 
+　　于厂长表示，红籽小麦一般可能已经变质发霉，会产生一定的有害物质，按国家规定不能作为原料加工成面粉。 
+　　河南理工大学不愿具名的粮食专家向澎湃新闻证实，小麦受潮发红之后，如果不及时处理，可能会产生呕吐毒素等有害物质。 
+　　山东省食药系统一名执法大队长告诉澎湃新闻，这种红籽小麦要经过严格检验，参照小麦国家标准，检验合格之后才能进入面粉原料库，“如果有明显的霉味或霉烂，严禁用于生产面粉”。 
+　　该大队长解释，其所称的国标是指GB1351-2008的国家小麦标准。其中对赤霉病粒的标注是籽粒皱缩，呆白，有的粒面呈紫色，或有明显的粉红色霉状物，间有玄色子囊壳。 
+　　中国粮食行业协会一位杨姓专家亦告诉澎湃新闻，受潮发热的小麦应该单独隔离开来，送到权威检测部门检测呕吐毒素、黄曲霉等的含量，再确定处理方法。 
+　　1998年，在国际癌症研究机构公布的评价报告中，呕吐毒素被列为3类致癌物。当人摄入被呕吐毒素污染的食物后，可能会导致厌食、呕吐、腹泻、发烧、站立不稳、反应迟钝等中毒症状。 
+　　假如用含有百分之十几红籽的小麦加工面粉，在加工前或加工中，有无将红籽筛选并去除的技术或工艺？ 
+　　博大食品安全员房某明确告诉澎湃新闻，红籽在面粉的生产加工过程中无法筛选掉，会进入制成的面粉当中，还会产生呕吐毒素、黄曲霉等有害“致癌物质”。 
+　　3月20日，五得利面粉集团有限公司华北区一名徐姓经理亦告诉澎湃新闻，小麦有红籽儿一般就不能用于加工面粉，“加工了肯定就往面粉里面去了，筛选不掉。” 
+　　“不能加工，加工出来对身体不好的。”徐姓经理强调说。 
+　　北京瑞旭律师事务所黄启瑞律师告诉澎湃新闻，新修改的《食品安全法》对食品生产企业的违规违法有了更加严重的处罚措施，如果查实使用霉变小麦用于面粉加工，企业可能会面临行政处罚，并可能根据情节轻重被追究刑事责任。 
+　　粮管所石氏父子 
+　　根据澎湃新闻拿到的《郑州博大面粉有限公司小麦检验单》，豫HC2636在3月2日送来含有红籽小麦的货主，为八岗粮管所前所长石彦明。 
+　　八岗粮管所一名职工告诉澎湃新闻，石彦明曾是八岗粮管所的所长，也是八岗粮管所现任所长石武强的父亲。 
+　　国家企业信用信息公示系统显示，中牟县八岗乡粮食管理所的法定代表人为石武强，主管部门（出资人）信息显示为中牟县粮食局。 
+　　3月21日，石彦明向澎湃新闻证实，他确实曾从八岗粮管所向博大面粉供货，但出库的小麦都是依照中储粮郑州直属库检验标准。对这批小麦是否有红籽，石彦明称只是很少一部分，具体数据他无法提供。 
+　　石彦明还证实，他曾在1991至1994年担任八岗粮管所所长，现任所长正是其儿子石武强。 
+　　中粮子公司曾购500吨，否认其中有红籽 
+　　从八岗粮管所购入小麦的不只是博大面粉，澎湃新闻拿到的一份《政策性粮油提货单》显示，郑州海嘉食品有限公司曾从八岗粮管所16号仓库内提货小麦500吨，成交等级为二级小麦，国家政策性粮油交易合同号为G4116122000371。 
+　　这份提货单显示的交货地点为郑州航空港区龙港粮油收购有限公司，而工商查询结果显示，该公司的注册地址亦为八岗粮管所所在的八岗村，具体为“龙港办事处八岗村和谐大道19号”，其法人代表是石武强。 
+　　八岗粮管所的一名职工告诉澎湃新闻，该石武强正是八岗粮管所的所长石武强。 
+　　3月6日，在八岗粮管所16号仓库门外，当地粮贩袁某自称很熟悉16号仓库小麦，受潮严重。“这个库味儿很大。”袁某在16号仓门口说。 
+　　公开资料显示，郑州海嘉食品有限公司是中国粮油集团有限公司控股，集面粉加工、食品生产为一体的大型现代化综合性企业。该公司主导产品为“神象”牌高品质小麦粉及各类专用小麦粉。 
+　　3月20日，中粮集团郑州海嘉食品有限公司采购部负责人任黎军告诉澎湃新闻，该公司在2016年12月，确曾从八岗粮管所提货500吨小麦，是从国家粮食交易中心拍卖购入的，这批小麦是2014年的。 
+　　但任黎军否认这批小麦有红籽。他表示，可以向记者提供相关的进货记录和检测结果。截至发稿，澎湃新闻尚未收到这些材料。 
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

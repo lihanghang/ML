@@ -1,0 +1,314 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+曼谷深夜大逃亡10名成都拼团游客泰国遭遇真实版泰囧
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:257502990,
+				pid:1,
+				url:'',
+				title:'曼谷深夜大逃亡10名成都拼团游客泰国遭遇真实版泰囧'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=257502990/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　曼谷深夜大逃亡！10名成都拼团游客泰国遭遇真实版“泰囧”
+　　来源：成都商报
+　　9日7时许，马女士从泰国回到了成都，她短信告知了报团旅行社的联系人：安全到达。她把这次旅游称作“泰囧”。“途中之惊险、恐惧，我无法用文字表现出来。”同行的游客钟先生这样描述这段旅程：糟糕、劳心。
+　　【点击此处登陆黑猫投诉，为自己维权】
+　　这段旅程到底发生了什么？？？
+　　成都商报记者了解到，行程的第五天晚上，马女士和钟先生等全部10名游客，自行“逃”回了曼谷。他们说，这样做完全是因为感受到导游的侮辱和威胁，“担心自身人生安全”。
+　　游客们展示的三段视频中，当地带团的导游不仅用中文吼游客“逼到你们做出来（消费）”、“不信你们中国人用逼迫的”、“投诉一百次也没用。”
+　　承担和履行这次旅游行程的公司系盈科美辰国际旅行社成都分公司。“这在行业里是件小事。”9日下午，在向记者说完这句话后，公司一位负责人关上了公司大门，“我们不接受采访”。
+▲其中一位游客的合同
+　　10人拼团赴泰旅游
+　　合同：“自愿购物”、“无强制消费”
+　　为了度蜜月，成都的马女士和丈夫找到重庆悠程去哪儿国际旅行社有限公司（成都成华区）前锋街门市，报了泰国的7天5夜游。马女士和丈夫是第一次出国旅游，她展示的合同显示，此次旅行的费用为2180元每人，成团的最低人数为30人，采用拼团方式拼至盈科美辰国际旅行社成都分公司履行合同。此外，地接社为“欣遥假期”。成都的钟先生和爱人报了“舞动沙美7日游”的团，他们是通过马蜂窝网站与四川全球通国际旅行社股份公司签订的旅游合同。旅行费用为2280元每人，成团的最低人数为15人，采用拼团方式拼至盈科美辰国际旅行社成都分公司履行合同。
+▲游客合同中约定无强制消费
+　　“同行的还有6个人，他们是直接与盈科美辰国际旅行社成都分公司签的合同。”马女士也展示了其余6人的合同。值得注意的是，马女士的合同上写明“自愿购物”，钟先生的合同上也写着“无强制消费”，其余6人的合同上也注明“旅游者可自主决定是否参加……购物活动”。
+　　3日晚间11点半，10名游客与一名领队集合后出发，次日凌晨2点过达到泰国曼谷。
+　　导游“凶猛”
+　　吼游客“逼到你们做出来” 
+　　斥领队“自己打车回曼谷”
+　　抵达曼谷上了去酒店的大巴车，当地的一名男导游给大家的印象并不好。马女士回忆，车上导游就用中文说“第一次带人这么少的团”，“他说如果要好玩，就走他介绍的自费项目的行程。”不过马女士表示，当时大家又累又困，没有人管导游的话。
+▲游客反映导游问题后，中方领队在微信群中的回应
+　　之后的行程尽管没太多偏差，但是旅行团成员们都感觉到，导游并不太友好，对于景点的游览也是走马观花。另一方面，因为感觉酒店的品质一般，第三天大家找到领队表达了不满。马女士展示了领队的回应，领队却表示“聪明的游客知道和导游打好关系”、“配合支持（导游的）工作”。无奈，马女士的丈夫梁先生介绍，他们也找到导游，“加了一些自费项目。”
+　　5月7日是行程的第五天，当天的行程有一个购物点“乳胶中心”。“拖了大概2个小时，只有一个人买了枕头。”马女士回忆，当时大家要求上车，“导游说车没来，其实车就在外面。”无奈，通过领队协调后大家才上车。然而车发动后，导游开始变得“穷凶极恶”起来。
+▲视频截图：导游吼游客
+　　从游客们提供的视频上，成都商报记者注意到，导游在第一排望着车上坐的游客，拿着话筒用普通话吼道：“逼到你们做出来为止”、“我不信你们中国人不用逼（迫）的”、“一句话，逼到你们做出来为止”。
+　　男子的言论也引发了领队的不满，领队说了一句“谁让你这样讲话”后，导游开始“发飙”。视频中，导游手指向车门方向，向领队吼：“要不然你就直接下车！”接着又喊：“明天早上你不要上车！自己打的回曼谷！”在得知领队要向组团旅行社反映后，男子称“你投一百个诉都没用”，又喃喃自语：“中国人不用逼（迫）的？”
+▲视频截图：导游斥领队
+　　“泰囧”：
+　　10名游客深夜泰国“大逃亡”
+　　旅途中，导游的一些言论让旅游团的钟先生回到成都后，还略显后怕。“他很隐晦，反复地说泰国治安不好、警察效率不高这样一些话。”加上7日下午大巴车上导游的表现，“大家都担心自己的人身安全，也怕第二天拉我们去消费。”7日下午5点左右，大巴车载着游客们到了酒店，“大家当时就有了‘逃跑’的想法了。”梁先生表示，直到晚饭时观察好了路线，他们才决定带上行李跑，“开始我们是不准备拿行李了，证件都是放身上的。”
+　　“晚饭后，大家都在想办法找去曼谷的车。”好不容易确定了一辆车，晚上8点过，10个人悄悄地带着行李来到酒店一楼，“前台看到后就通知了导游。”梁先生回忆，大家只好让团里的女士上车先走，留下他们3名男士应对赶来的导游。“我们在前面边跑边问的士，导游骑着摩托在后面追。”好不容易上了一辆的士，辗转才摆脱了导游，“我们3个人又换了一辆车，然后联系上团里的女士，跑去与她们汇合。”直到凌晨1点过，10人才到达曼谷，“自费找了酒店住下。”
+　　成都商报记者注意到，事发后领队在群里表示，因联系大家未果，如果第二天上午9：30还没有见到游客，则会通报泰国警方，并通知中国驻泰使领馆以及海关。“我们不相信她们了。”梁先生表示，当时提出第二天直接在曼谷机场汇合，“但是不能再见到那个导游。”
+　　8日下午17时许，10名游客与领队在机场附近的免税中心汇合。11人按照先前的计划，乘坐9日凌晨3：10分的飞机回国。
+▲其中一位游客合同上的成团与不成团约定
+　　当事旅行公司：行业里的一件小事
+　　“拼团至盈科美辰国际旅行社成都分公司，是旅游行业的操作方式，我们是合作。”悠程去哪儿国际旅行社有限公司（成都成华区）前锋街门市和四川全球通国际旅行社股份公司的工作人员均这样表示。至于未达到开团人数就成团，“这相当于精品小团，其实我们可以不开团的。”后者的工作人员说道。
+　　悠程去哪儿前锋街门市的工作人员表示，导游声称的“逼到做出来”其实就是要求购物消费，不过她认为导游的言论是“吓唬人”，对照合同中“自愿购物”的说明，门市一位负责人直言“导游有过错”。然而四川全球通国旅的工作人员则认为“没有强制消费”，“我们客人交钱了吗？”
+　　对于游客的行为，上述两家旅行社也都提出是“私自脱团”。“事发那一晚上我都没有睡，盈科美辰那边的人通知到的我，那晚上我一直在联系，始终没有找到客户。”一位工作人员说道。
+　　9日下午，成都商报记者也来到本次旅游团的组织方——盈科美辰国际旅行社成都分公司，公司的门口同时也悬挂着“欣遥假期”的门牌。得知记者来意后，一位自称员工的女子表示“不接受采访”。在另一间独立办公室内，记者见到一名男子，男子声称自己不是公司人员，尽管其办公室内还摆放着他的名片，名片信息显示其即为公司法人代表。期间，一位工作人员敲门后进入办公室，并俯首与他耳语。
+　　“这个在行业里是一件小事。”男子声称“事情已经处理”，并称事件中的导游“已经被开了”，随后，他表示“不接受采访”后，关上了公司的大门，将记者拒之门外。
+　　“事情已经发生了，好在大家安全回国了，我们现在希望得到赔偿。”马女士表示。
+　　9日上午，该旅游团成员荣女士刚刚回到成都，便拨打12301国家旅游服务热线投诉，并上传了资料。同时，她也拨打了市长热线反映了此行的遭遇。
+　　成都商报客户端记者彭亮
+　　图据受访者
+
+
+
+
+
+责任编辑：李彦丽
+

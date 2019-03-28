@@ -1,0 +1,292 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+女子跨国“网恋”被骗168万元
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:266660952,
+				pid:1,
+				url:'',
+				title:'女子跨国“网恋”被骗168万元'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=266660952/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　专挑单身女性下手！这个团伙半年内骗走168万元
+　　四川省公安厅最近发布消息，宜宾市公安局侦破一起特大电信诈骗案，抓获嫌疑人26人，冻结涉案资金430万元，涉案总金额达1000多万元。
+　　女子跨国“网恋”被骗168万元
+　　据警方介绍，“3.04”宜宾特大电信诈骗案受害人是四川宜宾某学校的教师。去年6月15日，她在微信上认识了一名自称在迪拜经商的美国男子Paul，不久，两人就发展成为所谓的“恋人”关系。随后，该男子就以生病住院、工伤赔偿、生意经营等为由，开始频频向受害人请求“经济支援”。 
+
+　　受害人：我就在想可能是他们国家的文化，国外的人不喜欢互相之间借钱，所以就想帮一下他。
+　　其实受害人也曾起过疑心，因为没有与Paul见过一次面，与但在与对方通话、视频后，打消了她的顾虑。在交往的半年时间里，受害人先后向Paul转账人民币共计168万余元，不光耗光了自己的积蓄，还向多家小额贷款公司、银行进行了借贷，但对方却一次也没还过。
+
+　　受害人：如果我不打钱给他，他就给我施加各种压力，就说我如果不把钱给他，他就还不了钱，他被迪拜的社区里的人关押起来，因为他没有上税，没有钱给他们，等等这样一些理由。
+　　直到今年3月，经济上的捉襟见肘，加之朋友的提醒，受害人才意识到自己可能上当了，这才向当地警局报了案。接警后，四川宜宾市公安局立即成立了专案组，对案件展开调查。
+
+　　受害人：因为我从离异之后，一直很封闭，也不喜欢与外界的人接触，情感上有些挫折。他（骗子）肯定是会说你想听的话，会给你一些幻想的东西。如果我务实一点、现实一点，可能不会被骗。
+　　境内外勾结专挑单身女性下手
+　　经过侦查，警方发现这是一个专门选择单身、离异女性，以“交朋友”、“谈恋爱”为幌子，境内境外勾结，骗取钱财的犯罪团伙。
+　　办案民警以该案涉及的诈骗电话和9张国内银行卡的资金流向，作为案件追查的突破口，先后调取上百个银行账户交易明细，收集开户资料、联系方式、取款视频等各类数据信息。于今年7月25日至26日，在广东、辽宁、浙江等五地，抓获3名外籍嫌疑人和23名中国籍嫌疑人，冻结涉案资金430万元，全国并案6起，串案35起，涉案总金额达1000余万元。 
+
+　　四川宜宾市公安局刑侦支队副大队长 陈秋帆：整个分工很明确，有专门负责获取相关受害者信息的犯罪嫌疑人，也有专门负责在境外实施话务诈骗，勾引受害人上钩的犯罪嫌疑人，也有在境内专门负责洗钱的犯罪嫌疑人。
+
+　　警方介绍，不法分子通过在婚恋网站上选择女性信息，以外籍人士的身份添加对方微信、QQ，通过聊天确认恋爱关系，再向受害者抛出国外优厚生活条件等诱饵，取得对方信任，最后以各种理由向受害者提出“经济援助”。 
+
+　　四川宜宾市公安局刑侦支队副大队长 陈秋帆：如果没有真实的通过相关人员见面，通过网上交往的，当对方提出经济要求的时候一定要慎重，一定要认真甄别。
+
+
+
+
+
+责任编辑：李思阳
+

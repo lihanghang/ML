@@ -1,0 +1,323 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:262003377,
+				pid:1,
+				url:'http://finance.sina.com.cn/wm/2018-08-24/doc-ihicsiaw3535097.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=262003377/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　曝光！数万元买的农机，开回家成废铁！农机“翻新”伤了农民了心．．．
+　　对于农民来说，农机不仅是耕作的好帮手，还是提升效率的重要工具。一台好用的农机往往决定了农民们一年的收成。
+　　前不久，一位农户向央视财经频道反映，他花费数万元购买了一台新农机，手续齐全，然而开回家后，根本无法正常运转，基本是一堆废铁。根据他提供的线索，央视财经记者在安徽颍上县进行了深入调查，由此揭开了藏在这些农机背后的秘密。 
+　　翻新农机暗箱操作生产日期任意更改
+
+　　安徽省颍上县王岗镇有很多买卖二手联合收割机和拖拉机的门店，全国很多地方的经销商、农户都会来这里采购农机。
+
+　　在这里，每家门面都会放上几辆到几十辆农机，准备出售。这里的农机有的明显是旧的，而有的看起来甚至跟新的一样。这些农机车身上的编号清晰可见；代表车辆身份的铭牌，显示着这些农机的出厂日期。
+　　奇怪的是，面对上门购买农机的客户，不同农机公司的负责人一开始都会问类似的问题。 
+　　农机销售商：你买回去自己用还是做什么？
+　　为什么要问客户买车的用途呢？在央视财经记者的追问下，一家农机公司的负责人向记者坦承，这些农用机虽然外表上看不出什么异样，但却暗藏秘密。
+
+　　农机销售商：如果用户过来了，我们能蒙就蒙，能瞒着就瞒着，能多卖钱就多卖钱，针对农户的话我们能多赚点钱。
+
+　　央视财经记者看到，车身上的铭牌显示，制造日期是2016年5月1日，出厂编号为QY48469。
+　　在现场，记者又捡到了一张明显旧很多的铭牌。铭牌所标注的出厂编号也是QY48469，但制造日期却是2015年4月1日。
+　　同一台车，怎么会有两个出厂日期呢？这家农机公司的负责人唐某承认，车身上刚装上去的这个新铭牌是假的。 
+
+　　唐某告诉记者，来自广东的二手农机经销商在附近收购了这台旧收割机，到这里进行翻新，想把制造日期从2015年改成2016年，这样，就能骗过购买这台收割机的农户，卖个好价钱。 
+
+　　除了铭牌，收割机上所有能看出真实制造日期的信息都要被替换成2016年的信息。就这样，收割机摇身一变，生产日期一下子推迟了1年多。从业者告诉记者，对于二手农机，晚生产一年，售价就要高出几千甚至上万元。 
+　　七拼八凑加喷漆旧农机如此换“新颜”
+
+　　做个假铭牌，再根据假铭牌上的时间把农机简单维修保养一下，零件更是拆了东墙补西墙，而新旧程度也可以根据客户的要求做。这些翻新农机是怎样七拼八凑到一起的呢？央视财经记者对此进行了调查。 
+
+　　央视财经记者在安徽省颍上县王岗镇调查发现，这里居然有人可以将旧农机改成全新的机器。这家名为金胜源众信精品农机的负责人金经理挑选了一台联合收割机，机器的铭牌已经被摘掉，钢印显示制造日期为2013年11月。收割机外壳残缺不全，里面的部件锈迹斑斑，内部甚至有一块铁皮已经被磨穿。这样的农机，怎么才能把它改成全新的呢？
+　　金经理说，旧农机翻新，难度在于要把整个车全部拆卸下来，在所有肉眼能看到的地方除锈、重新喷漆，并且把不能使用或者有破损的零件替换掉。但记者发现，所谓的替换，用的还是其它农机上拆下来的旧零件。 
+
+　　我国《农业机械安全监督管理条例》第十九条明确规定，从事农业机械维修不得使用不符合农业机械安全技术标准的零配件；不得拼装、改装农业机械整机。然而在这里，这些规定早已被抛在脑后。 
+
+　　更换零件、除锈、喷漆后，就到了农机“翻新”最重要的环节。金经理找来了当地专业做农机铭牌的人，在他的工具箱里，记者看到这台旧收割机的大梁号和新的铭牌已经提前做好。先是手工打上大梁号，接着上铭牌。新贴的铭牌上制造日期是2016年11月，足足比真实的制造日期晚了3年。之后，他们又仔细检查车身，把所有2013年制造日期的钢印都改成2016年。 
+　　每台收割机都会有一个表，显示已经工作过的时间长度，也叫台时。记者启动收割机看到，仪表上显示的实际使用台时为1980小时。在这里台时也能改，翻新工作进行到第六天，一个年轻人开始拆卸记录台时的仪表盘。 
+
+　　商定了大概的台时，这位年轻人拿着仪表盘走进自己的面包车，开始修改。改完台时后，记者再次启动了这台收割机，看到此时的台时数为262小时，不到实际台时的七分之一，一辆看起来全新的收割机就这样出炉了。外观干净漂亮，台时又非常少，自然能卖出个好价钱。然而购买这台农机的用户哪里会知道，这其实是一台不折不扣的旧农机。 
+　　配套证件也能造假农机翻新成“黑色产业链”
+
+　　我国《农业机械安全监督管理条例》明确规定，拖拉机、联合收割机应当悬挂牌照。拖拉机上道路行驶，联合收割机因转场作业、维修、安全检验等需要转移的，其操作人员应当携带操作证件。而这些翻新的农机并没有相关证件怎么办呢？
+
+　　金经理的这台收割机在修改完台时后，翻新就临近结束，与收割机相配套的证件也已经办妥了。江苏省的农机牌照、跨区作业证、车辆行驶证等，手续相当齐全，跨区作业证上的二维码甚至能扫出对应的信息来。这些证件都属于江苏省盐城市响水县一位名为张同生的人所有。
+　　这些信息究竟是真是假，从何而来呢？金经理告诉记者，这套假证是镇上一家婚纱照相馆做的，央视财经记者来到了这家照相馆，照相馆负责人信誓旦旦地保证，这套证件，足以以假乱真。 
+
+　　翻新农机从业者：全部是仿真的，编号没问题，查到没问题，都是网上的信息，信息是真的。提前和我联系，因为牌照不是线下的，牌照是从河南那边做下来的。一般他们做完发过来，哪个省都能做。
+　　央视财经记者在王岗镇调查发现，篡改农机制造日期、将旧农机翻新后销售甚至制造假手续、假证件，在这里几乎是公开的秘密。 
+　　农机销售商：一年得有几百台机器进出，基本上量都稳定在300台左右。
+
+　　有人专门从全国各地收购旧农机，有人负责翻新，有人专门改台时，有人专门做假手续，在王岗镇已俨然形成了一条造假的黑色产业链。 
+　　翻新农机从业者：跨区作业证、驾驶证都有。一套一套，我们就是搞全面了，专门倒表的什么都有。这个东西一个电话，直接搞线路、维修，什么都有。 
+　　中国农业机械学会秘书长张咸胜告诉央视财经记者，非法翻新、拼装农机质量根本无法保障，严重侵害了农机用户的合法权益。 
+
+　　中国农业机械学会秘书长张咸胜：对新的用户造成了安全上的隐患，因为它使用的产品质量、可靠性、安全性都得不到保证。
+　　联播观察
+　　机器铭牌想要哪年就可以做哪年，配套手续也可以配齐全，可谓造假一条龙。这些假冒伪劣的翻新农机之所以有市场，一方面是经营者贪图暴利，另一方面是农民缺乏辨别能力，或者贪图价格便宜而吃亏上当。为了农机市场的健康发展，必须对这种对坑农害农行为“零容忍”，加强对农机市场的清理整顿。另外，农机企业也要多做培训，让用户擦亮眼睛，让制假售假者无利可图。 
+
+
+
+
+
+
+责任编辑：王潇燕
+

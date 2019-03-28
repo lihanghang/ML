@@ -1,0 +1,319 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+“黄牛”曝网红店套路深喜
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251275940,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251275940.html',
+				title:'“黄牛”曝网红店套路深喜'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251275940/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　视频|黄牛业态调查1：网红店与黄牛的爱恨纠葛
+　　为什么网红店要排队辣么久？ 
+　　为什么网红店要限购？ 
+　　为什么找“黄牛”买价格要翻翻？ 
+　　为什么网红店开业第一天就火爆得不得了？ 
+　　到底是什么人吃饱了没事做愿意在大太阳里站三四个小时？ 
+　　why？why？why？ 
+　　在锁定了人广双雄（喜茶和鲍师傅）之后，为了进行调查，“黄牛”到底有多少，记者清晨6点就来到鲍师傅以及喜茶，开始布置机位。 
+　　6点半没有人，7点20分左右，开始有人排队，9点半正是营业的时候，队伍已经100米了，非常夸张，而记者也惊讶的发现，排在最前面的几个人中，买完以后没有走远，又绕了回来，倒买倒卖。 
+　　现货要么现货要么，满大街都是“黄牛”的叫卖声。就涨你十块钱。4斤原价110，现在120卖给你。多十块钱，看着长长的队伍，起码得拍个把小时啊。十块钱值啊，正在记者犹豫要不要买一点犒劳给办公室的小伙伴的时候，对面队伍里头的“黄牛”来了句，位子要么，50块，马上就要轮到了，随便买。“what！？”记者迅速算了笔帐，位子要五十块，一个位子只能买4斤，你这边要加50！？我干嘛不买“黄牛”的，只加十块。但是总感觉不对劲，记者决定再观望一下。 
+　　到中午10点半的时候，鲍师傅门口已经都是“黄牛”了，走过去只要稍微一驻足，就会有“黄牛”冲上来，“现货要伐，现货要伐”。只是因为在人群中多看了你一眼，你就以为我要买鲍师傅。 
+　　于是，记者以也想开一家人气奶茶店为理由，约到了多位“黄牛”、“牛头”，面基之后才发现，业内的套路果真不少。 
+　　在达成了初步意向之后，“黄牛”向我们展示了他们的生存技能。 
+　　技能一：插队 
+　　“黄牛”排队，来买东西，然后消费者买东西。出卖自己的时间，来赚取钱财，听上去蛮合理，可咱们“黄牛”怎么会这么傻。才赚这么。早有眼线已经在里面了，买完一轮，直接到眼线那边插队。旁边人不会说么？会啊，旁边人说的话，让他排到前面去好了，不影响你。总归会有人不说的，这么一招厚脸皮，果然是牛逼的。 
+　　技能二：缺斤少两 
+　　一般我们分两份，然后没分加10块。记者这时候才恍然大悟，原来之前路上说的原价加十块，原来，那里面的量，只有一半啊！路人们身上都没有电子秤，也不知道这到底有多重。而袋子里的小票只需要低头捡一捡，垃圾桶里看一看就能获得。这么一算，排一次队，能赚个百来块钱，一天排个三轮不是问题，“黄牛”月入一万根本不是梦。 
+　　技能三：低价雇人排队 
+　　技能一里的插队只能用在不发号的鲍师傅身上，对面的喜茶聘请了专业的保安公司，每张身份证限买两杯，那就只能找更多的“牛”来排队了。 
+
+　　在微信朋友圈里，每天“黄牛”们都在大声疾呼，缺人缺人！是人就要！排队一趟报酬30。“甚至有些阿姨，给15块、20块就愿意帮我排队”，一位黄牛这样告诉记者。当这些排队人员把奶茶交给“牛头”后，便会以60元一杯的价格（喜茶原价20元左右）卖给消费者。 
+　　站在喜茶的收银台旁观察，不难发现，喝的人少，打包的人多。有“黄牛”透露，在喜茶的队伍里，“黄牛”、外卖配送人员以及真正的消费者各占三分之一；而鲍师傅的队伍里真顾客仅有20多人。 
+　　这样的数字未必是准确的，但无论是谁在排队，最终奶茶、蛋糕仍然是被送到了真正需要的消费者嘴里，只不过是以更加高昂的价格。 
+　　“你看我手机，里面全是我的客户，你看，昨天这个客户下单，500，直接把钱给我了，就是这么简单，现在有钱人，都喜欢吃这个，发个朋友圈，有面子”，“牛头”们觉得人民广场周边人群的钱很好赚。 
+　　但是这些食物为何如此受人追捧？因为是不可多得的珍馐美味？因为是迎合白领的装潢和包装？ 
+　　还是因为商品看上去的稀缺性？
+　　“黄牛”的终极技能：当托儿 
+　　最后话题还是聊到了如何捧红一家网红店上。“黄牛”一下子来了精神，他表示，上海滩的蛋糕、奶茶、青团，他统统经历过。对排队行业，深谙于心，非常了解。 
+　　“黄牛”表示，之前鲍师傅就是自己参与了托儿。“当时主动找到了鲍师傅，达成了合作”。最初顾客对你的根本不了解，首先要让大家知道有这家店的存在！这名“牛头”回忆，鲍师傅开业第一天，他至少领了70多个人去假排队。 
+　　而这样的说法也得到了其他“牛头”的认可。他们告诉记者，鲍师傅聘请了不同团队的充场人员假排队至少一个月。有“牛头”一天至少为鲍师傅提供了200人次。 
+　　而在对面的喜茶，不少“牛头”也道出了假排队中的不少细节。 
+　　“喜茶的投资很大，第一天一共聘请了300多个人假排队”。 
+　　“七点多一大早，来福士还没开门就要站在门口，为了制造出强烈的视觉效果”。 
+　　“等中午真顾客来买的时候，就让出一些位置给他们购买”。 
+　　“假排队的人员构成很有讲究，有学生、有青年、有白领、有中年人，让人无看破”。 
+　　“喜茶做了七天就效果达到了”。 
+
+　　而这些套路也是“黄牛”们去捧红其他网红店的金科玉律。 
+　　“黄牛”表示，如果记者想开网红店，那么根据之前的经验，一天起码需要60人进行排队。这六十个人，都是有讲究的，不能一起到，要分批到，而且要在开业之前慢慢倒，不能让人家看出来。一般情况下，假排队10天，人气自然就会被带动起来。 
+　　不过面对黄牛的这些爆料，喜茶和鲍师傅都矢口否认了。 
+
+　　两家的负责人都向记者表示，喜茶和鲍师傅近几个月都在严厉打击黄牛，希望为顾客创造好的排队环境。他们也向记者明确，两家店至始至终没有聘请过人假排队。鲍师傅甚至表示，不排除有黄牛因为受到打击而故意编造谎言，来起到泼脏水的效果。 
+　　尽管兜转一圈，“黄牛”们并没有给出明确指向鲍师傅和喜茶假排队的证据，但是这种恶意营销却在其他美食店、房产业、手机业、服装业得到了证实。 
+　　（看看新闻Knews记者：方也、厂日子、王爱、王大宝、文见水、徐玮 编辑：胡琰琦） 
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

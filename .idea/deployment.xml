@@ -6,6 +6,7 @@
         <serverdata>
           <mappings>
             <mapping deploy="/home/lihanghang/tensorflow" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="" local="" />
           </mappings>
         </serverdata>
       </paths>

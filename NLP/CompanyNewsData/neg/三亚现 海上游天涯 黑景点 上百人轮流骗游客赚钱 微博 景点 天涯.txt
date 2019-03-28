@@ -1,0 +1,602 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+《晨光新视界》三亚“海上游天涯”黑景点：上百人轮流误导游客赚钱
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:250638128,
+				pid:1,
+				url:'http://video.sina.com.cn/view/250638128.html',
+				title:'《晨光新视界》三亚“海上游天涯”黑景点：上百人轮流误导游客赚钱'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=250638128/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　　上百人轮流骗客赚钱1小时狂赚2500元上百村民轮流骗钱
+
+　　【西楚网综合报道】“16路公交车上的收费员不断地将游客骗到天涯海角第二站，然后用电瓶车将其骗到村里消费”，16日，微博网友“@热腾腾的化肥”的爆料引发多名网友关注。17日，记者调查发现，此事仍是由屡禁不止的“海上游天涯”黑景点运作所致。黑景点售票处不仅换了地点，还采用了新的拉客方式——依靠公交车诱导拉客。在中午1个小时的时间里，该黑景点大概接待20名游客，收入2500余元。
+　　船员驾船带游客在天涯海角留影
+　　16路公交车推荐“黑景点”非车站点引导批量游客消费
+　　16日14时30分，微博网友“@热腾腾的化肥”发微博吐槽称：“我想问下三亚相关部门，这辆16路公交车上的收费员不断地将游客骗到天涯海角第二站，然后再用电瓶车将其骗到村里消费的事情，有没有人投诉过？”在该微博下方，引发多名网友跟评。其中“@三亚大吃包”评论称：“我曾因此提醒过游客，却被威胁要打我，16路车太恐怖了。”
+　　“@热腾腾的化肥”提供的图片显示，游客是透过一辆公交车的车窗往外拍摄的，马路上停着一辆车牌号为琼B16876的16路公交车，公交车旁有人在走动。在另一张图片中，车窗外有5名男子在往路边走。
+　　为调查其中详情，17日，记者以游客身份前往图片中的地点——“天涯邮政”公交站附近，距公交站还有50米，距天涯海角景区有两个公交站的距离。
+　　记者在停车点附近，找了一家名为“创新农村饭店”的餐馆坐了下来，发现餐桌就摆在路边，餐桌旁还坐着几名本地模样男女。在观察的1个小时内，约有5辆16路公交车在此地停车，有时是一两人，有时是三五人下车。但凡有客下车，坐在一旁的男女就会上前去接应。有时直接带着客人走下廊梯，消失在记者的视线中；有时则带客人到店吃饭。
+　　16路车到达后一男子前去接应
+　　海上游每人120元可游7景点售票本上无景点地址等信息
+　　在观察过程中，一名男游客于昨日13时30分，从车牌号为琼B16878的16路公交车上下来，被接到了饭店。在记者的询问下，该游客称他姓马，到三亚才两天。当日，他独自一人从南山寺游玩结束后乘坐16路公交车打算返回三亚。在途中，售票员向车内游客推荐天涯海角，称有两个景区门可供选择，其中一个门票价为90元，只能在岸上走走，能看到的景致只占景区的一小部分，要坐船的话还需要再加100多元。另一个门只需要120元票价，就可以在海上游遍天涯海角等7大景点。
+　　马先生说：“我觉得120元的那个划算，就在售票员的指引下下了车。”随后，记者与马先生一同跟随男向导前往游玩点。穿过马路，走下路边廊梯后，可见一辆3排座椅的4轮电瓶车停在路边。上了车后，向导驾车在村中巷子里绕了5分钟左右，视野便豁然开朗，大海和沙滩呈现在眼前。
+　　在通往沙滩的巷子内，搭着几个简易棚，简易棚内坐着多名男子。见电瓶车载客而来，棚内男子热情招呼：“来这里买票”，称每人只需交120元，并拿出了票本。该票本上印着“天涯浪漫之旅—海上游天涯”字样，票价120元，游7大景点：1．天涯；2．海角；3．南天一柱；4．海判南天；5．日月爱情石；6．南海神龟；7．四季平安石。票面背面则写着乘船须知，除此之外，票面上没有任何标准的公司名称、景点地址等信息。
+　　游客下车后有人接应到电瓶车上
+　　“黑景点”1小时狂赚2500元上百村民轮流当引导员赚钱
+　　最终，马先生支付了120元，于13时52分坐上船，奔向海面。见记者未买票，售票男子反复游说，并将价格降低到每人80元，仍被记者拒绝。
+　　记者通过观察，发现在沙滩上停放着数百只同样规格的船只，这些船只较为简陋，船上没有安全带等设备，唯一能用以固定的就是船边上的几个扶手。游客上船时，只需在光秃秃的座椅上垫上一个软垫，穿上救生衣即可出发。
+　　历时半小时左右，马先生于14时20分返回。马先生表示：“本以为会进入天涯海角游玩，没想到只是在海上逛了一圈。在途中，开船的男子还建议我再花150元到更远的岛去看看，我拒绝了，他也没有强求，绕了一圈就回来了。”
+　　在记者观察的1个小时里，不断有游客陆续前来，有的是一家三口，有的是同行的五、六个好友。记者初步统计，大概有20名游客购票乘船。如果按票价每人120元来计算，那么黑景点1个小时的收入便有2500元左右。
+　　记者通过与在一旁卖贝壳的女子交谈得知，附近村民做这份生意已经有很多年了，这也是村民唯一的营生，他们拉客的惯用方法就是让公交车售票员宣传。前年，由于成立了正规的公司组织海上游天涯之后，只有小部分村民成了“正规军”，剩下大约有上百的村民，依然以这种方式做着生意。她说：“这里也是有老板在组织的，村民们分批轮流当引导员赚钱。”
+　　多名工作人员上前忙活
+　　2014年已正规运营海上游天涯进入天涯海角景区后才能购票
+　　据了解，近年来，由于“海上游天涯”黑景点猖獗，三亚市政府部门为规范管理，于2014年6月30日，由三亚市天涯海角旅游发展有限公司和天涯区马岭社区居委会共同合作成立了“三亚天岭海上旅游服务有限公司”，将“海上游天涯”项目正规化运作。据旅游业内人士介绍，如今正规的“海上游天涯”只有进入天涯海角景区后才能购票游玩，景区之外购票的均是黑景点。
+　　有市民和网友提出质疑，为何时至今日，仍有公交车参与其中？仍有“海上游天涯”黑景点的存在？是公司运作存在漏洞，还是部门监管不力？
+　　（来源：西楚网）
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+《晨光新视界》三亚“海上游天涯”黑景点：上百人轮流误导游客赚钱
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:250638128,
+				pid:1,
+				url:'http://video.sina.com.cn/view/250638128.html',
+				title:'《晨光新视界》三亚“海上游天涯”黑景点：上百人轮流误导游客赚钱'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=250638128/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　　上百人轮流骗客赚钱1小时狂赚2500元上百村民轮流骗钱
+
+　　【西楚网综合报道】“16路公交车上的收费员不断地将游客骗到天涯海角第二站，然后用电瓶车将其骗到村里消费”，16日，微博网友“@热腾腾的化肥”的爆料引发多名网友关注。17日，记者调查发现，此事仍是由屡禁不止的“海上游天涯”黑景点运作所致。黑景点售票处不仅换了地点，还采用了新的拉客方式——依靠公交车诱导拉客。在中午1个小时的时间里，该黑景点大概接待20名游客，收入2500余元。
+　　船员驾船带游客在天涯海角留影
+　　16路公交车推荐“黑景点”非车站点引导批量游客消费
+　　16日14时30分，微博网友“@热腾腾的化肥”发微博吐槽称：“我想问下三亚相关部门，这辆16路公交车上的收费员不断地将游客骗到天涯海角第二站，然后再用电瓶车将其骗到村里消费的事情，有没有人投诉过？”在该微博下方，引发多名网友跟评。其中“@三亚大吃包”评论称：“我曾因此提醒过游客，却被威胁要打我，16路车太恐怖了。”
+　　“@热腾腾的化肥”提供的图片显示，游客是透过一辆公交车的车窗往外拍摄的，马路上停着一辆车牌号为琼B16876的16路公交车，公交车旁有人在走动。在另一张图片中，车窗外有5名男子在往路边走。
+　　为调查其中详情，17日，记者以游客身份前往图片中的地点——“天涯邮政”公交站附近，距公交站还有50米，距天涯海角景区有两个公交站的距离。
+　　记者在停车点附近，找了一家名为“创新农村饭店”的餐馆坐了下来，发现餐桌就摆在路边，餐桌旁还坐着几名本地模样男女。在观察的1个小时内，约有5辆16路公交车在此地停车，有时是一两人，有时是三五人下车。但凡有客下车，坐在一旁的男女就会上前去接应。有时直接带着客人走下廊梯，消失在记者的视线中；有时则带客人到店吃饭。
+　　16路车到达后一男子前去接应
+　　海上游每人120元可游7景点售票本上无景点地址等信息
+　　在观察过程中，一名男游客于昨日13时30分，从车牌号为琼B16878的16路公交车上下来，被接到了饭店。在记者的询问下，该游客称他姓马，到三亚才两天。当日，他独自一人从南山寺游玩结束后乘坐16路公交车打算返回三亚。在途中，售票员向车内游客推荐天涯海角，称有两个景区门可供选择，其中一个门票价为90元，只能在岸上走走，能看到的景致只占景区的一小部分，要坐船的话还需要再加100多元。另一个门只需要120元票价，就可以在海上游遍天涯海角等7大景点。
+　　马先生说：“我觉得120元的那个划算，就在售票员的指引下下了车。”随后，记者与马先生一同跟随男向导前往游玩点。穿过马路，走下路边廊梯后，可见一辆3排座椅的4轮电瓶车停在路边。上了车后，向导驾车在村中巷子里绕了5分钟左右，视野便豁然开朗，大海和沙滩呈现在眼前。
+　　在通往沙滩的巷子内，搭着几个简易棚，简易棚内坐着多名男子。见电瓶车载客而来，棚内男子热情招呼：“来这里买票”，称每人只需交120元，并拿出了票本。该票本上印着“天涯浪漫之旅—海上游天涯”字样，票价120元，游7大景点：1．天涯；2．海角；3．南天一柱；4．海判南天；5．日月爱情石；6．南海神龟；7．四季平安石。票面背面则写着乘船须知，除此之外，票面上没有任何标准的公司名称、景点地址等信息。
+　　游客下车后有人接应到电瓶车上
+　　“黑景点”1小时狂赚2500元上百村民轮流当引导员赚钱
+　　最终，马先生支付了120元，于13时52分坐上船，奔向海面。见记者未买票，售票男子反复游说，并将价格降低到每人80元，仍被记者拒绝。
+　　记者通过观察，发现在沙滩上停放着数百只同样规格的船只，这些船只较为简陋，船上没有安全带等设备，唯一能用以固定的就是船边上的几个扶手。游客上船时，只需在光秃秃的座椅上垫上一个软垫，穿上救生衣即可出发。
+　　历时半小时左右，马先生于14时20分返回。马先生表示：“本以为会进入天涯海角游玩，没想到只是在海上逛了一圈。在途中，开船的男子还建议我再花150元到更远的岛去看看，我拒绝了，他也没有强求，绕了一圈就回来了。”
+　　在记者观察的1个小时里，不断有游客陆续前来，有的是一家三口，有的是同行的五、六个好友。记者初步统计，大概有20名游客购票乘船。如果按票价每人120元来计算，那么黑景点1个小时的收入便有2500元左右。
+　　记者通过与在一旁卖贝壳的女子交谈得知，附近村民做这份生意已经有很多年了，这也是村民唯一的营生，他们拉客的惯用方法就是让公交车售票员宣传。前年，由于成立了正规的公司组织海上游天涯之后，只有小部分村民成了“正规军”，剩下大约有上百的村民，依然以这种方式做着生意。她说：“这里也是有老板在组织的，村民们分批轮流当引导员赚钱。”
+　　多名工作人员上前忙活
+　　2014年已正规运营海上游天涯进入天涯海角景区后才能购票
+　　据了解，近年来，由于“海上游天涯”黑景点猖獗，三亚市政府部门为规范管理，于2014年6月30日，由三亚市天涯海角旅游发展有限公司和天涯区马岭社区居委会共同合作成立了“三亚天岭海上旅游服务有限公司”，将“海上游天涯”项目正规化运作。据旅游业内人士介绍，如今正规的“海上游天涯”只有进入天涯海角景区后才能购票游玩，景区之外购票的均是黑景点。
+　　有市民和网友提出质疑，为何时至今日，仍有公交车参与其中？仍有“海上游天涯”黑景点的存在？是公司运作存在漏洞，还是部门监管不力？
+　　（来源：西楚网）
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

@@ -1,0 +1,309 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:257971000,
+				pid:1,
+				url:'http://finance.sina.com.cn/wm/2018-05-22/doc-ihawmaua7055409.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=257971000/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　“都怪微信这行都不好干了 ”
+　　来源：21财闻汇
+　　这几年移动支付发展迅速
+　　现在很多人出门都不带现金了
+　　这给人们的生活带来很多便利
+　　但是却给有一类人带来了“冲击”
+　　——小偷……
+
+　　据@平安徐州通报，5月7日白天，盗窃嫌疑人尹某使用工具一连撬开了三户居民的房门，一共才偷到了20枚硬币。
+　　被抓后，他面对民警说的第一句话就是：“这一行不好干了，都玩微信，家里谁还放现金。”
+
+　　视频戳↓
+
+　　5月7号下午，徐州云龙区绿地世纪城小区接连发生了三起入室盗窃。嫌疑人采用暴力手段，将防盗门锁破坏后入室盗窃。
+
+　　“犯罪嫌疑人上楼后，50分钟后就下了楼，完成了作案过程。”徐州市云龙分局黄山派出所民警表示，由于受害人家里没有贵重的东西，所以犯罪嫌疑人只盗取了一个存钱罐，存钱罐里有20几枚硬币，价值20元左右。犯罪嫌疑人把包放在电动车座位底下，然后离开犯罪现场。”
+
+　　民警通过视频追踪，于5月18日下午将犯罪嫌疑人尹某抓获。原来尹某是一名惯偷，他从15岁开始走上盗窃的犯罪道路，之后的10多年几乎都在监狱中度过。
+
+　　在审讯时，尹某向民警大倒苦水，称由于这些年移动互联网的出现，他们这行真的没法再干了。
+
+　　民警：在人家里边偷的什么东西？
+　　尹某：就偷了20块钱。
+　　民警：在哪发现的20块钱？
+　　尹某：就在存钱罐里边。入室盗窃真没有办法干了，现在也偷不着钱，现在家里也都不放钱了，不都微信支付吗，在网络上就付钱了，都没现金了，所以我以后一定改。
+　　后经了解，尹某盗窃的最后一家住户因保险柜损坏，其实未设密码，柜内放有金银首饰及现金，险些被盗。目前，尹某因入室盗窃被云龙警方依法刑事拘留，案件正在进一步侦办中。
+　　网友热评
+　　@赏你一块红烧肉：哪个小朋友好不容易存了二十结果被你截胡了
+　　@小路glo：看到那猪猪存钱罐我笑了出来。
+　　@梵妮莎：来偷我家让你连20都找不到。。。
+　　@流年似水Anita ： 不会转型注定失败。
+　　@Robin-庭先生：你是我教过的最差的一届小偷
+　　@飞熊的爱疯X：我确实是家里一分现金都没
+　　@邳州公安：在这里奉劝那些“同行们”一句：抓紧改行吧！
+　　@逆刃摇光：干掉小偷这一古老职业的居然是移动支付而不是警察…
+　　@郑常点儿：偷我啊我猪里还有七十多
+　　@武汉滴哥古阿乐：100块都不给我……偷
+　　@棒胡：治理犯罪，要让犯人从心里感觉这么干没前途没发展，以后肯定不会再犯了。这就是个例子
+　　文章观点仅代表作者观点，不代表本公众号立场；文中投资建议仅供参考。
+
+
+
+
+
+责任编辑：刘万里SF014
+

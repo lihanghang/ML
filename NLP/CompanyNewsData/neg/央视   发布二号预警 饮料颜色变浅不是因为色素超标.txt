@@ -1,0 +1,304 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+央视315晚会上第二个消费预警环节
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251059617,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251059617.html',
+				title:'央视315晚会上第二个消费预警环节'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251059617/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　2017年央视315晚会在北京举行，央视发布二号预警
+　　#315曝光台#央视315晚会上第二个消费预警环节，质检人员演示搅拌饮料，攻破了网上流言，大约30秒后，橙色饮料变浅，质检人员解释，饮料颜色变浅不是因为色素超标，是由于使用吸附力超强的色母片。
+　　以下为文字实录：
+　　谢颖颖：接下来要发布今天晚会的二号消费预警了。现在生活当中有关食品的安全太多了，需要大家冷静下来，用科学的尝试分析破解它。今天在现场我们就来做一个小调查，看大家辨别网络留言的能力怎么样。
+　　在您的视频上面有5道题，我们平常生活当中可能都有碰到过，第2道题就是我从小听到大的题，说菠菜富含铁元素，是补铁蔬菜。第4题是炒菜最好用铁锅，可以补铁，这5道题哪些是正确的、哪些是错误的。答案稍候给大家公布。
+　　公布之前我们再来看看几张照片。是网络上前段时间非常火的视频当中截取下来的，实验者是拿纸巾放在橙色的饮料当中搅拌之后饮料变成透明的白色了，大家都想说我是不是喝了那么多年的假饮料，这段食品我没有看过，今天现场就还原一下这个视频，有请我们的实验员。
+　　你带的也是橙色的饮料是吗？
+　　实验员：今天上午我刚从超市买的。
+　　谢颖颖：本着科学严谨的态度我们尝一下，是不是我们平常看到的侧色的饮料。
+　　实验员：倒一点。
+　　谢颖颖：科学的态度，一看是橙色的，二闻，是那个味，我再尝一下。对，就是我们平常喝的这种饮料。
+　　实验员：我们把饮料倒在两个相同的烧杯里面。
+　　谢颖颖：我们可以看到，这两个烧杯当中的饮料来源是同一个出处。
+　　实验员：我现场准备了两种纸巾，你挑一种放在烧杯里面。
+　　谢颖颖：我拿一个软的吧，平常我们看到的纸巾。塞进去。
+　　实验员：一个玻璃棒快速搅拌。我们一般在实验室搅拌1分钟效果就比较明显了，不过以我们现在的搅拌速率应该有十几二十秒效果就比较明显，看颜色釉没有变化，结果揭晓。
+　　拿东西把它捞出来。
+　　谢颖颖：我们看到这三杯，这是我刚才喝的饮料，这是用您挑选的纸巾搅拌的，这是我挑选的纸巾，颜色明显浅了很多，为什么会出现这样的变化？
+　　实验员：其实秘密就在你选的纸巾上面。
+　　谢颖颖：有什么区别？
+　　实验员：我选的是普通纸巾，你选择的叫色母片，吸附能力很强，一般我们洗衣服放一两张颜色就不会变了。
+　　谢颖颖：如果放在别的饮料当中也会产生这样的效果吗？
+　　实验员：是的。其实部分食品当中有色素，大家不要担心，只要符合相关的食品安全标准，按照规定的标准使用，符合相应的要求就可以正常饮用。
+　　谢颖颖：我们知道有些饮料当中含有一定的食用色素，一定剂量是在国家规定的安全范围之内的，大家不用惊慌，之所以产生这样的效果，是因为我用了吸附力超强的色母片，看来这个留言就被攻破了，但是网上调查60%的人都认为是真的，所以这些人都没有回答正确，不知道在场的朋友们你们回答正确了吗。
+　　看来第1道题是错误的。而其他4道题的表述是正确还是错误的呢？要给大家揭晓答案了。其余4道题的表述全部都是错误的。
+　　在于网上公布了这样的调查结果之后，刚才工作人员告诉我，全部回答正确的只有5%的人，我们现场有回答正确的朋友吗？
+　　那位女士，你回答正确了，只有1位女同志，还有这位男士，慢慢都举起来了，看来现场还是有明眼人。
+　　但是从这样一点非常明显的发现了，大家在这样一个消费环境的信息，有的时候可能就被短短几分钟的视频击破了，因此现在政府对于留言的编造者、散布者加大了处罚力度，会交由公安机关依法处理。
+　　我们晚会进行到现在已经揭开了一些消费的陷阱和黑幕了，我们央视财经频道的3·15追踪报道小组的记者和当地的执法部门已经到了涉事企业的现场进行执法。
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

@@ -1,0 +1,304 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255461235,
+				pid:1,
+				url:'http://finance.sina.com.cn/consume/puguangtai/2018-03-23/doc-ifyspqaw6613198.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255461235/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　买的“新车”居然出过车祸央视记者调查后发现背后的问题不简单
+　　2017年我国汽车销量达到了2887.9万辆，连续九年居全球第一。伴随着这个数字，另一个数字却令人堪忧，那就是，根据中国消费者协会的统计，2017年投诉的商品中，交通工具类高居所有商品第二位，销售时隐瞒汽车真实情况成为了消费者反映的主要问题。近日央视记者就调查采访了这样一起案件。
+
+　　花46万买奔驰却发现有维修痕迹
+　　去年7月，冯先生花将近46万元在奔驰广西桂林龙星行4S店买了辆轿车，开回老家徐州使用一个月后，发现汽车尾部的漆面有些异样。
+　　心生疑虑的冯先生于是给4S店销售人员打电话，对方多次在电话中坚称这辆车没有出过事故，拍着胸脯说，“4S店肯定不会干这种事情的，砸招牌”。
+　　冯先生当然无法相信眼前的维修痕迹会是“原厂工艺”，而不久后他又有了一个惊人发现，这辆车在出售给他之前，也就是在他购买的一个月前，发生过交通事故。
+　　证据终现奔驰车售前出险曾理赔
+　　在中国太平洋保险公司，工作人员输入车架号后进行查询得知，这辆车2017年5月6日，在湖南的岳阳高速出过险，是一起与大货车发生的追尾事故。
+　　在事故停车场拍摄到的原始照片显示，撞击后，车辆的右后部受损，左后部保险杠漆面受损，还有左后部保险杠下饰板损坏。
+　　面对冯先生拿到的出险和维修记录，4S店销售人员才说，“不排除车受过损的可能”，但是要求冯先生不管怎么样，要先把车开回来。
+
+　　事故车售卖竟非个例冯先生索赔
+　　实际上，奔驰桂林龙星行4S店这次售卖事故车并非偶然事件，根据中国太平洋保险公司系统中显示的内容，和冯先生的车一起受损的还有一辆车架尾号为134445的车，这辆车曾被一位车主买走，但车辆所有人又在2017年7月18日变更回4S店了。
+　　就是说这台事故车先被卖了出去，后来就被4S店回购回去了。
+　　清楚情况后的冯先生再次跟4S店进行交涉，这时4S店终于表态不排除有剐蹭。
+　　而当冯先生提出按照《消费者保护法》要求退一赔三的赔偿时，4S店又改口表示，汽车是属于交付前的PDI检测中检测出了问题进行了维修，拒绝再和冯先生沟通。
+　　商家改口“甩包”的PDI检查是什么？
+　　4S店这样的说法，让冯先生一头雾水，因为他根本不知道车辆做过PDI检测，也没有签过检测的单子。那么PDI究竟是一项怎样的检测，经销商就一点责任没有吗？
+
+　　经销商对乘用车新车进行的售前检查，汽车行业通称为PDI。 
+　　对于瑕疵项的处理，经供应商判定，无需返回供应商处理的车辆，由经销商根据供应商的规定和标准对瑕疵项进行独自处理。但是，对于需更换发动机总成、需更变速箱总成、需车身喷漆（全车工位喷漆或全车半数以上工位喷漆）的乘用车新车，经销商应在供应商的指导下修复。
+
+　　对外经济贸易大学消费者保护法研究中心主任苏号朋
+　　一辆新车在运输过程中受到撞击、受到损坏，也可能出现对它进行维修的情况，但是这种（出事故）维修，不属于PDI的范围，如果汽车经销商并没有把这种新车的维修记录告诉消费者，那么就属于隐瞒了对于消费者做出购买决定有重大影响的事实。我们可以认定经销商的行为构成欺诈，那么应当按照消法55条的规定承担三倍赔偿的法律责任。
+　　专家：建议法律规范PDI检测
+　　汽车PDI，作为交付到消费者手中的最后一道检测，在发现问题后难免也会有更换零件等修复，这样的维修，是否也应该告知消费者呢？ 
+　　据我国现行规定，PDI检测中进行过修复的包括发动机和变速器总成以及转向系统、制动系统等的主要零件修复，要明确告知消费者。但修复率不超过乘用车新车整车市场指导价5%的项目，不用告知。
+　　有专家认为，相对于汽车经销商对汽车的了解程度来说，消费者更加弱势，这就更需要经销商主动提供汽车的真实信息。
+
+　　中国政法大学民商经济法学院副教授王雷
+　　维修率低于5%的部分是否就属于经营者不负担告知义务的范围，我个人觉得还是看这一部分的维修事实，是否属于会影响到消费者购买这台车的意愿，是否会影响到消费者购买这台车的价格，如果属于这两类事实的话，它当然也应该属于告知义务的范围。
+
+
+
+
+
+
+
+责任编辑：孙剑嵩
+

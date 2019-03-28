@@ -1,0 +1,329 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+视频：道路施工“偷工减料”路面标线存在“交通隐患”
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255088308,
+				pid:1,
+				url:'http://video.sina.com.cn/view/255088308.html',
+				title:'视频：道路施工“偷工减料”路面标线存在“交通隐患”'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255088308/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　“3·15”晚会曝光：道路施工“偷工减料”路面标线存在“交通隐患”
+　　江西省宜春市的320国道、成都市新都大道、山西省大同市的魏都大道、山西省太原市南中环路…记者走访发现，一些城市主干道、国道甚至高速公路，都存在反光效果不明显的标线。由此所带来的安全隐患，一些司机们感受颇深。
+
+
+　　为何道路上标线不清楚？记者了解到反光玻璃微珠含量多少，决定了涂料成本的高低。交通部《路面标线涂料》的标准规定，热熔型反光标线涂料当中必须混入18%-25%的玻璃珠。有的施工方为了节约成本，他们反光标线内混玻璃珠的含量不超过10%。
+
+
+　　记者在调查过程中发现，道路反光标线从原料生产到施工划线的整个过程，偷工减料，反光效果严重达不到国家标准的情况，在业内早已不是个别现象。
+
+
+　　实录正文：
+　　生活当中无论您走路或者开车，可能曾经都关注过马路上白色的道路标线。但是您未必知道这种白色的道路标线其实也是有国家标准的，国家标准究竟对它做了什么样的规定呢？我们来看看大屏幕上的照片会更加的直观一些。
+　　陈伟鸿：如果各位开车行走的时候车灯没有打开，你可能不会看到这一条白色的道路标线会发生什么样的变化。但是在夜间如果车灯打亮的情况下你就会发现这条白色的道路标线呈现了明显的反光效果。对于开车的人落说这样的反光效果是至关重要的，尤其是在夜间开车或者阴雨天开车，它可以帮助我们明辩道路、安全驾驶。所以，国家标准对于道路标线的反光性能其实是有着非常严格的规定的，但是在中国的有些地方道路标线反光效果不达标的现象依然存在着。我们的记者也做了相关的调查，我们一块儿来看。
+　　解说：这是位于江西省宜春市的320国道，记者驾车在夜间行使的过程中几乎看不到标线。我们放上标准版，这才是它应该达到的效果，而道路上的实际标线没有任何反光效果。
+　　成都市一号大桥的桥头道路标线与标准版的实际对比。
+　　成都市新都大道标准版与标线的实际对比。
+　　记者在陕西省太原市南中环路行使过程中路面上的标线同样没有什么反光效果。
+　　记者走访发现一些城市主干道、国道甚至是高速公路都存在反光效果不明显的以标线，对于由此所带来的安全隐患一些司机们感受颇深。
+　　跑夜车没有标线不好跑，车道一宽不知道走哪儿。
+　　标线要清楚了就不容易初始股。
+　　如果线不清，说不定稍微一不注意，可能就跑偏了。
+　　解说：道路交通标志和表现国家要求各等级公路和城市快速路、主干路应按本部分规定设置交通标线，道路交通标线质量检测，对应达到的标准做出了明确的规定。
+　　为什么这些道路上的标线反光效果如此之差呢？记者调查发现，除了日常维护因素以外，背后还另有原因。
+　　武汉新锦城化工有限公司不仅生产热熔反光标线涂料而且还负责施工。这家公司的生产车间四周堆放着一些涂料，这就是给道路施画标线用的，吴经理告诉记者他们公司生产量种涂料，一种是普通料，一种是高标料，如果用普通料施划一平米节省1元。
+　　这个是一般的普通料，按高标准料，具体按照高标料的价格来核算，大概是30元左右，应该是30。如果是国标料的话。
+　　解说：记者了解到反光玻璃微珠含量多少决定涂料成本高低，交通部的规定热熔性反光标线必须混入18%—25%的玻璃珠。
+　　吴经理坦然为了节约成本，他们反光标线内玻璃珠的含量不会超过10%。
+　　胡经理：我们生产我们知道内混我们肯定会有，但是绝对有个10%、8%。
+　　解说：施工过程中没有达到国家标准的涂料是如何应对监管单位检查的呢？胡经理承认他们专门准备合格产品应对检测。
+　　胡经理：做逆反，你根本就达不到标准。测逆反射都是送铝板的，我们送铝板的。
+　　送铝板就是送样品对吧？
+　　胡经理：对。
+　　胡经理解释施工过程中会在标线表面撒上一层玻璃珠，虽然可以经过初始检测，但是反光效果维持时间特别短。
+　　能坚持一两个月就拉倒了。
+　　嗯，一个月左右。
+　　胡经理向记者透露，他们刚施工的两条高速公路的道路标线用的就是没有达到国家标准的反光标线涂料。
+　　我们做的高速，今年做了两条高速。
+　　那用的国标料还是非标料？
+　　国标料，就用我们的料就完了。
+　　内混百分之几的珠子，15%。
+　　内混，他们搀着用，我也挣不到钱，他们检测我们都是通的，我们就送样品就完了。
+　　解说：同样武汉四方达交通有限公司的熊经理也告诉记者，他们在施工过程中玻璃珠的含量也大打折扣。
+　　熊经理：我们去做了外地的大冶的一个项目，立项就是2、3千平方，它那个图纸上面就是姚秋寒20%的玻璃珠，但我们用的是10%。
+　　解说：2017年11月12日在陕西省大同市的南环东路与怀新路交叉口附近，一些自称是常达设施有限公司正在弄反光涂料，内含玻璃珠含量也不达标。
+　　涂料里有玻璃珠吗？
+　　也有。
+　　涂料里面最少是10%。
+　　解说：记者注意到工人在施工过程中会在标线表面再撒一层玻璃珠，这样就算施划完毕，反光标线在实际使用过程中会达到什么样的反光效果呢？
+　　时隔三个多月之后2018年2月28日记者再次来到这里，这就是当时工人施划的标，行使过程中从车里望去地面上的标线若隐若现。我们用标准版进行对比，很难想象才短短三个多月所划标线就几乎没有了什么反光效果。
+　　广州燕化交通设施有限公司赖经理也告诉记者，他们生产和使用的热熔反光标线涂料基本上也达不到国家标准。
+　　按正常来说的话，国标肯定达不到。
+　　解说：记者在调查过程中发现道路反光标线从原料生产到施工划线的整个过程偷工减料、反光效果严重达不到国家标准的情况在业内早已不是个别现象。
+　　四川省的话，地方的涂料说是国标的基本没有，我们地方上的标线说老实话都不是国标的，实话实说。
+　　解说：为了应对相关单位的检查，一些企业更是花招百出。
+　　他们外的话你可以倒仓库里参观一，这边是高标料子，那边都是普通料子，他们需要高标料子的时候他们都会拿个5包、6包搁这儿放着，提供给别人检查的，那几包料子是不用的，就是这种情况。这个东西一说你们也明白，是不是。
+　　在项目上咱们说啥就是啥，1公里用国标，剩下还用国标啊？这不缺心眼儿吗。
+　　陈伟鸿：道路标线反光效果不达标，其实是关系到了公共交通安全的重大问题。但是有些人却觉得对这个问题不必如此在意，也有人觉得这可能是长期使用之后的一种正常的损耗。事实上我们在这儿希望提醒大家的是，就像短片当中告诉我们的那样，很多的细节都是重大安全事故的一个隐患，来不得半点的疏忽。
+　　目前交通部已经对涉事企业进行了查处，也对相关的路段进行了重新的检测，同时他们也在全国范围内部署了为期一年的公路标线的质量控制专项行动。让我们所有人共同努力，让我们公路的标线亮起来，让每一个人都可以踏上平安之路。
+
+
+
+
+
+责任编辑：孙剑嵩
+

@@ -1,0 +1,294 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+深圳一家麦当劳天花板现蛆虫
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251275656,
+				pid:1,
+				url:'',
+				title:'深圳一家麦当劳天花板现蛆虫'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251275656/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　深圳一家麦当劳天花板现蛆虫 坠入顾客餐盘
+　　来源：南方都市报
+　　南都讯 记者陈文才 顾客在麦当劳餐厅用餐，发现餐盘内有两条蛆虫，交涉后餐厅重新提供食物，却仍在餐盘上发现蛆虫。并且，还有不少活体正在餐厅的地板上。这些蛆虫究竟从何而来？记者实地走访，竟发现来自餐厅天花顶。麦当劳方面对此事表示道歉。
+图说：民治街道民乐老街的家和乐超市的麦当劳餐厅出现数条蛆虫
+　　投诉：聚餐发现数条蛆虫
+　　据家住龙华新区民治街道民乐老村家和乐超市附近的王先生介绍，  6月4日上午11点左右，他陪妻子孩子在内的三个家庭共九个人来到了家和乐超市的麦当劳聚会用餐，由于人多就分散着坐，其中他和妻子小孩坐在餐厅过道边上的一张单独的圆桌上用餐。大概在11点半的时候，他们用完餐准备离开时，收盘子的服务员发现盘子上有两条蛆，“其实大家都几乎同时看到了那条蛆，还是活的，正在餐盘上蠕动着，看着浑身起鸡皮疙瘩”。
+　　为什么在用餐时会出现蛆虫？三家人表示很不理解，王先生起初怀疑是餐厅的食物有问题，随后找到店家，店家也调取了店内外的监控视频进行分析，但最终都未能找出蛆虫的来源。王先生表示，东西基本都是三个小孩和两个老人食用的，担心食物不干净伤害家人，因此向麦当劳提出要去医院进行体检的要求，但始终未得到麦当劳的同意。
+图说：王先生提供的照片中，在自己餐盘内发现两条蛆虫。
+　　王先生表示，由于店家无法同意他提出的意见，他和家人便一直待在店里没有离开，也没有吃午餐，麦当劳出于好心再次向王先生提供了一份午餐，但令人意外的是，他再次在餐盘中发现了两条活的蛆虫。
+图说：王先生此前用过的桌子已经被禁止使用。
+　　由此，王先生开始怀疑，蛆虫并非来自食物，有可能是其他地方出现的。王先生说，“他们麦当劳也不至于这么恶心吧，两次都给我吃有蛆虫的食物？”由此他坚信，食物应该不可能存在蛆虫，他寻着这条思路在座位周边仔细观察，还真的在地上找到了蛆虫，“就在我们用餐的餐桌下面发现了三条蛆虫，正在地上爬着”。由此，王先生向麦当劳店的负责人表示，蛆虫有可能来自天花顶，“当时由于我们没戴眼镜，没法看清上面的天花究竟有没有虫子，但想着蛆虫应该不会来自食物就放心多了，因为毕竟孩子吃了”。王先生随后就跟店家达成了口头协议：“等晚上打烊后，查看天花顶，调查蛆虫是否是来至于天花顶”。
+图说：在天花板上还有几条蛆虫，正在蠕动。
+　　探访：数条蛆虫从天花顶掉下
+　　南都记者来到麦当劳店里时，发现王先生原先用餐的桌子已经被贴上一块纸，告知顾客该桌子无法使用。记者抬头观察桌子上面的天花顶，忽然一只白色东西从上面掉下，俯身观察就是王先生反映的蛆虫，正在地上蠕动身子。南都记者站上了桌子，发现天花顶的接缝处，还有四条大小不一蛆虫正在试图从狭缝中爬出来，拼命地摆动着身子。从最大的有一公分长，小的有也有半公分。
+图说：民治街道民乐老街的家和乐超市的麦当劳餐厅的地面上掉下一条蛆虫，店员企图遮挡记者的镜头。
+　　就在记者跟店里负责人交流时，发现有三条蛆虫从上面掉下，时间也不过十多分钟。
+　　麦当劳回复
+　　对于顾客不愉快的用餐体验，深圳民乐村麦当劳餐厅深表歉意。麦当劳严格规定所有餐厅定期进行虫害消杀。该餐厅将于今晚再次开展相关工作，今后也将继续加强用餐环境的管理，并与物业加強沟通，做好商场的管理，以防止类似个案发生。
+图说：王先生在麦当劳的消费清单。
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

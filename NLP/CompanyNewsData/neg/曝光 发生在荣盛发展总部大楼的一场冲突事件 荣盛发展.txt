@@ -1,0 +1,309 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255695966,
+				pid:1,
+				url:'http://finance.sina.com.cn/consume/puguangtai/2018-03-29/doc-ifystfqa2774118.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255695966/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　调查丨发生在荣盛发展总部大楼的一场冲突事件
+　　来源：中国房地产报
+　　写在前面：  
+　　无论哪一个行业，不管赚了多少经济利润，归根结底是广大群众用货币投票支撑起来。但是，支付了货币，获得的商品不仅仅是出现了瑕疵，还有质量问题以及货不对板，人民群众当然有不满意、不高兴、不答应的理由。
+　　住房领域的消费投诉纠纷，一直居高不下，但在最近五年，高周转模式被奉为圭皋后，这种矛盾越发突出。住房零缺陷可能要求太高，但必须是房地产行业的新要求、新追求，惟其如此，才能匹配高质量发展的新时代步伐。
+
+　　█中房报记者秦龙河北、北京报道
+　　“荣盛是一家正常的房地产公司吗？雇佣的是‘黑社会’吗？把我的手机都抢走了，还踹了我一脚。”一位媒体记者对中国房地产报记者说，“亲眼看着两个女业主被荣盛保安追着打，还有一位业主在推搡中突发心脏病被送往了医院。”
+　　这一场景发生在河北廊坊荣盛房地产发展股份有限公司（以下简称“荣盛发展”）的总部大楼荣盛发展大厦前。
+　　3月28日，上午十点左右，来自荣盛白鹭岛的几十名业主聚集在位于荣盛发展总部大楼前进行权利维护，与荣盛方面的保安形成对峙。业主们的横幅上写着“拒收守空房，不做守陵人，还我家园”等标语。
+
+　　业主王女士向中国房地产报记者透露，荣盛白鹭岛存在消防不到位、不通电、不供水、屋内漏水、规划内道路没有修建、靠着坟场、霸王条款、提前收房等一系列问题。在业主们多次向荣盛方面请求解决、却无人处理的情况下，他们走上了权利维护的道路。
+
+
+　　离荣盛发展大厦一百多里外的荣盛白鹭岛是这次维权问题的症结所在地。
+　　从北京驱车几十公里后下京哈高速，往东一千米，一幅荣盛发展醒目的宣传语横幅“荣盛发展，中国房地产品牌价值16强”出现在记者眼前，这是荣盛白鹭岛的售楼处。
+　　据中国房地产报记者了解，荣盛白鹭岛系荣盛房地产股份有限公司香河分公司开发。从2013年至今，已经开发三期，均已交房。目前，只有一部分公寓在售。
+　　记者在走访荣盛白鹭岛项目时遇到附近村民刘某，“听说这几天他们（业主）要维权，没想到今天直接去荣盛发展总部了。”
+
+　　几十名业主为什么会不远百里驱车来到荣盛发展总部要说法呢？“小区里面的N7路和迎宾路两条道路没有修，下雨天几乎出不来进不去，没水没电。”刘某对记者说，“好像他们（业主）去过几次售楼处（讨说法），售楼处不管。”
+　　万般无奈、诉求无果的情况下，这几十名业主选择了去荣盛总部讨说法。
+　　“售楼处一直说在装修，但现在也没装完。荣盛白麓岛项目把临时的售楼处设在离这里有十来分钟车程的地方。”刘某说。
+　　荣盛发展把售楼处改到离楼盘二十里外的地方似乎另有深意。
+
+　　记者实地走访发现，荣盛白鹭岛位于京哈高速旁，这里离北京大概四十多分钟车程，离香河县城要七八分钟车程。一眼望去，此处极为荒凉冷清，除了有几十栋住宅高层外，几乎没发现什么商业与基础建筑设施。
+　　“除了房子（住宅）还是房子，全是房子！”刘某喃喃道，”住在里面小区的人只能去村里商店买东西。”
+　　对于此次业主维权事件，母公司荣盛控股更是表现怪异。记者拨通了荣盛控股股份有限公司总裁办的电话，询问对于今天荣盛发展大厦的维权事件，荣盛控股怎样看待？怎样督促子公司处理？总裁办工作人员接通电话后故作冷静回答，“对于业主到荣盛发展总部维权这件事我们并不知情，你获得的消息或许不对吧，应该没有这种事情。我给你提供荣盛发展总部的电话吧。”随后他向记者提供了一个联系号码后立即挂断电话。
+　　不过随即记者发现，表现“很无辜”的荣盛控股提供的号码与刚才记者给其（总裁办）打的电话同为一个号码。当记者再次拨总裁办电话的时候，已经提示关机状态。
+　　这场因为美好生活而买房的权利维护，最终还是以失败告终，在“推拉追打”一个多小时之后，几十名业主被荣盛保安推至警戒线外。最后，业主们无奈地选择离开……中国房地产报记者将持续关注后续事件进展。
+　　记者快评
+　　“一边高歌猛进一边声名狼藉”最要不得
+　　在投诉中完美，这曾经是房地产行业在发展初期阶段，一些公司提出并追求的一份初心。遗憾的是，这个快速膨胀极度成功的行业，弥漫着速度第一，规模第一，利润第一。从商业成功学来说，这没有错。
+　　问题是，利益之下毫不讲究商业伦理与买卖无欺的普世价值，这是很可怕的风气。什么都是第一当头，唯独质量不是第一，善待客户不是第一。如果长此以往，我们这个行业还能获得多少社会的尊敬？
+　　一个值得警惕的现象是，一些公司出现了一种新的局势：一边高歌猛进，一边声名狼藉。
+　　我们研究后发现，业主在消费住房中的投诉心态，大多是因为发现卖方产品货不对板、质量不合格、承诺不兑现，他们是一种求尊重、求解问题的心态。
+　　在政府都非常重视危机处理的当下，作为经济人而获利最多的企业，为什么不能学习政府危机处理好的办法，为什么不能认真对待问题，为什么不去树立起不敷衍的责任？
+　　要知道，业主作为客户，是一种稀缺资源，是企业存在的全部理由。
+　　这个理由，过去是，现在是，未来仍然是。顺之者昌，逆之者终究会亡。
+
+
+
+
+
+
+责任编辑：王嘉源
+

@@ -1,0 +1,331 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+重庆知名火锅店被曝使用潲水油做锅底
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:253158195,
+				pid:1,
+				url:'http://video.sina.com.cn/view/253158195.html',
+				title:'重庆知名火锅店被曝使用潲水油做锅底'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=253158195/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+最新消息：
+大队长主题火锅回应潲水油：涉事火锅店停业整顿
+
+
+　　半月谈独家暗访！这家火锅店端给顾客的锅底，竟是别人吃剩的
+　　大队长主题火锅是全国知名火锅品牌，在全国16个省区市拥有100余家门店。
+　　地处重庆繁华商圈的江北区北城天街店，不久前还被评为“放心火锅店”。
+　　但就在这里，客人吃到的火锅油，却是和地沟油同属回收油的“潲水油”。这种油因反复加热、循环使用，会产生大量对人体有害的物质，早已被明令禁止使用。
+
+　　2017年重庆市火锅协会联合相关部门认定的首批“放心火锅店”
+　　被曝出使用“潲水油”的大队长主题火锅北城天街店名列其中
+　　在这个仅重庆一地产值就接近300亿元的产业中，“潲水油”是怎样生产出来的？重重禁令缘何无法杜绝？“潲水油”对人体健康到底危害多大？半月谈记者和“线人”的独家暗访结果令人触目惊心。
+　　卧底厨房：“潲水油”直接端给客人
+　　“交了锅底费，还吃‘潲水油’，这种行为太过分了。”重庆市民邓先生说。一个月前，他在大队长主题火锅北城天街店吃火锅后肚子疼，怀疑火锅油有问题。为了找到证据，邓先生请人到这家火锅店“卧底”，结果发现店家竟使用“潲水油”作为火锅底料。
+　　邓先生提供的现场视频清晰地记录了大队长火锅店厨房发生的一幕：
+　　多名服务员忙着将客人食用后的火锅油倒入一只大铁桶里，一名未戴口罩的师傅站在桶边，用漏勺打捞桶里的漂浮物，倒进旁边的垃圾桶里，大铁桶里余下的火锅油直接舀进锅，撒上干辣椒和香料后，就由服务员直接端给客人了。
+　　“漏勺一会儿在垃圾桶沿上磕，一会儿放入铁桶里捞，肯定不卫生。何况客人吃完后，有时候会往火锅里扔餐巾纸、烟头，桶里不知道有多少细菌。”邓先生对半月谈记者说，“进店消费时，店里收取了38元的锅底费，店员明确表示这是‘一次性锅底’，结果竟是在欺骗消费者。”
+　　在这家店“卧底”的小李告诉半月谈记者，一般情况下，厨房会对端进来的火锅油先过滤再加热，以彻底除去残渣，将剩下的油舀出来装锅供客人食用。“但周末生意好时，简单滤一下就端出去了。”
+　　根据邓先生提供的线索，半月谈记者来到这家火锅店。
+　　“我们火锅店非常干净，无论是菜品还是用油都保证健康。我们用的都是一次性锅底。”
+　　一位年轻的女服务员如是介绍道。半月谈记者看到，该店菜单上清楚标明：红汤锅收锅底费38元，鸳鸯锅收锅底费58元。
+　　大队长主题火锅官方网站显示，该品牌火锅是重庆火锅排名前十强，现有20家直营店、8家合作店，还有100余家连锁加盟店，分布在重庆、四川、江苏、广东等16个省区市。2017年12月，重庆市火锅协会联合商委、食药监局等部门认定了全市第一批“放心火锅店”，大队长主题火锅北城天街店名列其中。
+　　邓先生告诉半月谈记者，除了大队长主题火锅，他还对重庆市主城区其他的7家火锅店进行了调查，发现也存在使用“潲水油”的情况。
+　　“这些火锅店明明收了锅底费，还将顾客吃过的油重复利用，完全不顾顾客的健康。老百姓想吃顿安全放心的火锅怎么就这么难？”
+　　禁令重重：“潲水油”缘何赶不出餐桌？
+　　全国人大常委会2015年修订的食品安全法规定，禁止生产经营“用回收食品作为原料生产的食品”。
+　　2017年7月，重庆市食品安全委员会出台《关于进一步加强火锅类餐饮食品安全工作的意见》，要求严查采购或使用“地沟油”“潲水油”等违法犯罪行为。
+　　重重禁令为何管不住“潲水油”？
+　　1．“原因在于守法成本高，违法成本小，‘潲水油’可以带来暴利。”
+　　在重庆从事火锅生意20多年的业内人士杨女士说，现在除了一些大型餐饮企业采用一次性锅底外，小火锅店使用“潲水油”较为常见。
+　　杨女士给半月谈记者算了一笔账：火锅底料1斤成本约17元，一般情况小锅要用2~3斤火锅底料，大锅用4~5斤，但大部分火锅店的锅底费仅为30~50元左右，还不够火锅底料的成本。
+　　“使用‘潲水油’，大锅只耗油1.2斤左右，小锅只耗油0.8斤左右，剩下六七成油可以循环使用，节约大半火锅底料成本，省出了一笔商家纯利润。” 杨女士说，一家火锅店按每天接待30桌算，使用“潲水油”光火锅底料成本就节约上千元，一个月算下来达数万元。
+　　正因此，重庆不少火锅店一直对推广一次性锅底不积极，有些店家甚至表面承诺用一次性锅底，暗地使的还是“潲水油”。再加上“潲水油”火锅的味道更“浓厚”，迎合了部分消费者的口味，也让部分火锅店排斥一次性锅底。
+
+　　2．对违法者打击力度不够是“潲水油”屡禁不止的又一重要原因。
+　　中国法学会食品安全法治研究中心专家咨询委员会委员、重庆工商大学法学院教授张忠民指出，目前我国法律针对使用地沟油、“潲水油”等违法行为的处罚手段有限，对违法商家的震慑力不足，令其仍存侥幸心理。
+　　而“潲水油”的外观、成分与正常用油相似，一些不法商家或采用高纯度过滤，或与正常用油混用，使得“潲水油”难以在日常监管中现形。
+　　3．消费者维权成本过高，也变相助长了“潲水油”的气焰。
+　　张忠民分析，商家使用“潲水油”不利于消费者身体健康，属于普遍性侵权。但这一损害并不明显，消费者如果发起维权，费时费力却补偿有限，且面临举证困难等难题，这令不法商家更加有恃无恐。
+　　百亿产业岂能毁于“潲水油”？
+　　“不少人对‘潲水油’火锅存在误解，认为油烧开了吃了就不会有事。实际上，‘潲水油’在制作加工中就受到了污染，反复加热更会催生有害物质，严重危及人体健康。”杨女士说。
+　　湖南省益阳市计量测试检定所工程师喻旭东研究表明，“潲水油”在制作过程中，油脂发生了水解、氧化、缩合等一系列复杂化学反应，产生大量有毒有害物质。由于潲水中常常会混有其他各种杂质，运输和储存过程也不会考虑任何卫生要求，极易发酵变馊。
+　　科学实验测定，“潲水油”的羰基价远远超出国家规定的食用油卫生指标，人食用后会引发头昏、头痛、恶心、呕吐、腹部疼痛以及胃肠道疾病；所含丙二醛聚合物对人体细胞色素酶等多种酶系统会产生损害作用，加速人体衰老，还能诱发肝癌。
+　　重庆市商委统计数据显示，截至2017年上半年，重庆市辖区内火锅门店数已近3万家，年产值近300亿元，占重庆全市餐饮业比重达38.8%，成为拉动全市消费最有力的产业之一。
+　　不少火锅行业人士表示，当前人们对绿色健康饮食日益敏感，“潲水油”可能会葬送重庆300亿元的火锅产业。
+
+　　对此，西南政法大学政治与公共管理学院和静钧副教授建议：
+　　政府主管部门应当采取更有力的监管措施，确保食品安全，呵护火锅产业发展。
+　　①制定火锅等餐饮行业餐厨垃圾废料处理的明确标准，回收过程全程监管，从源头上减少“潲水油”流向餐桌。
+　　②加大不法商家的违法成本，对于承诺不使用“潲水油”却不能兑现的商家从重从严处罚，还可以借鉴欧美等国家经验，对其采取信用惩戒措施，在一定年限内甚至终身禁止从事食品生产经营活动。
+　　③引导消费者转变不健康的饮食观念，提醒其老油火锅并非特色美食，对身体危害甚大，让消费者在选择火锅店时“擦亮眼”。
+
+
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

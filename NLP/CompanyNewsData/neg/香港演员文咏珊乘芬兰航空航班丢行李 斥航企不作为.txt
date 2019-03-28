@@ -1,0 +1,65 @@
+
+
+
+
+
+
+
+
+
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'4189005534364217'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+　　新浪娱乐讯12月26日凌晨，文咏珊在微博发文称自己25日从芬兰转机去圣彼得堡时发现行李丢失，其中包括所有的御寒衣物和生活用品。航空公司仅以一句“不清楚”作为回答。文咏珊工作室随即发声：“出行的选择即是客户最大的信任，试问你们将客户的信任放在哪里？异国他乡丢失行李，孤立无助…希望能尽快解决。”
+
+
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

@@ -1,0 +1,304 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+3·15在行动丨沃尔沃汽车失速！车主投诉4年无果喊着“以人为尊”，怎么就“作”成了命悬一刻？
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:262729055,
+				pid:1,
+				url:'',
+				title:'3·15在行动丨沃尔沃汽车失速！车主投诉4年无果喊着“以人为尊”，怎么就“作”成了命悬一刻？'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=262729055/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　3·15在行动丨沃尔沃汽车失速！车主投诉4年无果喊着“以人为尊”，怎么就“作”成了命悬一刻？
+　　在很多车友的印象中，“安全”，一直是沃尔沃汽车的主要卖点之一，而“以人为尊”，也是沃尔沃汽车秉承的品牌理念。
+　　然而，沃尔沃的一款纯进口SUV——XC60，却让车主们吃尽了苦头，开车的时候总是提心吊胆．．．．．．
+　　△沃尔沃中国官网截图
+　　沃尔沃变速箱问题频发 “安全霸主”惹质疑
+　　2016年4月的一天，田先生的进口沃尔沃XC60轿车，在上海高架桥上，突然失去动力，仪表盘显示，变速箱性能低。 
+　　上海车主田先生：我的太太在市区高架上面出现了失速脱挡，当时后座上坐着我的小孩，是在上学的路上。这是危及到生命的事情。 
+
+　　更让田先生害怕的是，同样的故障，之后竟然多次出现，4S店的维修人员检测后告诉田先生，这是双离合变速箱故障所导致的，需要对变速箱进行维修或更换。不过维修人员又表示，由于过了质保期，修理费必须田先生自己来出。
+　　而田先生认为，车子才刚过保修期不久，并且，问题并非自己使用不当所致，因此不愿意承担高达7万元的维修费。在与4S店协商无果的情况下，他拨打了沃尔沃厂家的400电话进行投诉。
+
+　　上海车主田先生：400电话说会记录在案，说到时候4S店会打电话给我。但我到4S店之后，4S店却说，找400沃尔沃会给我解决。每次投诉完，他们都是踢皮球踢来踢去。
+　　无奈之下，田先生把自己的遭遇写出来发布到网上进行维权。没想到的是，4S店态度转变，为田先生进行了免费维修。更没想到的是，维修后不久，同样的故障又接连出现了好几次。为了留下证据，这一次，田先生用手机记录下了故障时的惊险一幕。
+
+　　第二次维修之后，虽然没有出现严重脱挡、失速的情况，但却出现了车辆行驶中抖动、窜车及强烈顿挫的问题。而田先生的遭遇并不是个案。北京的车主李女士，在和4S店反复协商后，对方同意免费更换变速箱。但前提是，李女士必须承认不是变速箱的质量问题。 
+
+　　北京车主李女士：必须要签协议才能给我免费换变速箱。这个协议其中有一条就是，不是这个变速箱质量问题。
+　　2015年12月，北京的朱先生驾驶沃尔沃XC60汽车在八达岭高速公路正常行驶时，突然失去动力。
+
+　　北京车主朱先生：太害怕了，边儿上就是悬崖，这一不小心翻下去，后果简直不敢想象。
+　　沃尔沃厂家至今不愿给出统一解决方案
+　　从2014年起至今，车主们一直在以各种方式维护自己的合法权益。面对无法彻底解决的问题，车主们也曾通过各种方法找厂家解决问题，然而，沃尔沃厂家也始终没有就此问题向车主们做出公开声明，甚至连安全提示都没有。 
+
+　　2018年6月，记者跟随部分车主来到了沃尔沃汽车销售（上海）有限公司。对于双离合变速箱所存在的问题，售后服务部李经理并不否认。 
+　　记者：这个变速箱是不是存在质量问题？
+　　沃尔沃汽车销售（上海）有限公司售后服务部李经理：我站到公司的角度，我只能说它有问题我们来解决。你要是问我这个变速箱有没有问题，那事实摆在前面，如果没有问题怎么要换东西呢？如果要没有问题怎么会要修呢？ 
+
+　　李经理表示，沃尔沃公司曾在去年对4S店下达了针对双离合变速箱的服务政策。车子开到七年或者十六万公里以内的，如果有任何问题可以找经销商。但李经理同时强调，这并不意味着保修期的延长，只是沃尔沃厂家的一个服务活动，需要根据每一个车主的情况，具体问题具体分析。
+
+　　北京朱先生：在变速箱的问题上，我感觉4S店就是，你闹的话，大闹给免费，小闹给打折，不闹就自己掏腰包。
+
+　　从2014年至今，四年多来，车主们一直没有等到沃尔沃公开给出一个统一的解决方案，没有看到沃尔沃拿出应有的诚意。 
+　　高速路上失速关乎的可是人身安全，但以安全著称的沃尔沃，出了问题却不是积极面对，而是看人下菜碟，能拖就拖。他们漠视的不仅仅是车主权益，而是生命。这样的行为，无异于是在拿自己多年积累的形象冒险。
+
+
+
+
+
+责任编辑：刘万里SF014
+

@@ -1,0 +1,306 @@
+
+
+
+
+
+
+
+
+
+
+
+
+银华杯十佳银行理财师大赛，惊喜大奖至高荣誉等你来！
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+北京：记者暗访海底捞劲松店——后厨老鼠爬进装食品柜子
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251545516,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251545516.html',
+				title:'北京：记者暗访海底捞劲松店——后厨老鼠爬进装食品柜子'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251545516/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+
+　　人民网北京8月25日电 （记者万世成、王宇鹏、赵敬菡）北京两家海底捞店“后厨有老鼠、漏勺通下水道”等卫生问题被曝光后，海底捞连发两封致歉信，承认错误并宣布整改。人民网记者今晚走访了几家海底捞门店，看到涉事的北京太阳宫店已经关门，而大屯路店、红庙店正常营业，并且仍有排号等位情况，但顾客较以往还是有所减少。 
+　　在红庙店，记者随机访问了一些正在等位的顾客，他们表示，已经看到了曝光海底捞的新闻，但自己并不介意，因此仍然选择前来用餐。也有顾客表示“介意的话肯定就不会出现在这里了”。两位年轻的女性顾客告诉记者，她们听说了海底捞的新闻，平时都是网上订位，今天还以为没人来不用排队，没想到还这么多人。涉事的两家店不会去了，毕竟知道了，还是会介意。但没曝光的还是会来，吃了这么多年海底捞。
+　　另有一家三口前来就餐的顾客则表示，中低端餐饮都存在这种卫生问题，一些街边小饭馆，后厨更没法儿看。“其实连锁餐厅，一家存在这个问题，别的肯定也都存在，所以都一样。”但表示还是会去已被曝光的两家店。
+　　一位年轻的男性顾客认为，出事的不是这家（红庙）店。至于卫生问题，他认为“火锅嘛，都一样。”
+　　等位区的服务员则向记者表示，海底捞都是直营店，每家店有自己的团队，情况不同，不会存在同样的（卫生）问题。
+　　海底捞红庙店余经理表示，今天下午2点20分左右，食药监局人员到该店检查了后厨操作间、水果房、凉菜房、洗锅间、窗口上菜区等，并建议该店将消毒毛巾挂在操作间保险柜的把手上。余经理说，出了负面消息，多少都会受到影响，今天比以往周五的客流量明显减少。往常这个时间要等位2个半到3个小时，今天只用等1个半到2个小时。对于今天媒体曝出的事件，该店并没有召集员工开会，“以免造成紧张情绪”，也没有安排特别的卫生打扫，“一切按照日常进行”。
+图为海底捞北京太阳宫店门外等候区
+　图为海底捞太阳宫店门口空无一人
+图为海底捞北京太阳宫店已经停业
+图为太阳宫店门口贴的通知
+　图为海底捞大屯路店，晚上8点左右，有很多顾客在排队等位
+　图为海底捞大屯路店等位情况
+　图为记者在大屯路店的排队等位号，前面还有84桌
+　图为大屯路店内，顾客依然很多
+图为海底捞红庙店，晚上9点多，大量顾客在排队等位
+图为红庙店排号情况，大桌前面还有11桌
+图为海底捞红庙店，晚上9点半的排号情况
+图为红庙店内，顾客们在用餐
+ 
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

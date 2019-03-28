@@ -1,0 +1,300 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+央视发布消费预警：人脸识别验证存漏洞
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251059669,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251059669.html',
+				title:'央视发布消费预警：人脸识别验证存漏洞'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251059669/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　2017年央视315晚会在北京举行，央视发布三号预警，主持人演示照片经过技术处理后便可通过人脸识别系统，暴露安全隐患。
+　　陈伟鸿：在今天这样一个互联网时代，有一样东西其实跟我们的关系变得越来越密切了，那就是密码，因为你会发现需要使用密码的地方真的越来越多了，比如说登录我们个人的电子邮箱，使用我们的社交软件，或者是完成支付等等等等，当然为了安全起见，密码设置的方式也变得越来越复杂、越来越多元，原来可能只是一连串的数字，现在是数字加上英文字母，加上现在日渐流行的指纹识别、虹膜识别、人脸识别等等，这些安全级别越来越高的密码，到底是不是可以真正做到万无一失呢，我们今天在现场会来完成几个实验。
+　　接下来是我们今天2017《3·15晚会》消费预警的现场互动时间，我想问一问我们现场的各位，有多少人经常会使用包括微博或者微信在内的这些社交软件。非常多，占比高达90%以上。再问一下大家，有多少人常常在你们的社交媒体上发布自己的照片，晒一下自己的美照？也有不少人。
+　　我们从刚才举手的朋友当中选一位参加我们的互动和调查。那位小伙子，待会儿我们要请你展现一下你的亮照，因为你刚刚举手了，相信你肯定经常在微博或者微信上发照片，介意不介意公布自己微博的名字。展现在大屏幕上，全国观众都能看得到的。
+　　A：最好多点粉丝。
+　　陈伟鸿：微博名字叫什么？
+　　A：逆的风看有天空在飞。
+　　陈伟鸿：好文艺的名字，我们请工作人员把他的微博找到，并且呈现在大屏幕上，看看在这个微博当中你会发布一些什么样的照片，出现了。
+　　A：是这个。
+　　陈伟鸿：我们请工作人员做一下技术处理，小伙子，我待会儿会用你的照片变一个魔术。
+　　A：可以。
+　　陈伟鸿：这其实是一张静止的照片，经过我们的处理之后会听我的指挥动起来，不信可以看一下。
+　　照片眨眨眼，动了。照片请动动嘴，也动了。其实在我看来这不算是特别神奇的事，因为我们的技术处理还可以进一步的升级，接下来我会用手机为大家来做一个演示。
+　　接下来请导播将我的手机信号切到我们的大屏上。现在各位在屏幕上已经看到我的图像，我们待会儿来看看究竟会有什么样的变化出现。321。
+　　天哪，我瞬间就变成了他。虽然有点不太习惯，但是这样的变化居然真的就出现了，但是也许有人说，你刚才这个如果算得上是魔术的话，一点都不高级，对，我也觉得不高级，难度不大，没有什么挑战性，因为市面上流行的一些拼图软件，分分钟可以做到这样的效果，但越是简单的背后，我们越希望提醒大家注意它可能存在的潜在的风险。比如说如果你仅仅是拼图自娱自乐当然无妨，但是你也没有想过，如果有人用这样处理过的照片去登录人脸识别之后才可以登录的一些系统，你的社交媒体、你的银行账户会不会让你觉得特别的恐怖呢，这有可能做得到吗？我们来试一试。
+　　现在我手上的这个手机即将要登录的是一个通过人脸识别才可以登录的APP，它和所有的人脸登录系统的要求是一样的，这次实验我不大把它对着我的脸来登录，因为没有难度，因为那是规定动作，这次我想对着我的一张照片来试一试它有没有可能通过人脸识别的验证。
+　　大屏幕上现在已经出现了我的照片，当然现在各位看到的是一张静态的照片，稍候我会用一下刚才已经被各位演示过的技术处理，比如说眨眨眼之类的，马上开始我们今天的实验。实验正式开始。
+　　刷脸解锁。
+　　A：请眨眼。很好。
+　　陈伟鸿：验证通过。这会儿其实我真的笑不出来，做这个实验之前我还有点将信将疑，但现在看到“验证通过”这几个字的时候全身出了很多很多的汗，你想原本这个人脸识别应该是让它对着我的脸完成的，可是先一张照片稍作处理居然就通过了，就是说如果有别有用心的人拿某一张照片去做一定的技术处理的话，它是有可能通过人脸识别的验证的。
+　　你可能还会说，其实不是所有的人脸识别的验证都是这么简单，只要眨眨眼，没错，因为安全的需求，有的时候需要有更级别的验证，被称之为活体检测，这一刻活体检测不是一个医学术语，指的是你需要用一个更鲜活的、更生动的、更立体的面孔通过检测，我们继续来做实验，看这当中有没有可能依然还有漏洞的存在。
+　　这个手机是刚才我们来做变脸的那部手机，我继续让它变过来，现在大家看到，我的脸又在上面了，当然是刚才那个小伙子的脸。
+　　A：321，请眨眼。右转头，做的不错。左转头，棒棒的。请左右摇头。最后一步，请微笑，棒棒的。
+　　大伙笑了，其实我有点笑不出来，第一，要向这个小活字道歉，你那么帅，因为我们历史处理，把你弄得那么丑，但是居然还通过了。这说明刚才我所使用的这个人脸识别的活体检测依然是有漏洞的。如果有人钻了这样一个漏洞，钻进了我们需要人脸识别、需要活体检测才可以进入的一些系统，那么会有什么样的风险等待着我们。
+　　其实今天我所做的以上的实验完全没有任何的意味想要把人脸识别这样一些高科技含量的应用打入冷宫，我只是想提醒大家，在这些高科技应用的背后依然有可能存在风险、存在漏洞。其实从过往的经验来看，科技含量越高，他常常安全系数也越高，但是对于像人脸识别这样的全新的技术应用，我们特别希望提醒那些研发者、那些使用部门，能够在使用和研发的过程当中少一些概念，而能够把真正的力气花在脚踏实地的每一件实事当中，让高科技真正的铸起我们安全的铜墙铁壁，当然对于我们所有的消费者来说，在今天，当我们的姓名、我们的电话、我们的住址这些个人信息已经没有办法成为百分之百的绝对隐私的时候，其实坦率地讲，任何一种密码的设定方式，也不能称之为百分之百的安全，只有不断的提高我们的防范意识，才能够真正的把风险降到最低。
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

@@ -1,0 +1,305 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:259134943,
+				pid:1,
+				url:'http://finance.sina.com.cn/wm/2018-06-16/doc-ihcyszsa2971683.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=259134943/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　起底特大网络盗刷案！数亿人的“秘密”因一个小习惯被盗卖，更可怕的还有…
+　　五月中旬，安徽警方破获了一起特大网络盗刷案，涉及被盗的邮箱账户、密码超过10亿条，去除掉其中重复的部分，至少也有几亿条。犯罪嫌疑人通过购买个人邮箱信息，并利用很多用户在注册信息时，喜欢使用同样账号和密码的这个习惯，来破解用户手机绑定账户的用户名和密码，从而实施犯罪，盗取钱财。
+　　安徽：窃取公民信息冒用账号盗刷钱财
+
+　　2018年3月16日，安徽淮北的马女士向警方报案，称她正在家休息时，突然手机连续收到多条游戏充值消费提醒。马女士赶紧查询了自己的手机账户，发现在3月15号的凌晨，有人登录了自己的账户，修改了密码，并且以支付宝付款的方式，在一款网络游戏里充值了五千多元。
+
+　　马女士说自己从没有下载过这款游戏，更不可能进行充值，接到报案后，安徽淮北警方立即进行研判，认定这是一起利用互联网手段，冒用他人账号实施盗刷的犯罪。于是成立专案组，掌握了嫌疑人的犯罪手法以及犯罪链条。
+　　安徽淮北市公安局相山分局刑警大队民警胡猛：这是分工很明确的一个犯罪链条，第一步是有人去窃取公民的信息，第二步就有人去处理这些信息，处理这些信息就是撞库，把这些信息和账户进行一个匹配，第三步才是盗刷。
+
+　　5月中旬，在掌握充分证据后，专案组民警对涉案的八名嫌疑人先后实施抓捕，在多名嫌疑人的电脑里，警方都发现了数量惊人的公民个人信息。
+　　安徽淮北市公安局相山分局刑警大队民警唐放：发现犯罪集团获取的公民信息量高达10亿条以上。
+　　安徽淮北市公安局相山分局刑警大队民警胡猛：90%的内容，都是只牵扯到公民的账户和密码，但是有些网站可能注册的时候，需要填写的个人信息比较多，犯罪分子获取到公民的信息也会比较多。
+　　安徽：个人信息低价卖简单密码被利用
+
+　　被盗的邮箱账户、密码，竟然超过10亿条，嫌疑人怎么会有这么多的邮箱信息呢？在安徽淮北市看守所，记者见到了其中一名犯罪嫌疑人叶某。他告诉记者，这些邮箱信息在网络上四处贩卖，价格低得让人难以想象。
+
+　　嫌疑人叶某：我当初是花了一百五十元，买到了五个G，大概有千万条左右。
+　　叶某供述，参与这一犯罪活动半年的时间，先后购买的个人邮箱信息，将近两亿条。嫌疑人利用很多用户在注册信息时，喜欢使用同样的账号和密码，来破解用户手机绑定账户的用户名和密码，从而实施犯罪。
+
+　　安徽淮北市公安局相山分局刑警大队民警胡猛：通过我们对嫌疑人电脑，进行一个反复侦查，发现撞成功的账户和密码，应该超百万条。
+
+　　目前，警方已经查出这个盗刷团伙作案涉及全国六省七市，案件现在还在进一步侦办中。
+　　保护钱包谨防盗刷
+
+　　个人信息被四处贩卖，一不留神，账户里的钱可能就被盗刷了，那到底该如何防范，才能避免损失？
+　　在日常生活中，很多人为了图方便，不管在什么地方注册，使用的都是同样的账户和密码。这样虽然容易记住，但存在着巨大的风险，因为一旦被盗，嫌疑人就可以利用这些信息，登录所有的账户。
+
+　　安徽淮北市公安局相山分局刑警大队民警胡猛：这类网站注册的邮箱和账户，和手机的邮箱账户一定要区分开来，不能是一致的。而且我们平时在注册各类网站的时候，如果牵扯到资金的话，这个密码和其他的密码也要区分开来。
+
+　　嫌疑人王某供述，他在作案过程中，有些账户已经被多次盗刷了，但受害人都没有发现。
+　　其实一部分手机在支付过程中是有一个双重验证的功能，目的是防止他人在异地用其他设备登录自己的账户。嫌疑人供述，一旦用户打开了这个功能，就很难盗刷成功，但很多用户都没有注意，这也给犯罪嫌疑人留下了空子。
+　　嫌疑人王某：设置了双重验证以后，哪怕我知道你的账号密码，或者说其他的信息，但是我都无法登录，如果我要登录的话，必须你那面提供验证码。
+
+　　除了双重验证之外，很多支付平台上，都设定了不用密码就能完成支付的小额免密功能，虽然支付过程简单便捷，但也容易被盗刷。因此，应当尽可能关闭这一功能，如果一定要开启，最好把额度调到最低，以免被不法分子钻了空子。
+
+
+
+
+
+
+责任编辑：刘万里SF014
+

@@ -1,0 +1,315 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+这家培训机构有陷阱，千万不能报
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251481678,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251481678.html',
+				title:'这家培训机构有陷阱，千万不能报'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251481678/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　注意了！这家培训机构有陷阱，千万不能报
+
+　　6万8学“右脑开发”，号称“蒙眼能辨色”、“七天成诗人”，“脑立方”天价培训班到底是神奇还是忽悠？请看新华社记者的独家调查。（非正常拍摄）
+　　短短几天时间“开发”孩子右脑，提高学习潜能，甚至达到“蒙眼辨色”“七天成诗人”“过目不忘”…… 
+　　近日，新华社记者调查了一个名为“脑立方”的培训机构。该机构号称在全国有120多个教学点，培训学员超过2万名，并在上海设立了教学总部，注册了12家分公司。 
+　　在上海规范教育培训市场秩序、对“无证无照”教育培训机构进行逐步关停的大背景下，仍有披着“神奇效果”外衣的培训班趁着暑期忽悠学生和家长。　
+　　学费6.8万元，称1小时可创作20首古诗
+　　在这个暑假，每天早上9点前后，位于上海市周康路一座写字楼里，等着上电梯的队伍常常排到楼外。其中，大部分是家长带着孩子，上楼参加一个名为“脑立方”的培训班。 
+　　这个培训班面向6岁至18岁的学生，开设的系列课程宣称“开启右脑的智慧，促进左右脑平衡应用，提升孩子的专注力、记忆力、创作力”等。 
+　　记者参加了一堂面向家长的宣讲会。会场满满当当坐了来自全国各地家长近百人，“脑立方全脑应用亲子导师”丁士千向家长宣讲“脑立方”的神奇效果：“超感心像力”课程提升孩子专注力，蒙着眼睛也能辨别物体颜色；“脑屏成像”课程增强孩子记忆力，对任何文章篇目过目不忘；“超感创作力”课程激发孩子创作力，1小时写20首古诗，再不愁背书和写作文。 
+图为“脑立方全脑应用亲子导师”在宣讲会上向家长推销课程。（非正常拍摄）
+　　在宣讲会现场，两位13岁左右的孩子演示了“脑屏成像”和“超感创作”。一个孩子准备了10分钟左右后，将一段约100字的文章流畅地正背、倒背；另一个孩子则根据一位家长的名字，作了一首藏头诗。 
+　　宣讲会后，多位家长现场缴费报名。“朋友推荐了就过来看看，效果似乎不错。”一位现场报名的家长对记者说。 
+　　据介绍，整套系列课程收费6.8万元，包含了2天的“超感心像力”、7天的“超感创作力”、7天的“脑屏成像”等全套课程。其中，“超感心像力”是系列课程的基础，孩子在两天能“打开右脑”，实现“蒙眼辨色”，成功率为100%。
+　　“蒙眼辨色”试8次错7次　脑开发尚无科学理论证实
+　　孩子经过培训真的能达到宣传效果吗？上海丁先生的孩子今年初上了“脑立方”的“超感心像力”课程，在经过所谓“右脑开发”后，发现孩子并不能做到“蒙眼辨色”，于是退出培训。“我怀疑孩子们就是去猜，而我们家孩子比较老实，看不见就说看不见。” 
+　　记者走进“脑立方”的“超感心像力”教室，看到孩子们闭目低头而坐，仿佛在集中精力冥想。 
+　　一位老师叮嘱来接孩子的家长说，孩子回家后每天至少要练10至20分钟的“蒙眼辨色”，争取把脑门里的那个“小光球”越练越亮。孩子要通过手、额头、后脑勺等部位训练，感知出颜色，“投射”在“小光球”上。 
+　　应记者要求，“脑立方”工作人员叫来了三个受训过的孩子演示“蒙眼辨色”，分别通过手、额头等部位“感知”纸牌和塑料积木的颜色。三人共尝试8次，答错7次。工作人员解释说，可能是因为有很多陌生人在场，比较紧张，难以集中注意力。 
+三个在“脑立方“受训过的孩子分别通过手、额头等部位“感知”纸牌和塑料积木的颜色，三人共尝试8次，答错7次。（非正常拍摄）
+　　此外，工作人员还展示了“右脑开发”的过程。他拿出一张蓝底上印有橙色圆球的卡片，让记者集中注意力盯着看，随后闭上眼睛。工作人员说，如果闭上眼后还能看到颜色和一块屏幕的话，就证明记者的大脑是可以被开发的。 
+　　“这与大脑认知无关，属于视觉补像，就像对着太阳看后闭上眼睛会有光亮。”华东师范大学认知神经科学研究所副教授蔡清说。她解释，目前，世界上确实有关于用指尖阅读方面的研究，但还没有任何理论能够证实，视觉以外的人体功能可以感知图像和颜色。 
+华东师范大学认知神经科学研究所副教授蔡清认为，还没有任何理论能够证实视觉以外的人体功能可以感知图像和颜色。
+　　在“脑屏成像”和“超感创作力”教室，记者看到，学生们反复训练记忆力和作诗。根据“脑立方”方面的说法，在“打开右脑”后，孩子的脑海中会呈现要背诵的段落和要作诗的场景，只需“照着念”和“照着写”即可。当记者以《新上海》出题时，一位来自外地的学生现场作诗：“酒店住大厅，公较（交）坐车玩”。 
+　　蔡清认为，所谓左右脑理论在学术界已经落后。目前，科学界公认，左右脑本是以不同的方式协同运作的，并不存在“打开右脑”一说。“况且，在5至10分钟内背出一两百字的文章，本来就很正常。” 
+　　“任何一篇文章或著作，无论内容和形式有多美，倒着看都谈不上美，毫无意义可言，所以相关培训也根本没有价值。”复旦大学附属中学特级教师黄玉峰说。
+　　黄玉峰说，古诗词的教与学有自身规律。“古人云‘熟读唐诗三百首，不会写诗也会吟’，是说古诗词写作要在大量阅读和积累的基础上，依靠长期的训练和情感的融入。所谓‘七天成诗人’，更像是一种急功近利心态下‘走火入魔’的教学办法。”他说。 
+　　无办学许可却设私塾，有孩子辍学走穴
+　　据悉，“脑立方”总部位于内蒙古，企业注册名为“内蒙古脑立方全脑应用训练中心股份有限公司”，注册日期为2014年10月。其在上海共设12家分公司，未在地方教育行政部门备案。 
+　　由上海工商、教育与人力资源和社会保障部门共同制定的《上海市经营性民办培训机构登记暂行办法》和《上海市经营性民办培训机构管理暂行办法》明确，经营性民办培训机构需要征求上海教育行政部门或人力资源社会保障行政部门意见后，由工商行政管理部门登记，才能从事经营性培训活动；其他公司不得以教育咨询或教育类家政服务等名义变相从事经营性培训活动。 
+　　“脑立方”内蒙古总公司法人宋建华、上海分公司法人金骏表示，之所以未向所在地方教育部门征求意见，是因为所从事的“并非教育培训，而是潜能开发，属于一种能力训练”。 
+　　当被记者问起为何要教孩子“蒙眼辨色”时，宋建华说：“我们也不想这样表现，我说已经帮孩子开发了右脑，但家长一定要看到一个结果。”
+图为“脑立方全脑应用亲子导师”在宣讲会上向家长推销6万8千元的课程。（非正常拍摄）
+　　3年间，“脑立方”已发展了120多个教学点。企业自称，还有上海徐汇等一些教学点正在建设装修阶段，同时有大量新建协议，今后还将投资办“脑立方幼儿园”。 
+　　记者发现，所谓“非教育培训”的“脑立方”还设有私塾。今年14岁的江雪（化名）就在私塾念书，学籍保留在老家河南兰考。 
+　　她告诉记者，在“脑立方”的日常生活主要是到各地参加宣讲会，向前来咨询的家长展示“蒙眼辨色”和“过目不忘”，期末回老家考试。“去年比较忙，每几天都得出去一趟，经常1个星期6天在外面出差，展示成果，拿点补贴。” 
+　　江雪说，她在老家农村学校没心思读书，就跟着在“脑立方”工作的亲戚来到上海读私塾，不出差时由“脑立方”的老师教些文化课。像她这样可以为家长展示的孩子在上海有好几个，有些长期待在这边，有些是随亲戚暑假过来。 
+　　华东师范大学教育学部教授吴遵民说，“脑立方”的私塾未获办学许可，却诱使一些孩子放弃义务教育，已经涉嫌违法。 
+　　事实上，早在2012年，新华社就曾播发报道揭露类似骗术，但几年后，相似的骗术依旧换汤不换药地重现。吴遵民说，这些骗术之所以屡屡得逞，归根结底是急功近利之心蒙住了家长的双眼。此外，教育行政、市场监管部门应对办学机构的资质严加审核，并加大对无证办学的打击力度。
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

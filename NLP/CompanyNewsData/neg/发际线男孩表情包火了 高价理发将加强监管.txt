@@ -1,0 +1,344 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+发际线男孩表情包火了，高价理发将加强监管
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:262259526,
+				pid:1,
+				url:'',
+				title:'发际线男孩表情包火了，高价理发将加强监管'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=262259526/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　发际线男孩表情包火了，高价理发将加强监管
+　　来源：1818黄金眼
+　　小吴今年18岁，刚在杭州找了份工作。28号下午，他去单位附近理发，原本只想单纯地理个发。后来拿到的清单上，总费用是4万块钱。
+　　说是免费护理，中途四万清单
+
+　　见到小吴时，他还比较放松，但聊到当天的事情，小伙子皱起了眉头。他说当天进的是上城区大学路146号的这家尚进美容spa店。本来是要理发，结果刚洗过头，对方说是有个免费的项目可以体验。
+
+
+
+　　小吴：“然后让我上去，中途做到一半，突然有个单子上来（单子写着什么？）像那些嫩肤，发际线什么的。”
+
+　　小吴给记者看了这个消费清单的照片，当天特价6800，4次嫩肤，6次提取，特价6800，提发际线特价6800，提取鬓角三部位特价18000，所谓的“并角”记者猜应该就是小吴的鬓角，还有一个当天消费扣8000。记者加了一下，要3万9千多。他说当时几个人围着他，他也没看就签了字，后来才知道要付这么多钱。
+
+　　小吴：“总共是4万，打完折1万8（发际线）剪个那个什么（多少钱？）这个项目8800（就弄个这8800？）对，那些面部护理好像是几千，我感觉做完没任何效果。”
+　　小吴觉得对方的技术也很一般，他让记者看面部哪里奇怪，记者一眼就发现了眉毛。
+
+　　小吴：“眉毛他稍微给我修了下（修完之后你觉得？）修完感觉还不如之前的眉毛好，我之前的眉毛，我同学都说有点凶，但我做完这个，我感觉比之前还凶。”
+
+　　报警后付2500块才离开，觉得钱花的冤
+
+　　因为不交钱不让走，小吴找了自己的领导过来，当时报了警后付了2500块才离开，但总觉得钱花的冤。
+
+　　小吴：“我这头也理的太贵了吧（一万八什么概念？）天价（你一个月工资多少钱？）我一个月工资两三千。”
+
+　　小吴的同事：“当天可能他们可能人也多，话也不会讲了，他们说什么就是什么了。”
+
+　　杭州上城区尚进美容spa店店长俊超：“（发际线是怎么个提法？）我不懂（你是店长吗？）我是店长，但是我不懂（有没有懂的，我们了解下情况）懂得不在（鬓角怎么回事？）我说我不懂（就那一个人懂？）对（美肤呢？）我也不懂。”
+　　店长表示是经过小吴同意的；小吴不认可
+　　店门口，店长已经在等候，问情况是一问三不知，记者想要进店看一下，对方表示不方便。
+
+　　杭州上城区尚进美容spa店店长俊超：“（有没有营业执照？）肯定有的（叫什么名字？）在公司（营业执照不在这吗？）不在这里（营业执照要悬挂的）我悬不悬挂跟你有没有关系（你们要悬挂的）我悬不悬挂跟你有没有关系。”
+　　根据规定，营业执照正本应悬挂在主要办事场所或者主要经营场所。就在记者联系市场监管部门的时候，对方态度缓和了很多，说是免费的项目前十五分钟免费，后面是不免费的。
+
+　　杭州上城区尚进美容spa店店长俊超：“我叫俊超，提发好像是修饰发际线，把多余的杂的乱的修饰好一点（1600就这样提个发际线？）提完之后，以后就这样，不会再长了，昨天你做的，你做的所有东西，都是经过你同意的，并不是说你不知情（小吴：完全是我在中途才签的字，签字两三个人围着我，什么意思啊）他上去不管做什么，我们肯定告知项目的效果，鬓角还要几次才有效果，美肤就不知道了。”
+
+　　接下来，小吴会向商务部门反映情况
+
+　　记者从小营市场监管所核实到，对方有营业执照，上面的名字叫杭州尚学国际美容美发，今年5月份注册，营业执照办下来还不到半年。
+
+　　杭州上城区尚进美容spa店店长俊超：“（当时还办了会员卡是吧？）是的，会员卡500块钱（5月份才开啊？）这个我不太清楚（预付卡半年内不能发的）所以说我不清楚。”　
+
+　　浙版新消法第十条规定：经营者自营业执照核准登记之日起六个月后，方可发放单用途商业预付凭证。
+　　小吴说，会员卡在协商时就已经退了，但他会再向商务部门反馈下。
+　　小吴火了，有点不适应
+　　节目播出之后，让小吴没想到的是，他一夜间就火了起来，小伙子说有点不太适应。
+
+　　昨天晚上的节目播出后，很多观众关注到了小吴的表情，在微博上大量的转发评论，截止到今天傍晚6点，已经有3000多万的阅读量，以及7万多的转发和评论量，包括人民日报等微博也进行了转发。大家一方面关注事情进展，还有人收集制作小伙子的表情包来，记者今天再次见到小吴时，他表示有点不太适应。
+
+　　小吴：“好多电话打过来找我（是火了还是？）火了，就相当于让我代言，我到现在都还很懵，我真的不知道是怎么火的，到现在都很懵。”
+　　小吴说自己才18岁，对着突如其来的关注有点吃惊，自己的表情包上了热搜，自己的微博账号也火了，被人搜出来转发后，几个小时里就多了上万的粉丝。
+　　小吴：“最开始才几个，现在相当于根本打不开那种（我看很多拿你的头像做表情包）我的意思最好是不要（但我看你自己的微博也在发）如果实在没办法，大家开心就好。”
+
+　　小吴的同事：“每一个评论都能戳中我们的笑点，就是表情包嘛，太搞笑了，还是这样的状态（你放松也是这样的状态啊？）对啊，我放松也是这样的。” 
+　　再次来到店里，昨天那位店长已被开除
+　　很多粉丝给小吴留言，大家是善意的关注。小吴说，给大家带来快乐，自己很荣幸，但还是希望大家关注理发的事情。他说昨天下午市场监管部门介入后，店老板已经把2500块钱退给他了。今天他跟同事又去了店里，店老板在门口等着。
+　　杭州上城区尚进养生spa店臣老板：“他那个所有款项已经退掉了，我们也会主动要求停业两天，第三个我也道个歉，昨天那个店长已经被我们开除，他这种事情，这么高的价格，作为我来讲，我也不知道，如果不出这个事，我也不知道。” 
+
+　　臣老板说，那个叫俊超的店长已经被他开掉了，收这么高的价码，他不知情。
+　　杭州上城区尚进养生spa店臣老板：“我们怎么可能有收这么高的价目出来呢（昨天说有价目表？）所以说（其实是没有的？）对对（这个是什么呢）其实就是想把鬓角修掉，去了以后不长，可能是这么想的，不长，正常头发剪了还是要长（别人的发际线都是希望拉低你让他不长？）这个可能是沟通上存在问题。”
+　　相关部门已介入
+　　臣老板说，小吴做的这些项目，并不在他们服务范围内，能服务的项目都在店内挂着，这时记者发现营业执照也挂了起来。
+
+　　杭州市市场监督管理局工作人员：“我们就是按我们的职责范围内进行检查，有消费的投诉单，钱退了，反正后面这个事我们再进行一个检查。”
+　　杭州市市场监督管理局消费维权科的王科长表示，消费者的问题解决了，但店里的检查才刚开始。他们对当天的消费清单，营业执照，会员卡等资料进行采集。价格的问题，将由一同到来的杭州市上城区物价检查所的工作人员现场采集。
+　　杭州市上城区物价检查所工作人员：“所有的收费项目都在这里，这些，是另外的，这些都没有的，这个当天特价6800，是嫩肤的价格是吧，四次。” 
+　　杭州市上城区物价检查所胡所长：“标价上面做的项目，没有体现出来，主要是这个问题，其他的调查了再说。” 
+　　高价理发将加强监管
+　　胡所长表示，凡是消费的价目，都要在店里进行公示，他们会进行采集然后调查。
+
+　　杭州市上城区物价检查所胡所长：“（哪怕签了字，只要是没明码标价，签字也）认可，又另外一回事，不管你认可或者怎么样，我们要求要在这个上面公示，我看这么多的，消费者都来认可。” 
+　　杭州市市场监督管理局消费维权科的王科长：“（那他说的是店长的事情，跟老板）首先来讲，员工的行为，一定是代表经营者的，不管你是店长也好，工作人员也好，他的行为一定是代表经营者本身的，经营者本身一定要负责任的。”
+　　王科长称，针对理发类的高消费维权，他们接下来加强监管，发现一起严查一起。
+
+
+
+免责声明：自媒体综合提供的内容均源自自媒体，版权归原作者所有，转载请联系原作者并获许可。文章观点仅代表作者本人，不代表新浪立场。若内容涉及投资建议，仅供参考勿作为投资依据。投资有风险，入市需谨慎。
+
+
+责任编辑：王潇燕
+

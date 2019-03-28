@@ -1,0 +1,360 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+视频：“黑心”水管用“再生料”
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255087936,
+				pid:1,
+				url:'http://video.sina.com.cn/view/255087936.html',
+				title:'视频：“黑心”水管用“再生料”'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255087936/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　埋在地下的秘密：“黑心”水管用“再生料”
+　　高密度聚乙烯双臂波纹管被俗称波纹管，主要是用于小区市政排水，是近年来大量采用的排水管。而记者发现，市场上有一种水管，比“国家标准版”的产品价格便宜三分之一，是因为生产程中加入了便宜的再生料。
+
+
+　　有业内人士表示，好多再生料是用洋垃圾做的。这样的管材长埋地下，很容易出现渗漏、破裂、爆管等现象，将直接影响公共安全。
+
+　　其实，一些从业者心里非常清楚，加入了再生料的水管无法达到要求，但依然通过隐蔽的作假手段，让问题产品流向市场。
+
+
+　　涉事企业：
+　　•新郑浩通管业有限公司
+　　•江阴长江管材公司
+　　•洛阳久通管业有限公司
+　　•江阴大嬴塑业有限公司
+　　•新郑康泰管业公司
+　　•中谊建材科技有限公司
+　　现场实录：
+　　我们知道每一个行业、每一种产品都会有自己的标准，这其中包括职业标准、行业标准或者是国家标准。可以说这些标准就是我们产品品质的一条底线，只有那些达标的产品才能够给我们提供最基本的质量保障和安全保障。当然对我们消费者来说这些标准可能是看不见的、摸不着的，但是正是这样一道无形的防线在捍卫者、守护着我们的公共利益。但是在有一些行业，却充斥着所谓的非标产品，也就是不达标的产品。这些非标产品大行其道，到底会给我们的市场带来怎样的影响呢？
+　　一起来看。
+　　解说：高密度聚乙烯双臂波纹管被俗称波纹管，主要是用于小区市政排水，是近年来大量采用的排水管。河南新政浩通管业就是专门生产波纹管的公司，院子里对方着大量的波纹管，在这里记者发现一个奇怪的现象，除了少量波纹管上标注的产品型号、执行标准等，其余大部分波纹管上竟没有标注任何信息。
+　　这个国标的
+　　这个都要打
+　　非标管子都不敢打
+　　国标、非标究竟是什么意思？有什么区别呢？
+　　国家标准埋地用聚乙烯结构壁管道系统对波纹管使用的产品及原料应达到的各项指标都做出明确规定。达到这一标准的就叫国标管，而达不到国家标准的产品业内都叫非标管，在一些工地上非标波纹管很受欢迎。
+　　我做的库存也比较多，因为按市场行情去做，对吧。
+　　非标管价格比国标管便宜近三分之一，价格如此大悬殊是因为加入了再生料。
+　　这塑料回收料也有，原生料也有。
+　　国标的就是原生料做的。非标是那个造粒的粒子再加这个原生料。
+　　解说：中谊建材科技有限公司是当地波纹管销量较大的公司之一，同样生产波纹管。
+　　这个卖的多还是那个卖的多？
+　　这个卖的多，大部分都要这个管。
+　　非标排水波纹管的确相当有市场。
+　　我们所做的全部都是非标的，都不打字。
+　　这是非标还是？
+　　非标、非表。
+　　排水管竟然存在大量非标产品，而随着调查的深入记者发现储水管竟然也存在着不少非标产品。……厂区里摆放着很多黑管，陈经理告诉记者此类外放的产品大多都是为居民输送饮用水的集水管。
+　　市政饮用水管材的颜色为蓝色或黑色，黑色管上应有蓝色色条，色条沿管条至少三条。
+　　陈经理承认这些产品其实是非标的，生产过程中添加了一定比例的再生料。
+　　陈经理告诉记者，再生料比新料便宜近一半，因此搀入再生料越多，给水管的价格越便宜，业内大家已经熟悉了用新料与再生料的比例来区分给水管档次。
+　　记者在河南江苏等地调查发现，带给水管中添加再生料的现象并非个案。
+　　现在有拿咱物料做供水管的吗？
+　　有。
+　　现在用咱这个管当供水管的多吗。
+　　有，半新料。卷新的哪里有买的动力？
+　　无论是排水用的非标波纹管还是非标给水管，原料中添加再生料是使这些产品达不到国标的重要原因。一些工厂负责人告诉记者这些再生料大多是从外面采购过来。
+　　再生料是那种洋垃圾。
+　　回收的，彩色的，绿的、黑的、红的，啥都有，都是收的废品再造成粒，啥样的都有。
+　　解说：事实果真如此吗？按照这些水管生产厂家提供的线索记者调查发现，由于国内需求量大已经形成了一个完整的再生料产业，有些人直接从国外进口加工好的再深料卖给下游企业使用。还有的企业就是用这种经过破碎的花花绿绿的塑料废品加工再生料。
+　　你这大部分都是桶。对，都是桶料。
+　　就是大桶、小桶。
+　　啥塑料？
+　　洗发精经品、沐浴露品、蓝罐。
+　　解说：这些塑料肥品被熔化、拉斯、冷却、切割之后就便成了颗粒的再生料，由于比新料价格便宜近1/3，颇受水管生产企业欢迎。
+　　你的客户都是做给排水的。
+　　是的，基本上都是做排水管。
+　　你们的客户里做给排水的多吗？
+　　多，有呀。
+　　供水管，给水管。
+　　我们都是给人家做管道的。
+　　工厂老板告诉记者，由于经过了多次熔化，再生料的生产指标和新料无法相比，做成水管后所承受的压力无法达到国标的要求。金政浩通管业负责人承认加入了再生料的波纹管，承重力只有一半左右。
+　　这个承重多少？
+　　只有大概4个、5个左右。
+　　解说：相差近一半，这样的管材将直接影响公共安全。而非标给水管所能承受的压力实际上也是只有国标的7成左右。
+　　10公斤现在实际能达到多少？
+　　试压10公斤，常压的话7公斤左右吧，打一个7折。
+　　市政饮用水管材更是关系到千家万户的用水安全，因此我国相关标准明确规定，生活饮用水输配水设备和防护材料使用的原料应为食品级。其实从业者心里非常清楚，加入了再生料的非标给水管无法达到食品级的要求。
+　　卫生指标那都不用考虑，你只要加上10%，它都给你检测出来卫生部达标。
+　　回收管它是首先一个卫生指标达不到的。
+　　给水管必须第一个条件就是卫生必须合格，回料咋会卫生，你一查肯定超标，第一步就超标，已经成非标了。
+　　排水用的波纹管和国标相差一半，给水管连卫生都存在隐患。采访中生产企业为了逃避监管生产企业各有各的办法，有的厂家在管材外边不标注产品名称、执行标准等信息。有的企业虽然生产的是非标管，但是却公然在产品上标注着国家产品。
+　　标注打吗？
+　　打。
+　　不管啥料都打？
+　　都打。
+　　七新，七成新料三成回料。
+　　做什么？
+　　就是GB/T。
+　　就是国标？
+　　对。
+　　解说：还有的厂家做法就显得更加隐蔽了，在江苏有的厂家虽然是依据企业标准生产了排水管，但大部分产品上不但不标注排水管的字样，反而在管材外壁加上了四根蓝色线条。
+　　像他们有的人自来水管去冒充，都是这种管子。
+　　解说：为了让各种非标管材堂而皇之进入市场工地，一些生产厂家甚至为采购方准备好了各种应付检查的手续。
+　　半新料的管，能提供这些卫生许可？有。检测报告什么的都能有吗？有，可以。
+　　能对得上吗？
+　　当然对得上。
+　　你要五五料，也是给你全新料的检验报告。
+　　给你出正常的检查证明，但是东西你知道咋回事。
+　　马洪涛：大部分的管道都是常年埋藏在地下是不见阳光的，但是它们的质量必须要经得起阳光的检验。我们可以看不见这些管道在哪里，但是对于它们的质量问题我们绝对不能视而不见。其实早在2014年，也就是四年之前已经有媒体曝光过自来水管道存在质量问题，当时我们国家卫计委也曾经采取专项整治行动，中国塑料行业协会也曾经发布了行业的自律公约，之后这个情况的确是有所好转。但是刚刚这个调查还是提醒我们，对于这个行业的问题必须要常抓不懈。
+
+
+
+
+
+责任编辑：孙剑嵩
+

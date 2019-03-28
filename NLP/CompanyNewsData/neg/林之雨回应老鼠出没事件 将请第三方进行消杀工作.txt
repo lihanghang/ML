@@ -1,0 +1,66 @@
+
+
+
+
+
+
+
+
+　　【推荐阅读】
+　　北京林之雨铁板烧店备餐区现老鼠用餐者当场呕吐
+
+　　新浪财经讯3月27日消息，林之雨精致料理铁板烧在昨日接到新浪黑猫投诉平台上消费者投诉后，今日在其官方微博上发文通报3月25日其北京望京店备餐区老鼠横行情况的处理结果。林之雨表示北京望京店将于3月28日结束营业后请第三方生物公司进行消杀工作，其他门店也将自行进行消杀工作，并确保此类事件不再发生。
+　　3月24日晚间，消费者在林之雨日式料理望京店用餐时多次看到有老鼠出入备餐台，用餐后当场呕吐，他录像后找来工作人员，店内经理表示最高赔偿是消费免单，拒绝他提出的检测食物并到医院检查的要求。随后该消费者在新浪黑猫投诉平台上进行投诉，要求商家停业整顿、赔偿其经济损失并提供身体检查，平台当天便将该投诉分配至有关商家，并在24小时内获得商家对于该事件的处理结果。
+　　商家此次回应并未涉及如何进行赔偿，新浪财经将持续关注此事件进展。
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'961126047678200351542152952'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+　　新浪《黑猫投诉》消费者服务平台正式上线后，充分发挥互联网高效便捷的特性，利用社交网络和媒体优势，帮助消费者快速对接当事企业，进而推动投诉事件得到快速解决。
+　　目前，黑猫投诉平台已与12301国家旅游服务热线达成战略合作，对涉及旅游景区管理部门等的重要投诉，黑猫投诉将在24小时内提交至12301平台进行重点处理，共同提升处理效率。未来，黑猫投诉将与越来越多的企业商家、监管机构等合作，更紧密贴近消费者，共打造健全的维权体系，协助营造公平公正的消费环境。
+
+
+
+
+
+
+责任编辑：孙剑嵩
+

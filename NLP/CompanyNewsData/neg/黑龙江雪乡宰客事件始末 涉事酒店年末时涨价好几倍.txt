@@ -1,0 +1,366 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+毛振华
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:252934062,
+				pid:1,
+				url:'http://video.sina.com.cn/view/252934062.html',
+				title:'毛振华'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=252934062/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　刷爆朋友圈的“雪乡”事件，你想看的都在这
+　　《爸爸去哪儿》这个综艺节目带火了黑龙江雪乡，但是最近有人在去雪乡旅游的时候却遇到了宰客的事情。
+
+　　“雪乡宰客”事件
+　　近日，一篇关于“雪乡宰客”的文章引发网友关注。
+　　在网传的这篇名为《雪乡的雪再白也掩盖不掉纯黑的人心！别再去雪乡了！》的文章中，这名游客称，自己与家人2017年12月9日在雪乡赵家大院预定一间三人火炕房，计划27日入住，支付两晚费用552元。但当他们到达赵家大院时，店家却告知该三人火炕房只能住一晚，第二晚安排他们到很多人一起睡的大通铺，并称，“今晚住这房我都没让你们补差价算不错了！现在这房八百一千随便订出去，你们订得早才便宜。”
+　　这名游客与家人商议后决定只住一晚，但对后续退款问题，店家又称三天之后才退钱，并要求在网上评论时不能“乱说”，看到评论后才能退钱。文中还提到，在游客中心泡面卖60元一盒、有大巴车乘务员忽悠游客购买的游玩项目其实是毫无经营权的民设景点等问题，另外，在这名游客截图的网友评价中，有人提到当地一盘炒肉卖288元，一小杯红糖水卖15元等。
+
+图片摘自一木行微信原文
+　　涉事酒店：年末时价格确实涨了好几倍
+　　雪乡赵家大院事件中，酒店方面的当事人付先生称，“一木行”帖子中的说法除了录音中他要求对方先评论再退钱的部分，其余基本都是假的，而他提出先评论的要求，也是因为对方提出无理要求在先。付先生一再表示：“对方的目的就是想讹钱。”
+　　付先生称，“一木行”确实在携程上预订了12月27日、28日两晚“三人炕”的房间，预订价格每晚276元。但他表示，入住的只有年轻夫妇两人，并不存在帖子中提到的“木木妈妈”这个人。
+　　付先生承认，年末那段时间酒店的价格确实涨了好几倍。“三人炕”的价格，半个月前网上挂的是276元，那几天网上改成了1009元一晚，店里线下的价格是850元。但给“一木行”的价格还是按照他们预订时的276元一晚。“两晚都是这个价格，没有想过让他们补差价。”
+　　付先生表示，自己并没有要求对方换房，提出换房的恰恰是“一木行”一方，而且对方提出了倒补差价的要求。“他们自己过来找我唠嗑说，第一晚他们住在‘三人炕’，第二晚他们主动搬到大通铺去，大通铺还按276元一晚收他们，但因为他们让出了‘三人炕’，所以要按现在的价格850元，把差价574元用现金退给他们。”
+　　“我一听有点怒，说你住我这，还做起买卖来了。”付先生进一步表示，“一木行”一方之所以提出这个要求，是因为他们看到很多人来询问有没有房，但店里已经没有空房。“而且他们原来定了两晚，来了之后发现雪乡的行程，只住一晚也能游览完。”
+　　付先生称，对方说了这个要求后，还威胁他说要给差评，要去网上曝光他。“我觉得还不如不做这笔买卖了，就说他们可以退房。”他承认自己要求对方先不给差评，自己再去携程上同意退款。“这样做，我也是没办法，不然他们老拿差评威胁我。”
+　　付先生表示，本来他以为事情就这样过去了。没想到，这几天网上就有了那个热传的帖子，“前天有个南方口音的男的给我打电话，说想摆平这个事得拿出4万元，我也不知道是不是当事人。我刚想录音，对方就把电话挂了。”
+　　针对媒体报道的黑龙江有关部门对赵家大院给出的5.9万元的罚款，付先生表示，这几天派出所、消防部门都来过人。“这笔罚款是针对酒店年末几天的涨价的，说实话，我们雪乡的酒店旺季这段时间都这样涨价，对这个处罚我不是很认同。”据他介绍，这几天，他已经把酒店关了，携程上的预订也下线了，名义上是停业整顿。
+　　付先生称，关于他和“一木行”一方交涉的事实情况，他很后悔没有录音，但他有人证，“酒店的工作人员和部分旅客都听到了”。他也希望，如果“一木行”一方有整个过程的录音，能够都拿出来，还原整个事实。
+　　记者多次联系“一木行”一方，希望对方就付先生一方的说法做出回应，截止发稿前（1月3日17：34分），“一木行”一方尚未回应记者。
+　　涉事游客最新回应
+　　在12月29日，我们发表了《雪乡的雪再白也掩盖不掉纯黑的人心！别再去雪乡了！》文章，陈述了在雪乡遭遇被无良店家驱赶与威胁的经过，以及在雪乡所亲眼看到，亲耳听到的一些真实情况。
+　　由于此篇文章传播甚广，我们收到很多读者给出的疑问，秉着真实还原事实的心态，特做出以下回应。
+　　关于地域问题
+　　首先，我们绝没有任何对于东北地域的言论攻击，全文都明确指出“雪乡无良商家”，以及提到东北口音的时候也明确表示了前提——雪乡商家。
+　　为什么会跑到东北去看雪，是因为木木妈就是一个东北人，少时随家人离开家乡，几十年没有回过东北，一心想要回去看一眼。因此木木也算半个东北人，我们绝不会因为一个景区就抹黑一个地域和抹黑自己的家乡，请有些读者不要断章取义，文章中陈诉的只是我们经历的事实真相。
+　　而对于文中有提到的喀纳斯。在经历了雪乡事件之后，我们深知喀纳斯算是良心景区，毕竟那边地处偏远，维护不易。我们对于新疆的喜欢，相信在80天的后续更文中，大家能够知晓。为此不做过多无用的解释。
+　　关于雪乡官方（工作人员）给出的回应
+（我们将具体信息姓名抹掉，避免个别人对他造成不必要的骚扰）
+　　相信在我们的回复里可以看出我们的态度，我们没有恶意，真正的是希望雪乡可以认识到欺客事件的严重性，继而在以后可以好好整顿以及好好发展。
+　　关于收到的读者评论
+　　在我们收到的无数留言里，虽然有一些人不明事理并断章取义去理解文章，甚至还有些言语攻击，但是这些还是少数，大部分人都秉着公正的态度去看待这件事情。
+　　但是最让我们痛心的是，留言中有那么那么多的游客也曾遭遇了同样的经历。不仅仅在微信公众号，新浪微博里我们也收到了很多有过被骗被坑经历的游客给我们发来的私信。我相信这也是为什么关于雪乡的文章会引发如此之高的关注度，因为受害游客，太多太多了。
+　　关于大家留言告诉我们的经历，我们都收到，非常感谢大家此刻勇敢得发声。
+　　也希望大家就事论事，不要对地域进行言语攻击。无论是哪个地方的人，都有好、有坏。
+　　雪乡无良商家是事实，但是东北正直、善良的人也无数。
+　　而还有个别带有威胁及侮辱的留言。希望有些人明白，如果我们害怕威胁，就不会有关于雪乡的文章出现。文章所陈述的均是事实，不存在半点欺骗。如果有人真的要抱着这种心态强逼我们黑白颠倒，甚至删除文章，那么对不起，我们不会成全。
+　　我们也相信，微信公众平台是一个正义之声可以留存的地方。
+　　“建议”不等于“强制”
+　　首先，因为我们经历如此遭遇，也因为深知还有很多人也与我们一样也曾被这样对待，甚至更甚，因此发出了这篇文章，给出我们的建议。但是建议不是强制，至于雪乡到底去还是不去，全在于自己。
+　　为什么我们有一定的旅行经历却前往雪乡，这其中有我们自己的原因。在木妈告诉我们她想回东北看看，想去看看厚厚的雪景的时候，我们正在国外旅行，为了赶在她元旦前的几天空闲时间能够带她前往，我们临时在国外匆忙订了机票和住宿。回国的第二天就火速出发了。
+　　因此我们没有做好对于雪乡的了解，这也是导致此行不畅的原因之一。
+　　所以如果有人问：到底雪乡还能不能去？我们想说：这取决于你们自己。
+　　雪乡冬季每日接待游客可以数以万计，在如此之多的游客里面，总有些游客遇到了好的旅行社，或者自由行遇到的是良心店家，这些也都是存在的。
+　　我们给出建议，只是因为被欺和被骗的游客也存在很多。这已经不是做好万全计划和查遍攻略就能避免的事情了，难道道出真相让更多的人多一份警惕和选择，不应该吗？
+　　我相信绝大部分人，是能分清：贵，不等于黑。“贵”可以根据经济情况来决定接受与不接受，而黑是绝不接受的！
+　　而如果对于这个建议不认可，可以不用理会，更不用采纳。
+　　我们给出建议的初衷，不是为了让雪乡门庭冷落，而是希望让更多普通的游客有所防备，避免被坑。也希望雪乡相关部门能够清楚的认识问题的严重性，只有正面认识到问题，才能解决问题，雪乡才能在今后有更好的发展，而不至于被一些无良商家所彻底败坏。
+　　感谢
+　　事情发生到现在，收到很多朋友的留言鼓励和支持，我们在此万分感谢。说真话的路从来不是坦途，但有你们正义之声的相伴，我们已很知足。
+　　关于此事，已有很多媒体新闻记者与我们联系，希望各大媒体新闻平台不要断章取义随意报道，请公正的报道。
+　　此声明我们除了微信公众号之外，也会同步到新浪微博，仅在这两个平台进行公布。
+　　感谢大家对于此事的关注。
+　　最后想说，我们非常难过得在网上得知在12月31日前往雪乡的路途中因发生交通意外已导致北京林业大学学生4死5伤。跟生命安全比起来，被欺被骗和被坑，都显得微不足道了。
+　　希望每个人安全出行，平安归家。
+　　（部分内容有删减）
+　　黑龙江旅游部门官方回应
+　　1月3日，黑龙江大海林林业地区旅游局局长刘忠才表示，经查，文章中提到的赵家大院确实存在价格欺诈行为，按照规定已对其处罚5.9万余元，同时发现赵家大院在卫生及消防方面也存在问题，已责令其限期整改。
+　　相关负责人表示，发现帖文后立即组成工作组，到涉事旅馆调查核实。经查，涉事旅馆（赵家大院）不属于核心景区，是村民自办的家庭旅馆，有正规的营业执照。网帖中所说关于老板态度蛮横的部分内容属实，但其只是个案。
+　　针对此事，大海林林业地区旅游局局长刘忠才回应记者称，2017年12月29日发现网帖后，当地立即联动林业局、消防等多部门组成工作组对涉事旅馆进行检查，发现店家（赵家大院）确实存在价格欺诈行为，按照规定已对其处罚5.9万余元，同时，店家在卫生及消防方面也发现问题，已责令其限期整改，否则将停业整顿。“今天3日刚好到期，我们会派专人前去验收。”
+　　不过，刘忠才也表示，网帖中存有不实信息，正考虑走法律途径解决。至于不属实的信息内容，他表示，“网贴后文中所说雪乡售卖的桶面60元一桶及餐馆中酸菜炒肉丝几百元一盘等内容不属实。”
+　　来源：新京报、新闻晨报、一木行等
+
+　　【事件起因】
+　　毛振华控诉亚布力管委会：我在这里被欺负被愚弄
+　　毛振华本想当面反映情况但省委书记并未到达滑雪场
+　　【相关回应】
+　　毛振华确认控诉视频真实：我一个企业家搞得像上访户
+　　黑龙江省委省政府重视毛振华反映问题开展深入调查
+　　亚布力管委会回应毛振华控诉：领导正在紧急开会
+　　【各方力挺】
+　　毛大庆谈毛振华喊冤：这样的管委会是社会进步癌细胞
+　　吴亚军力挺毛振华：不是被逼到走投无路不会诉诸公众
+　　潘石屹连发三条微博声援毛振华：喊冤！是为社会进步
+　　人大教授：连毛振华这样的人都被整其他企业可想而知
+　　东北经济学家谈毛振华控诉：善待企业家东北才有未来
+　　孙建波谈东北症结：是把毛振华搞成上访户的政商环境
+　　【媒体评论】
+　　人民网评：从毛振华遭遇看亲商环境不能是形同虚设
+　　新京报：面对毛振华雪地“陈情”地方政府不能无动于衷
+　　澎湃：毛振华雪地陈情这哪里像窦娥分明更像孟姜女
+　　经济观察网：毛振华的怒吼何尝不是东北的机会
+　　【相关背景】
+　　网络怒怼亚布力官方的毛振华是什么背景？
+　　独家揭秘：亚布力滑雪旅游度假区管委会是个什么机构
+
+
+
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

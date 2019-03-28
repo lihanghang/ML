@@ -1,0 +1,297 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+5天花掉8900元！揭秘老年人保健品会销骗局
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:266664555,
+				pid:1,
+				url:'',
+				title:'5天花掉8900元！揭秘老年人保健品会销骗局'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=266664555/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　5天花掉8900元，宣称有药物疗效实乃普通食品——记者暗访揭秘老年人保健品会销骗局
+　　新华社北京10月15日电题：5天花掉8900元，宣称有药物疗效实乃普通食品——记者暗访揭秘老年人保健品会销骗局
+　　“新华视点”记者邰思聪、鲁畅、马晓冬
+　　打着弘扬传统文化、传统孝道等旗号给老年人讲课、洗脑，借机把成本低廉的产品“包装”成能治百病的保健品高价推销，牟取暴利……“新华视点”记者调查了解到，这个名为“长寿工程”的老年人会销活动在全国多地开展。记者进入会销活动现场进行暗访，揭秘骗局内幕。
+　　会销现场：连哄带吓，老人5天花8900元
+　　日前，记者以合伙经销商身份进入位于中福丽宫品牌基地的“长寿工程”会场进行暗访。会销活动开始前，老人们先接受了“藏式传统药膏按摩”的免费体验活动。会场工作人员称，该药膏可以治疗各类关节疼痛、风湿性疾病，老人们争相排队接受按摩。
+　　半小时后，会销活动开始。据知情人透露，这次活动为期10天，内容为主办方邀请讲师前来讲课，其间安排三次产品销售。现场一些老人说，他们前几天就已经连续到此参与课程。
+　　据记者观察，当天有200到300位老人参与。会销主办单位用歌舞表演、课程讲授等方式吸引老人，现场老人时而开怀大笑，时而感动落泪。
+　　记者发现，为获取老年人信任，主办方会先要求老人交付现金换取产品券，有的老人交了100元，有的则交了8000元。在讲授过程中，主办方先将现金归还给老人，并赠予老人号称价格不菲的赠品，使老人防范心理降低，最后通过各种推销手段，把老人手中的钱再次拿到手。
+　　一位连续参加了5天会销活动的老人告诉记者，现场讲师先送给每人一份声称价值12600元、现场只售7000元的“青藏1号”产品，称这款产品可以治疗高血压、心脏病等心脑血管疾病。
+　　“讲师现场还播放了心脏搭桥手术视频，在场的老年人看了很害怕，几乎都买了产品。”她说，卖产品时，讲师说第一份是免费送的，第二份需要购买，不少老人在营销手段的诱导下，又将退还的7000元主动交给工作人员，购买第二份产品。
+　　她告诉记者，5天来，她一共花费了8900元，包括7000元的“青藏1号”，以及其他名义花费的1900元。
+　　记者注意到，“青藏1号”产品并没有保健食品认证标识或批号，有的仅是食品批号，其配料也只有白刺果、黑枸杞、番茄和香菇。
+　　现场一位经销商告诉记者，卖货时，即使销售高价产品，签单率也都在50%以上，若是新来参与活动的老人，签单率几乎超过80%。
+　　利益链条：经销商拉人头、会销方忽悠，双方五五分成
+　　记者调查了解，在“长寿工程”所组织的会销活动中，现场会销由该公司负责邀请讲师、销售产品、录制视频，合伙人则负责组织老年人到现场“听课”。在为期多天的活动里，组织者会安排三次“卖货”，所得利益与合伙人五五分成。
+　　一位曾经与“长寿工程”合作过的经销商告诉记者，这些合伙人都有自己的线下直营门店，售卖保健床垫、高电位治疗仪等产品，光顾者以中老年人居多，使合伙人拥有不少老年客户资源。“但直营店的利润远没有会销来钱多、来钱快。”
+　　他告诉记者，与“长寿工程”合作时，他销售的是一款标价2380元的负离子驻波机即净水机，四五百名老人中有一半掏钱购买。实际上，这款净水机成本只有200元左右，根本起不到宣传中的功效。
+　　另一位知情者告诉记者，“长寿工程”组织的会销上推销的产品“桑黄参肽胶囊”售价高达1980元，与成本相差悬殊。
+　　会销负离子驻波机的原经销商告诉记者，也有子女发现父母购买的产品、仪器出现问题想要退货或维修，但都找不到生产厂家。“通常情况下，儿女也不会为这些事和父母闹不愉快，于是不了了之。”
+　　怕走漏风声时间地点前一天才通知，用现金减少交易痕迹
+　　记者了解到，去年7月，国务院食安办等九部门联合印发通知，部署在全国开展为期一年的食品、保健食品欺诈和虚假宣传整治。此后，针对保健品公司借会议营销坑骗老年人的情况，全国多地掀起整治风暴，取得一定成效。但是，顶风作案的情况仍有发生。
+　　记者在此次暗访中发现，为躲避打击，会销手法更加隐蔽。知情者告诉记者，“长寿工程”从7月份开始在中福丽宫品牌基地进行了多期会销活动，其间有一些老人及其子女因组织方拒绝退款或发现情况不对而选择报警。此后，会销活动转至度假村中进行。“在哪开、几点开，组织方要到前一天晚上才会通知合作经销商，怕走漏风声。”
+　　公安部门一位执法人员告诉记者，由于一些商品“食药同源”的特效，为逃避法律处罚，不少商家用药物效果骗取消费者，但在注册产品批号时使用的是食品批号。多数会销人员要求老年人以现金形式进行交易，无形中减少了交易痕迹，增加了打击难度。
+　　法律人士认为，监管部门掌握的一些案件线索证据，往往因达不到立案查处标准而无法处罚到位，建议对相关法律法规中虚假宣传及欺诈的定性进一步明晰，同时行政机关应从重从严处理违法经营者。
+　　执法人员建议，应强化多部门联合执法，对产品来源、宣传行为、营销手段等的合法性进行核查，及时固定证据，形成打击合力。（完）
+
+
+
+
+
+责任编辑：陈合群
+

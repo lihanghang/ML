@@ -1,0 +1,29 @@
+
+
+
+
+
+
+
+　　联想多款电脑曝指纹识别漏洞：任何人都可登录系统
+　　来源：IT之家  守一
+　　IT之家1月29日消息 近日，联想发布公告称，旗下多款搭载指纹识别功能的电脑存在指纹识别安全漏洞。目前，联想已经发布软件升级以修复漏洞。最新版FingerprintManagerPro软件点此下载。
+　　受影响的电脑主要运行Windows7、Windows8、Windows8.132/64位版系统，因为这些电脑需要依赖FingerprintManagerPro套件进行指纹读取。而运行Windows10系统的电脑因为原生支持指纹读取，所以未受到影响。
+　　受该漏洞影响的型号具体有：
+　　-ThinkPadL560
+　　-ThinkPadP40Yoga、P50s
+　　-ThinkPadT440、T440p、T440s、T450、T450s、T460、T540p、T550、T560
+　　-ThinkPadW540、W541、W550s
+　　-ThinkPadX1Carbon（20A7/20A8）、X1Carbon（20BS/20BT）
+　　-ThinkPadX240、X240s、X250、X260
+　　-ThinkPadYoga14（20FY）、Yoga460
+　　-ThinkCentreM73、M73z、M78、M79、M83、M93、M93p、M93z
+　　-ThinkStationE32、P300、P500、P700、P900
+　　联想表示，联想指纹扫描管理软件FingerprintManagerPro会存储一些敏感数据，包括Windows登陆凭证和指纹数据，但使用的是弱算法加密，其中包含一个硬编码密码，只要安装这个指纹扫描管理软件，即便没有管理员访问权限，也可以让任何人可以登陆系统。
+
+
+
+
+
+责任编辑：孙剑嵩
+

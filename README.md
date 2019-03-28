@@ -1,5 +1,19 @@
 ## &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;技术专列
-#### 一、ML内容--工程测试代码
+### 一、ML内容--工程测试代码
+#### 各文件说明
+- attention&&memory:工程代码。基于注意力机制和记忆网络实现企业信用评级和科研投入的模型构建与训练。  
+- CNN:主要包括手写数字识别实验与基于卷积神经网络的企业信用评级算法模型构建与训练实验。输出在out文件夹中  
+- GAN:对抗神经网络实验，生成手写数字。  
+- gcForestTest: 多粒度级联森林源码，由南大周志华老师团队提出。  
+- MemNN:记忆网络实验相关。  
+- MINST_DATA:手写数字数据集。  
+- ML_Demo:机器学习实验相关：PM2.5、反欺诈等。  
+- NLP:自然语言处理相关：基于卷积的情感分析。  
+- RBM:受限玻尔兹曼机相关的手写数字实验。  
+- RiskPredict:工程代码。企业风险分析，主要方法是卷积神经网络。  
+- RNN:工程代码。行业风险分析，主要方法有RNN、ARIMA。包括汽车行业、信息服务业、房地产业。  
+
+
 ***
 #### 实例代码--[ML Demo](https://github.com/lihanghang/ML/)
 1. 机器学习实验，关于CNN、RNN、GAN等神经网络算法的入门、中级、高级运用，运用在图像处理或医疗诊断等领域
@@ -25,20 +39,18 @@
 不一定会增加训练结果的友好度，适当即可！
 
 ***
-#### 三、应用级--- 各大Neural Network算法在LUNG Cancer Image中利用，来进行临床辅助诊断
-##### (1)图像预处理
-1.
-2.
-3. ……
+#### 三、NLP情感分析实践
+##### (1)对企业舆情数据进行情感分析，目前能够进行正负向分析
+1. 实践过程中，一是语料库不是很多，即便有数据量也不够大。那么没有数据，我们也不能随意创造数据。只有去寻找了。随即自己写个爬虫去爬
+2. 基于TensorFlow的keras进行建模。主要使用jieba分词、word2vector、知乎已训练的词向量等。
+3. 主要[数据和代码](https://github.com/lihanghang/ML/tree/master/NLP)
 
-***
-
-## &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;有启示意义的博客
+## &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;博客
 ***
 - [研究生守则20条](http://blog.sciencenet.cn/home.php?mod=space&uid=220220&do=blog&id=444499)
 - [偏爱什么样的学生？](http://blog.sciencenet.cn/home.php?mod=space&uid=265898&do=blog&id=241678)
 - [王泛森院士：研究生和本科生的区别](http://www.folo.cn/user1/18593/archives/2009/79758.html)
 - - -
-#### 这里不仅有技术还有诗和远方！
-[我的个人文章地址](http://lihanghang.top)
-#### 更新于20180829
+[个人文章地址](http://lihanghang.top)
+* 备注：本仓库代码仅为工程项目实验调试时的整理，仅供参考！*
+#### 最后一次更新于20190327 by HangHang Li 

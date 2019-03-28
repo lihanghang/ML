@@ -1,0 +1,324 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+秒杀各路戏骨！这老太把神医
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251320452,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251320452.html',
+				title:'秒杀各路戏骨！这老太把神医'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251320452/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　推荐阅读：
+　　炒药团队起底“神医刘洪斌”：厉害的老群演让哭就哭
+　　“神医”刘洪斌用9身份推销保健品包装只要几千元
+　　起底“神医刘洪斌”：去年站台就被查生产商称不认识她
+　　最忙碌“电视神医”背后：每场广告报价至少5000元
+
+　　“假药广告表演艺术家”背后产业链揭秘：
+　　保健品吹成“神药”3月敛财600万
+　　来源：南方都市报 
+
+节目里，刘洪滨在给患者腿上涂抹药品。
+节目里，刘洪滨让一位坐轮椅多年的患者当场站了起来。
+招聘网站上，华珏达科贸有限公司提供的公司办公场景。
+　　刘洪滨（有时叫刘洪斌）所参与录制的节目，观众看到是她在镜头前侃侃而谈，但背后其实是从产品采购、视频广告制作、平台播出、受众购买等一系列产业链在运作。鲜为人知的是，刘洪滨参与宣传的产品销售公司负责人，曾经被告上法庭，最终“操盘者”被判处有期徒刑三年，缓刑三年。
+　　南都记者获取了一份来自江苏省淮安市淮阴区人民法院下达的刑事判决书。该判决书显示，这些视频“节目”的运作背后有一整套流程在运作：先是成立一家公司，然后安排人员采购产品，将保健品“变成”药品，开始制作并在电视台播出刘洪滨等“名医”参与的广告，打出“400”服务电话，观众来电话后有经过培训的“健康顾问”接听，运用早已准备好的“话术”吸引买家掏钱，三个月疯狂获利600余万元。
+　　《广告法》和《医疗广告管理办法》明确规定，医疗、药品、医疗器械广告，不得利用患者、卫生技术人员、医疗教育科研机构及人员以及其他社会团体、组织的名义、形象作证明。
+　　“骨头张开嘴吃药”实为保健品
+　　在刘洪滨参与录制的一档叫《药王养生汇》节目中，身份为“中华中医医学会风湿分会会员”的刘洪滨现场给一位患者涂药，让这名风湿病多年坐轮椅的患者，几分钟后就站了起来，感动得不少观众当场落泪。
+　　但其实这些节目都是事先拍摄的，就连刘洪滨手里的药，这些宣称是其“祖传的秘方”的“药品”，也是公司人员从其他医药公司购买的“保健品”，根本不是药，而且一转手就加价卖出。
+　　2011年7月，由张某出资，以另一人的名义，成立了“北京华珏达科贸有限公司”，从事电视购物经营活动。
+　　判决书显示，为牟取非法利润，张某通过中视蓝海（北京）影视文化传播有限公司等机构，在几家电视台以养生节目形式对这些“药品”进行宣传。
+　　接着，张某自行联系并购进了由湖南岳阳今华医疗器械有限公司生产的“御医风湿痛走珠给药器”、贵州省大方县贵州奢香药业有限公司生产的“清椿堂药王风痛方活络祛痛酊”这两种产品，值得注意的是，这些都不是药品。
+　　然而，当刘洪滨的节目在电视台播出时，这两种产品已经摇身一变，成为了“御医风痛方”和“药王风痛方”，刘洪滨以专家的名义，宣称能“让骨头张开嘴吃药”，是药王孙思邈的秘方。
+　　6月22日下午，贵州苗彝药业有限公司（原贵州奢香药业有限公司）相关负责人向南都记者称，自己并不认识这位“专家”，也不知道刘洪滨是谁，“我们的产品有批文，不是我们找的她，应该是代理商找的，我从未见过”。
+　　早先接受媒体采访时，这位负责人曾公开承认，刘洪滨相关视频的确存在对该药的夸大行为，现在仍有电视台在播。
+　　上述负责人表示，2014年，该药的一个代理商在北京找刘洪滨，并拍摄了相关宣传视频，而“清椿堂药王风痛方活络祛痛酊”在几年前已经停止生产。
+　　专人培训“话术”接电话
+　　经过一系列颇为离奇的情节，不少观众会逐渐相信这些“药品”确有奇效，在视频节目下方，始终会醒目地标示“400养生热线”，一旦打进这条热线，负责接待的“健康顾问”就登场了。
+　　这些健康顾问其实也是张某旗下公司员工，每个人在上岗前会安排专人进行培训。北京华珏达公司一位马姓经理透露，培训流程一般是先看广告片，然后把“话术”发给大家。
+　　员工接听电话时也完全按照话术的要求，先自报家门，自称指导老师、健康顾问等，之后介绍产品是宫廷配方，员工宣传时也是跟广告、话术一致的，目的是增加可信度，提高销量。
+　　该公司的另一位员工也表示，公司在销售产品前会对员工进行培训，先组织员工观看两种产品的广告，之后会把话术分享到公司的电脑上，员工自行打印、学习，话术主要指导员工如何跟客户交流并引导其购买产品。
+　　南都记者在一家招聘网站上看到该公司的“电话销售”职位的招聘广告，该职位的要求是“电视购物的形式接打电话直接销售，通过电话与客户进行有效沟通了解客户需求，寻找销售机会并完成销售业绩。”
+　　这些“秘方”既然不是药品，也就没有疗效，最终上当的一位患者，将该公司告上法庭。2014年，江苏淮安的一位居民王某，在观看了电视广告后，按照电视广告上的电话联系购买了“御医风痛方”，用后发现无效，然后向公安机关报案。
+　　收益惊人三个月敛财669万
+　　刘洪滨的虚假广告宣传带来的效果惊人。
+　　据判决书显示，经侦查，张某运营的电视购物公司，在2014年的三个月内，华珏达公司对外销售“御医风痛方”的金额为人民币4742620元、“药王风痛方”的金额为人民币1954687元，合计销售金额为人民币6697307元。
+　　公安机关于2014年9月21日对华珏达公司进行了查处，当场传唤被告人张某等人到案。其中一位被告人归案后，代华珏达公司退出赃款人民币400万元。
+　　公诉机关在法庭上出示了相关证据，并据此认为北京华珏达科贸有限公司以非药品冒充药品对外宣传、销售假药，有其他特别严重情节，张某作为北京华珏达科贸有限公司直接负责的主管人员，其行为已构成销售假药罪。
+　　最终，华珏达公司的负责人张某因犯销售假药罪，判处有期徒刑三年，缓刑三年，并处罚金人民币20万元。
+　　法律禁止专家为药品代言
+　　6月22日，南都记者致电中视蓝海文化传媒（北京）有限公司。总经理段继文称，曾在中部某省电视台播出的“御医健康汇”和“药王养生汇”节目并非他们制作，“我们只是电视台的合作方，后来我们也因为节目中间插广告被罚了”。
+　　南都记者了解到，全国大型健康养生电视节目《国医养生堂》由该公司出品制作。针对网友指出部分药品虚假推广质疑，段继文回应称，栏目被冒用很普遍，“现在很多药品推广都是打着我们的名号，事实上并不是我们制作的”。
+　　段继文告诉南都记者，公司成立于2010年，2015年前曾策划、制作过该类电视广告专题片，之后已取消该类节目制作，“投放渠道也不做了，现在主要做贴片广告，投放渠道是互联网媒体”。
+　　问及能否请专家站台推广药品，段继文则表示，公司的中西医名家资源都是正规专家，“他们参与节目推广医药知识是可以的，但是不能推介具体的产品及功效”。
+　　“相关法律条文是不允许专家以其身份为药品代言的。”6月22日，北京君本律师事务所律师王飞告诉南都记者，《广告法》和《医疗广告管理办法》明确规定，医疗、药品、医疗器械广告，不得利用患者、卫生技术人员、医疗教育科研机构及人员以及其他社会团体、组织的名义、形象作证明。
+　　此外，《医疗广告管理办法》还要求，广播电台、电视台、报刊音像出版单位、互联网信息服务提供者不得以介绍健康、养生知识等形式变相发布医疗、药品、医疗器械、保健食品广告。
+　　采写：南都记者 申鹏 实习生 李一凡　视频截图、网络图片
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

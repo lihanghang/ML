@@ -1,0 +1,310 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:258639859,
+				pid:1,
+				url:'http://finance.sina.com.cn/wm/2018-06-04/doc-ihcmurvh6535832.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=258639859/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　【曝光】这类热销儿童床，被检出多款产品存安全隐患！你家孩子在用吗（附名单）
+　　近日，北京市消费者协会公布了最新的双层床比较试验结果。结果显示，28件双层床样品不符合相关标准，这些不符合标准的双层床大多数来自于网络销售平台，价位从1701元到7070元不等。
+　　双层床不符合标准暗藏安全风险
+
+　　不符合国家标准的双层床违反的是国家强制性标准，这就意味着这些双层床是不允许生产、不允许在市场上销售的。而这些不符合国家标准的产品，问题多集中在使用安全上。
+
+　　检测人员介绍，与普通家具不同，双层床的使用者多为儿童，属于儿童家具。因此按照国标要求，儿童家具中1米6以下的家具产品如有外角，必须进行倒圆处理，且倒圆的直径最小要能贴合这个10mm的测角器。
+
+　　这次比较试验中，共有8件样品的边缘及尖端不符合国标要求，存在安全隐患。 
+
+　　国家家具及室内环境质量监督检验中心主任孙书冬：主要是对产品的安全意识不足，认为这个产品只要满足使用功能，但是忽略了产品设计缺陷对人体造成的这种伤害。
+　　而同样是设计问题，双层床梯子间距一但出了问题，容易导致儿童摔下受伤。 
+　　国家家具及室内环境质量监督检验中心主任孙书冬：标准要求这个梯子的上下表面之间的距离要在200-300mm的范围之内。
+
+　　经过检测，这次比较试验，10件样品的梯子不符合国家标准的要求。这些不符合国标的梯子，都是因为脚踏板上下表面的间距过大。 
+
+　　国家家具及室内环境质量监督检验中心主任孙书冬：出现这种情况的主要原因就是企业为了降低自己的生产成本，拉大这个梯子间距，这样的话会节省这个梯子脚踏板。记者注意到，因双层床导致的伤亡事故不断被报出。这些事故中，多数是由于上床安全栏板存在隐患，导致使用者从上铺摔下，最终酿成惨剧。
+
+　　因此，上床安全栏板作用不言而喻。国标要求上床安全栏板间隙在60-75mm之间，否则容易卡住使用者的腿或手臂。
+
+　　另外护栏要有足够的高度，至少达到300mm，过低的护栏容易导致使用者摔下。因为上床护栏的重要性，因此国标还规定满足间隙、高度要求的护栏四周都需要安装。 
+
+　　但是，在这次比较试验对上床安全栏板的检测中，发现28件不符合国标规定的样品中，有27件样品的上床安全栏板不符合国标要求，是不符合率最高的一项。 
+
+
+　　检测人员分析，导致护栏存在诸多问题的原因，同样是企业为了节省成本而减少用料。
+　　双层床上的标记线是不能忽视的安全线
+
+　　检测人员指出，不进行倒圆处理，人为拉大梯子间距等是此次比较试验中发现的主要质量问题，其背后原因就是生产企业为了节约成本。
+
+　　与此同时，一些不费原材料、因缺乏安全意识带来的风险也不容忽视。 
+
+　　国标规定，双层床的上床要有标记线，也就是永久性刻度线。它提醒消费者使用时床垫加上被褥的高度不能超过这条线。经过检测发现，这次比较试验共有24件产品没有这条标记线。 
+
+
+　　国家家具及室内环境质量监督检验中心主任孙书冬：这个警示线提醒消费者，约束消费者床垫的使用高度，如果超过这个刻度的话，会造成消费者从床上摔下致死致伤这种情况的出现，可以说这个警示线是保护消费者的一个生命线。 
+
+　　标记线是消费者的生命线。但是这条不费原材料的标记线，却有近九成的企业没有标注。 
+　
+
+
+
+
+
+
+责任编辑：刘万里SF014
+

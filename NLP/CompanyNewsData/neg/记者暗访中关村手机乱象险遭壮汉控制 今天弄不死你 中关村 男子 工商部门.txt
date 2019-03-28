@@ -1,0 +1,321 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+记者暗访中关村手机业乱象险遭壮汉控制夺路狂奔脱身
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251605631,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251605631.html',
+				title:'记者暗访中关村手机业乱象险遭壮汉控制夺路狂奔脱身'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251605631/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　“今天我弄不死你”，记者暗访中关村手机业乱象险遭壮汉控制
+　　“你是摄像的吗？现在摄。因为我现在要弄死他。”
+　　“全程录，不录都不行。（转头对着记者）今天我弄不死你。记住了。”
+　　中关村某大厦商场，一男子叫嚣道。
+
+　　中关村，这个曾经的“中国硅谷”发生了很多起欺诈消费者的案件。9月4日，新京报我们视频记者扮演消费者，经历了一场不同寻常的“交易”过程。
+　　电子钓鱼愿者上钩
+　　9月4日，记者在微信朋友圈收到一则推广广告，广告声称“旧手机换购iPhone6s只需499元”，记者与其联系后相约在欧美汇购物中心见面进行交易。
+　　晚上8点，记者到达欧美汇购物中心，并没有找到对方的商铺。与之联系后不久，一男子来和记者“接头”，随后记者被带到鼎好商场地下二层一商铺内。
+
+　　猛喂定心丸
+　　记者在商铺刚坐下，该男子便问询记者想要购买的机型等问题，在得知记者想要换购苹果7p后，对方拿出一部背带划痕，边角掉漆的苹果7p对着记者说，“这是样机，你先看看。”看完机器后，记者提出了是否是翻新机、山寨机的质疑。
+　　“你到（苹果）客服做质检，如果是翻新的，或者是那种山寨的，你都来找我，假一罚十。”面对质疑，男子给记者吃了一颗“定心丸”。随后，记者又和对方确认了手机是否是“三网合一”、保修等问题后缴纳了1500元，并将用于换购的旧苹果6p交给男子。
+
+　　避重就轻偷换概念
+　　缴费过后，男子开出一张单据让记者确认无误后在上面签字，上面写到“iPhone6plus换购iPhone7plus，添加1500元，享受运营商补贴，无质量问题概不退换，同城个人使用，网约机。“记者感到疑惑，什么是同城个人使用？”对方则称，同城就是指他和记者都是北京的，个人使用就是指记者自己使用。得到答复后，记者再三向其确定手机在各地都能用后，在单据上签了字。
+
+　　初露獠牙“不光费事，你还费钱呢！”
+　　过了2分钟左右，男子让记者和他一起去拿机器，带着记者离开店铺，后来到“e世界”11楼，该男子却变了卦。
+　　“你不是问我全国各地哪都能用么，我说对，哪都能用。但是这个前提是，你自己选择一个你常活动的区域。而且必须有4G，没有4G手机会自动锁机，白苹果知道么？进不了系统。”记者质疑，这不是太费劲了么。对方又称“你不光费劲，你还费钱呢。你每次没了4G信号都要来解锁，解锁是要收费的，不解的话会有滞纳金，按天收的，跟高利贷差不多，比如第一天50，第二天100，第三天300。”记者表示无法接受这种“霸王条款”，对方则称，记者已经签字，无法取消交易。
+
+　　图穷匕见不想承担“霸王条款”？只有两条路
+　　男子给记者提出两种解决方案。
+　　选择1： 1500元+旧苹果6p+5500元=苹果7p（价格7800）=回执单（有风险）
+
+　　需要再垫付5500元购买一款iPhone7plus（7800元）去他指定的机构申请撤销交易，申请成功后该机构会接收iPhone7plus并给记者一张回执单，拿着这张回执单来找他将会得到退款。但如果申请不一定成功。
+　　选择2：1500元+旧苹果6p+1200元=旧苹果6+国产手机+置换霸王协议
+
+　　需要再垫付1200元买的一款国产手机，用这些手机来置换协议，但这些手机均高出市场价。
+　　记者险被控制夺路狂奔多人追逐
+　　记者再三表示自己身上没钱，对方则要求记者必须在当天借钱来垫付，并用语言威胁记者。
+　　随后，记者打电话上厕所均有人跟随，在靠近电梯间时立刻被对方制止，并称给记者准备了VIP包间来打电话借钱。记者见势不妙，趁其不备从安全通道甩开数人追逐，逃离脱身。
+
+　　男子推搡记者工商将店铺查封
+　　9月5日（第二天），记者与工商部门一同到现场查处，与记者交易的男子见状，当着执法人员的面威胁要弄死记者，后又推搡记者。
+　　该店铺老板对工商部门表示，涉事男子与其店铺没有关系，只是在店铺里发生了交易。但工商部门认定该店铺无照经营，并涉嫌欺诈消费者，予以查封。
+　　工商部门：中关村是我们工作的重点
+　　记者通过检索了解到，其实早在16年5月，北京就出现了类似的事件，其操作手法大致相同，甚至连涉事商铺的名字都仅有两字只差，一年前的商铺叫“微新数码”，而这次事件发布推广广告的商铺叫做“微新汇聚数码”。
+　　对于类似的现象，海淀分局中关村西区工商所高所长对记者称，中关村电子卖场秩序混乱的问题一直是工商部门的工作重点，现在对市场内强买强卖、销售假冒伪劣、恶意的销售转型等恶性的消费欺诈事件，都会第一时间采取封店，高限处罚，并给市场主办单位发清退建议书，要求其与商铺解除租赁关系。
+　　对于已经清除卖场的不良商户，工商部门会将这些不良商户列一个清单，要求所有卖场不得和商户签订新的租赁协议。
+　　据工商部门介绍，一些不法商家欺诈消费者又有了新的手段。他们通过一些类似闲鱼、转转之类的二手物品交换软件发布信息，以低价吸引消费者上门，再使用传统的手段欺诈消费者。
+　　提醒：千万不要贪图小便宜，不是每个人都像我们记者跑得快的哦
+
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

@@ -1,0 +1,346 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+视频：美联航强制乘客下机
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251127200,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251127200.html',
+				title:'视频：美联航强制乘客下机'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251127200/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+
+
+
+
+　　推荐阅读：
+　　美联航超售票粗暴拖走69岁亚裔乘客乘客满脸血迹
+　　美联航华裔乘客遭强行拖拽下机一涉事警员被停职
+　　美联航CEO称支持员工做法因乘客挑衅　
+　　美联航强拖乘客下机CEO上月刚获公关大奖　
+
+　　【图】因为选择了美联航，年近70的他被打的满脸是血，拖下飞机
+　　来源：北美吐槽君
+
+　　今天吐槽君我吐槽都不发了，因为看了件特别气人的事情。美国时间9号，一名年近70的亚裔乘客，在付费购买了美联航（UnitedAirlines）的机票后，顺利登机。准备起飞时，由于他们要载几个UA自己的雇员，而飞机已满，就把无辜的乘客请下去。而且不是一般的请，是叫来三个大汉，弄的满脸是血拖着“请”下去。
+　　事情发生在芝加哥O’Hare国际机场，在美联航从芝加哥出发前往路易斯维尔的3411航班上。在场的不少乘客纷纷谴责这群警卫的行为，并手机拍了当时的情况，而一旁不断有乘客发出惊呼与尖叫：
+　　事发后，美联航发出声明（就是强行解释），称由于航空公司超额售票导致该趟航班超载，出发前希望能有4名乘客主动改签，并会对此进行相应的补偿。而直至飞机即将起飞，也没有乘客愿意放弃座位。
+　　所以航空公司便以机舱级别，是否为常飞顾客以及办理登记手续的时间这三个条件为准，随机选择了4名乘客请他们下机改签，而视频中出现的这位乘客，便是这4人中拒绝配合的一位。
+　　由于该名乘客拒绝下机，美联航方面便请求警卫出动，将其强制带离飞机。乘客AudraBridges事后补充道：“清空出来的4个座位，之后便由美联航的4位空乘所占，这些人急着要去路易斯维尔当值。”
+　　在被警卫带离后不久，这位乘客又一脸是血小跑回了机舱：
+　　他看起来惊魂未定，一直在不断重复“justkillme．．．justkillme．“（杀了我吧，杀了我吧）
+
+　　但最终该乘客还是被带离了飞机，并被送往LutheranGeneralHospital进行治疗。据悉，这位亚裔乘客实为一名医生，而他此次出行，是为了病人而出诊，所以才拒绝下飞机。而且消息指出，他似乎是要去做一台手术。
+　　最搞笑的就是，美联航牵强的解释根本糊弄不了美国大众，这条视频，和其他乘客们在自己的社交账号上发布的内容一起，迅速在脸书和推特成为热门，也迅速登上全美的新闻和网站的头条。#BoycottUnitedAirlines（抵制美联航）的标签也迅速刷爆。
+　　扒皮点一：在场的乘客称，之所以没有人自愿下飞机，是因为美联航给出的补偿，不是他们说的400美金，而是几张UA的50美金代金券。而且每次只能用1张，还只能1年内用完。也就是说，假如是补偿400，你要一年坐8次UA飞机才能用完。大哥，被你打一次还不够，还要再来8次？？？
+（美国网友恶搞漫画：我们超售了，自愿改签者可收到“免揍券”一张）
+　　扒皮点二：UA发言人对媒体说，因为自己Overbooked（预售过度，导致买票数超过实际座位数，这在酒店航空业挺常见的）。你这是睁眼说瞎话吧？？如果是这样，为啥这位先生和其他乘客都已经好好的坐在飞机上？后来被人爆出来说是因为UA要载自己的人去执行公务。
+　　好牛b哦，因为UA自己的雇员赶着要上飞机，就能把交了钱的乘客暴打一顿赶下去？你们这么牛逼，咋不搭乘专机去？？
+　　扒皮点三：亚裔乘客不配合，航空公司是按流程办事。事后，美联航发言人先是发表了声明，称航空公司是在“按照流程办事”。随后马上被美国空管协会打脸。航空部出来甩锅称这个事件里面的空警的处理方式完全不符合他们的标准流程，并且这样的行为绝对不会被宽恕。相关人员已经马上被停止调查。
+　（图片源自Patch.com，版权属于原作者）
+　　而且围观群众都不傻，我们就不说你是不是看人家老先生和蔼可亲才捡软柿子捏，光凭人家进门是客人这点，你就不能把人弄的这么难看吧，你的良心不会痛吗？？？最可怕的是，这样的暴力，是UA和空警一起对手无寸铁又没犯大错的无辜乘客执行的，可怕，可怕。
+（MikeMoody评论：不开玩笑，‘UA乘客门’最可怕的部分是空警竟然和UA一起欺负守法的公民）
+　　不久之后，美联航CEO，OscarMunoz也发表了公开声明，对请求乘客改签一事表达了歉意，同时想直接与事件中受到暴行的亚裔医生进行对话。可笑的是，这是一份极其虚情假意避重就轻的声明。
+　　美国网友嘲讽道，估计写这个声明的人，和那群下令暴力对待乘客的空服人员是从一个地方聘用的吧。
+
+　　首先，这是一件全美人神共愤的事情，对方居然轻描淡写的说，啊，这是一件‘upsetting‘（令人不安）的事。英语好不好，我们不是nativespeaker不好说，但是显然，有那么多词可以形容这件事，公关是从所有词语里面，精选了一个词去粉饰。这就好像渣男出轨了，回来给你说“我犯了个小错误”一样令人讨厌！
+　　其次，原文对暴力行为的描述是“很抱歉我们需要重新安置（re-accommodate）这几位乘客”。这一句话直接引发了网友的愤怒。敢情你们家重新安置乘客，是殴打对方并送进医院还不公开道歉吗？？？
+
+　　而橄榄球明星JoeThomas也对这个词发来了“嘲讽”：亲爱的UA，我也曾经‘重新安置’过某人呢。
+
+　　哦对了，还有一点，CEOOscar先生，我们想问问您，作为一个公司的领导，公司出了这么大的事情，您发了个声明，既没有向受害乘客直接道歉，也没有提到任何要处理贵公司涉事员工的意思，您这个声明是不是有点浪费我们大众的时间？
+　　最后，说点认真的。不少微博，推特和FB上的人，都提出这个‘随机’挑选，就正好挑选到一个亚裔，还这么暴力对待。这是不是对亚裔的歧视，是不是因为亚裔喜欢买打折票？
+　　我们觉得这个问题讨论没有意义，不论是不是亚裔，任何一名乘客被这样对待都不应该。因为他/她可能会是你的父母同事，你的朋友同学。在出行前，希望大家擦亮眼睛。
+
+　　当然了，关于美联航号称的‘Oversale‘（预售过多）的情况，美国网友给出了解决办法，大家懂的：
+（要取消你的UA机票，请拨打800-864-8331。如果你的飞机起飞日期在七天后，订票24小时内取消票免费）
+　　写在最后的话：
+　　根据芝加哥航空交通运输部的最近更新，涉事的3名警卫中的一人，已因违反标准流程而被解雇。
+　　根据航空运输合同，在美国，航空公司在超额售票的情况下，就算是已出票的乘客，航空公司也有权拒绝其上机。而相对应的，在这种情况下，航空公司需要给予现金或是免费改签的补偿。同时，如果乘客无法配合或是干预到了机组人员的工作，航空公司也有权要求其下机。
+　　航空公司超额售票司空见惯，在过去的一年中，共有近4万乘客在临出发了，被航空公司请求改签，这其中还不包括了主动改签的人员数量。但是UA此次的处理方式简直闻所未闻，无论受害者的身份是否为亚裔，都令人感到心寒。
+（美国网友嘲讽UA的友好服务）
+　　作为在北美有影响力的号，我们希望曝光这样的恶劣事件，提醒广大用户注意这种劣质航空公司。同时也愿事情能得到解决，相关公司和人员受到应有的惩罚。
+　　对于此事你有怎样的看法？欢迎大家在评论区留言，畅所欲言！
+　　热门评论：
+　　珧慢慢：推特上看到的真的太痛心了！这个医生做错了什么要被打成这样！视频里他一直在说justkillme．．．好难过啊
+
+　　61次元仙女：看ins上的视频那位医生被暴力拖拽然后脸一下子就撞在了扶手上卧槽……
+　　夏不了夏：貌似是因为UA自己有4个工作人员要上飞机所以得换4个乘客下来
+　　充电宝小姐：超售本就是航司的问题哪怕是经济获利的方式也不属于乘客应该去承担这些责任乘客有权不下机这是人权原则乘客不愿意接受这个补偿航司有义务去解决比如继续加价哪怕航司会亏这笔钱可是这本身就是航司自己处理不当的超售你有什么资格暴力殴打又凭什么呼叫警察这位乘客犯了什么法？做错了什么？
+　　eyesthatsmile：哇！看到这个就想到之前我坐ua的飞机去la，当时也是人多了，我都坐下去了，然后那个空乘来和我讲让我下飞机，然后我不同意，他就说要取消我的票，然后来了两个高高壮壮的黑人直接拿着我的箱子把我推下飞机了，事后给了我三百刀态度还贼差，终于被扒出来了，ua真的不知道怎么撑的这么久的
+　　雪落_Alex：超售很常见，在飞机酒店这种行业里非常多，常规做法都是高额补偿，酒店行业是送你到一个附近的酒店高档房，费用由超售酒店全包，航空公司是赠送免费里程或者高额赔款直到有volunteer下飞机。UA的做法闻所未闻
+　　Fo1TheDream丶：400刀去你妈的。当年来美国，delta超售4张，没人当volunteer，我被告知能否下飞机，它尽快给我安排2小时之内的下一班飞机，如果按排不出来给我1300刀加吃饭酒店费用。最后超过两个小时的一瞬家我就拿了1300刀的compensation，而且赶上了下一个小时的飞机。这就是差距。还有CanadaAirline一样渣
+　　muamua汪汪汪：真的是气的发抖！不是简单的ovsrbook而是他们自己内部有四个人要上去，不是要volunteers干嘛暴力！我看见微博有两种我不接受的声音1．安保不是ua的人2．给了400刀了比国内好多了。可是发生在ua的飞机上ua就要负责，其次400刀给的是分几次的50刀ua代金券，而且人家医生那边只有病人等着的，400刀算个屁啊
+　　呀怎么糊了一脸马赛克：完全就是气到发抖啊，有人愿意为了400刀800刀下去，有的人有自己的事就不愿意啊，关注点都错了好吗！
+　　licas575：确实就算不是亚裔换做任何一个人这种行为都很可恶
+　　MinoQAQ：别处看到的报道：航空公司先是说给500代金券（还不能一次用，只有一年有效期，也就是一年坐八次他们的航班才能分批把500美金用完），没有人愿意，于是航空公司决定“随机”抽选人让他们下飞机，换他们公司的四个雇员上飞机，其中抽到的就有这位看上去很老实的亚裔医生，医生说他要赶回去看病，拒绝下
+　　lolbear2：最神奇的是，ceo说这个乘客像个孩子一样不成熟
+　　King_of_Uolo：想当初我在UA飞机上坐在过道一侧，空姐拿着一壶开水从我身边过去的时候撒了我整个胳膊。后来只是拿来一点冰块给我，还夸我毛衣质量好不然就怎么怎么样．．．结果我下飞机的时候起了好几个很大的水泡，袖子都挽起来的露着胳膊回到学校的。从那以后再也没做过UA
+　　仲哥不要智齿：UA出名的种族歧视啊 上次飞迈阿密的时候因为拿中国护照被安排在最后几排同行的朋友拿加拿大护照就坐在前面wtfUA？
+　　沧一又要上学了：关键还不是真的overbook了。。是乘客都已经坐上座位后UA强行塞了4个工作人员上飞机以便这群人飞明天的飞机。没人自愿就硬拖。。反正辣鸡UA这种服务早就该倒闭了。。。。之前员工偷行李等一系列丑闻。从来就没有洗得白过
+　　今日最佳点评
+　　豆芽豆芽乖乖：希望这个医生站出来，告ua。我相信我们很多人都愿意因为这个大家集资请个好律师。即使不告倒闭，也不能让他好受。
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

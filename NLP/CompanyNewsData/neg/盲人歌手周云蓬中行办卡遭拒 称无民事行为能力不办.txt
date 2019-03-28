@@ -1,0 +1,64 @@
+
+
+
+
+
+
+
+　　新浪财经讯3月27日消息，盲人歌手周云蓬26日在其微博发文，讲述自己在中国银行支行办卡遭拒的经历。周云蓬表示，工作人员再三确认他看不见之后，表示有规定，“无民事行为能力的人不能办理”。
+　　根据《中华人民共和国民法总则》的规定，构成无民事行为能力人的条件为“未满八周岁”和“完全不能辨认自己的行为”。周云蓬对中国银行的理由提出质疑。
+　　中国银行暂未对此作出回应。
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'4221927595601952'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+　　以下是微博原文：
+　　今天在中国银行深圳沙河支行遭遇堵心事。我要办一张借记卡，工作人员先问：你是一点儿也看不见吗？我回答后，她又问了三遍：你是一点儿也看不见吗？然后拒绝为我办理。我说我有中国银行和其他银行的银行卡，只是现在因为办理业务需要，要办理一张深圳的银行借记卡，陪同人员可以为我阅读相关条例，我和陪同都带有身份证，但是工作人员仍然说根据规定不能办理。我们向她要相关文件，她进屋找了一会儿，拿出一页纸，念：“无民事行为能力的人不能办理”，我的陪同要给文件拍照，她说不行。
+　　后来我去了招商银行华侨城支行，服务人员非常殷勤，主动替我着想，为我办理了异地银行卡变更所属地，解决了我需要的借记卡业务。
+　　关于“民事行为能力”的法律规定：“我国《民法总则》规定，成年人（十八周岁以上的自然人）是完全民事行为能力人。”请问中国银行，你们为什么说我不具备民事行为能力。中国银行的工作人员工号20429。请中国银行给我一个答复。
+　　我对招商银行的服务非常满意，准备把中国银行里的钱转到招商银行。
+
+
+
+
+
+责任编辑：李彦丽
+

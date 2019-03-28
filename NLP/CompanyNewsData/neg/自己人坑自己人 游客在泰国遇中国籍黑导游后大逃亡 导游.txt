@@ -1,0 +1,315 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:257530768,
+				pid:1,
+				url:'http://finance.sina.com.cn/wm/2018-05-13/doc-ihamfahx5255289.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=257530768/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　比“泰囧”还囧，游客遭遇中国籍黑导游，半夜“集体大逃亡”！
+　　据统计，2017年中国赴泰国游客人次约为980万人次，同比增长11.97%。人数不断攀升的同时，一些问题也随之而来。国内部分旅行社以低价揽客，在行程安排、接待水平和安全系数等方面大打折扣，甚至不惜采用无证的“黑导游”来接待游客．．．．．．
+　　近日，成都的马女士就经历了一场惊魂的“泰国大逃亡”，她用她的亲身经历告诉大家，“黑导游”是一个多可怕的存在。
+
+　　5月12日，泰国国家旅游局官方微博发布公告称：
+　　关于10名中国游客在泰芭提雅旅游遭遇黑导恐吓、逼迫购物无法忍受，深夜“大逃亡”事件最新进展：5月11日晚涉事中国籍21岁男性黑导游李海已在芭提雅被警方逮捕，一同逮捕的还有他供职的TYT旅行社两位泰籍负责人，下一步泰国警方将依据泰国法律对他们严惩。
+　　据李海交代：事发期间曾带10名中国游客到芭提雅一家乳胶中心购买乳胶枕头从中收取回扣，由于购买人数较少没有赚到钱，于是才口出狂言恐吓游客，导致游客集体脱团返回曼谷。
+　　旅游警察工作人员调查发现，该名中国籍男子没有导游证，属于在泰非法从事旅游工作的外籍黑导游。
+▲图片来源：泰国国家旅游局
+　　另一方面，据成都商报报道，涉事的盈科美辰国际旅行社（履行本次旅游合同的公司）北京总部的负责人称，11日晚间，她们已经与游客协商一致。据调查，游客的反馈与该负责人所说一致。
+　　旅行社向我们道歉，并且团费、签证费以及其他开销都退了。
+　　把我们的损失降到最低。
+　　盈科美辰国际旅行社说，补偿我们一次蜜月旅行。
+　　此前，成都的10名游客在该名导游的威逼恐吓下，于赴泰旅行的第五天晚上，全部自行从景点“逃”回了曼谷。
+　　对于这一次泰国之旅，马女士称之为“泰囧”，“途中之惊险、恐惧，我无法用文字表现出来。”同行的游客钟先生则用糟糕、劳心描述这一段旅程。
+　　这一段泰国旅程到底发生了什么？
+　　据成都商报报道，成都的马女士和丈夫找到重庆悠程去哪儿国际旅行社有限公司（成都成华区）前锋街门市，报了泰国的7天5夜游，价格为每人2180元；成都的钟先生和爱人则通过马蜂窝网站与四川全球通国际旅行社股份公司签订泰国7日游的旅游合同，价格为每人2280元。
+▲游客提供图（图片来源：成都商报 ）
+　　“同行的还有6个人，他们是直接与盈科美辰国际旅行社成都分公司签的合同。”马女士也展示了其余6人的合同。
+　　值得注意的是，马女士的合同上写明“自愿购物”，钟先生的合同上也写着“无强制消费”，其余6人的合同上也注明“旅游者可自主决定是否参加购物活动”。
+　　5月7日是行程的第五天，当天的行程有一个购物点“乳胶中心”。
+　　“拖了大概2个小时，只有一个人买了枕头。”马女士回忆，当时大家要求上车，“导游说车没来，其实车就在外面。”后来通过领队协调大家才上了车。
+　　没想到汽车发动后，导游开始变得“穷凶极恶”起来。
+　　从游客们提供的视频上可以看到，导游在第一排望着游客，拿着话筒用略显流利的普通话吼道：
+　　逼到你们做出来为止！
+　　我不信你们中国人不用逼（迫）的！
+　　一句话，逼到你们做出来为止”！
+　　男子的言论引发了领队的不满，领队说了一句“谁让你这样讲话”后，导游开始“发飙”。
+　　视频中，导游手指向车门方向，向领队吼：“要不然你就直接下车！”接着又喊：“明天早上你不要上车！自己打的回曼谷！”在得知领队要向组团旅行社反映后，男子称“你投一百个诉都没用”，又喃喃自语：“中国人不用逼（迫）的？”
+▲图片来源：视频截图
+　　导游的表现让游客担心起自己的人身安全，7日下午5点左右，大巴车载着游客们到了酒店，“大家当时就有了逃跑的想法了。”梁先生表示，直到晚饭时观察好路线，他们才决定带上行李跑，“开始我们是不准备拿行李了，证件都是放身上的。”
+　　直到凌晨1点过，10人才到达曼谷，自费找了酒店住下。
+　　8日下午17时许，10名游客与领队在机场附近的免税中心汇合。11人按照先前的计划，乘坐9日凌晨3：10分的飞机回国。
+　　除了境外“黑导游”猖獗，近年来，国内导游强制购物消费和辱骂游客事件也屡遭曝光，虽然涉事旅游企业和旅游从业人员也都受到处罚，但“黑导游”事件仍屡禁不止。
+　　专家和业内人士分析认为，当前旅游市场发育不成熟、旅游产品单一、旅游企业低价恶性竞争等问题是诱因。
+　　据新华国际消息，泰国和越南的业内人士强调，“黑导游”难禁的根源在于一些旅行社组织“低价团”乃至“零价团”吸引游客。待游客到了泰国后，地接社为了降低成本不雇当地导游，而选择雇“黑导游”带团，领游客去对接好的购物点和餐厅高消费，以回本盈利。因此，游客要从源头上减少遇到“黑导游”的几率，关键是拒绝参加低价团和零价团。
+　　据新华社，中国旅游研究院副研究员杨劲松接受采访时表示，“一旦低于成本价，身处一线工作的导游只能通过购物和自费项目填坑 ，如果达不到预期，他们会以各种方式促使游客消费，甚至出现一些极端案例。”
+▲图片来源：摄图网
+　　云南凌云律师事务所律师孙文杰说，新旅游法规定旅行社不得以不合理低价组织旅游活动，诱骗旅游者，并通过安排购物或者另行付费旅游项目获取回扣等不正当利益，违反规定的最高可处罚30万元。“但违法现象仍屡禁不止的原因之一就在于违法成本过低。”
+　　“很多旅行社负责人和导游法律意识淡薄，出问题的基本都是违法违规操作。”云南财经大学旅游文化产业研究院院长许南垣表示，而相关法规和条例实施细则也不够具体，操作性不强。
+　　为进一步加大旅游市场秩序整治力度，今年1月份至3月份，针对个别旅游地区相继发生的导游强迫或变相强迫游客消费、“黑导”殴打游客等恶劣事件，文化和旅游部开展了以打击强迫消费以及非法从事导游执业活动为重点的旅游市场秩序专项整治行动。
+　　各地在旅游景区、旅游集散地、热点旅游线路沿途以及公共交通枢纽地点对带团导游进行拉网式排查，并对发现的违法违规问题依法进行查处。
+
+　　截至3月底，各地共检查旅游企业11253家，检查旅游团队2942个，检查旅游客运车辆800台次，检查导游8596人次，立案172起，处罚导游及非法从业人员70人，罚款及没收违法所得326.05万元。
+　　每经编辑汤亚文
+
+
+
+
+
+责任编辑：陈永乐
+

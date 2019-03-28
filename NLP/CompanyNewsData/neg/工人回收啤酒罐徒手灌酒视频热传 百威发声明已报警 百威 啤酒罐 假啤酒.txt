@@ -1,0 +1,303 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+“回收啤酒罐徒手灌酒”视频热传百威公司:已报警
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251262885,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251262885.html',
+				title:'“回收啤酒罐徒手灌酒”视频热传百威公司:已报警'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251262885/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　网上疯传工人回收啤酒罐徒手灌啤酒小心喝到假啤酒！
+　　来源：湖南经视
+
+　　夏季吃夜宵，少不了要来上几罐啤酒助兴，可要是你的喝的是来自地下黑工厂做的假啤酒，还有心情继续喝吗？
+　　这两天，网上就曝出一段疑似制造假冒百威啤酒的视频，工人用回收来的啤酒罐徒手灌装啤酒，最终封盖，摇身一变成了“知名品牌”。现场操作流程十分简陋，卫生环境也令人作呕，我们日常购买啤酒又该如何辨别真假？
+　　在这段网上热传的视频中：在一个简陋的棚户房内，4名操作工人拿着疑似回收来的、没有顶盖的“百威”啤酒罐，徒手放进箱子里，盛满后又将罐子放在桌上。
+　　随后，在厂房内工人利用机器将这些啤酒罐压上顶盖，制成原装啤酒的模样，整个操作流程十分简陋，没有经过清洁消毒，恶劣的生产环境在视频中一览无余。
+　　瓶身包装可以辨认出，视频中生产制作的正是国际知名的啤酒品牌百威，随后焦点记者走访多家超市，找到了与网络视频中同款的百威啤酒。
+
+　　本文图均为经视焦点图
+
+　　网络视频中制作的啤酒易拉罐就跟记者在超市发现的这款百威啤酒一模一样，标注是330毫升，每瓶的价格在7元钱左右。那么网络视频中制造百威啤酒的流水线是否属于百威公司？还是地下黑工厂生产的“假百威”，带着疑问，焦点记者找到了位于长沙湘江中路上的“百威英博（中国）销售有限公司”，但此时这里大门紧闭并没有人员上班。
+
+　　随后记者又拨打了瓶身上的客服热线。
+
+　　面对众多网友的质疑，百威公司29日通过官方途径发布公告说明称，网络视频片段来自假酒工厂，目前公司已经报警，百威称重视消费者安全和产品品质，并有多重把关，也不会将产品交予第三方生产生产、分装。
+
+　　记者了解到，由于外国品牌啤酒定价高，利润大，并且深受国内消费者的青睐，“假啤酒”作为“暴利”行业，不少违法商家甘愿铤而走险，类似的造假百威啤酒并非首次出现，而一旦不法分子使用工业酒精勾兑制成假酒，对人体危害极大。
+
+　　专家提醒，消费者应从正规途径购买啤酒，并可从以下几个方面辨别真假。
+　　辨别方法1：看包装
+　　真的啤酒商品标签图案比较清晰，颜色比较鲜艳，摸上去表面有凹凸感，冒牌的啤酒商品标签则比较模糊、颜色比较浅。假冒啤酒的瓶盖是重新压上去的，因此会比较松
+
+　　辨别方法2：闻气味看气泡
+　　由于假冒啤酒的瓶盖是重新压上去的，极易存在密封不严的情况，容易导致挥发，啤酒缺少酒香。不会冒气泡或气泡很少。真的啤酒打开盖后，闻起来有很浓的酒香味，打开后气泡较多。
+
+　　辨别方法3：尝味道
+　　饮用假冒啤酒时，会感到味道比较淡，没有什么啤酒味。而真的啤酒味道则比较重，酒味也比较浓。
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

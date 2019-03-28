@@ -1,255 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f54859da-b344-47e3-929c-3a78ae233d1c" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/ARIMA-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/ARIMA.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/.ipynb_checkpoints/Sentiment-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/.ipynb_checkpoints/Untitled-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/LICENSE" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/README.md" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/evaluation/ana_eval_dense.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/evaluation/ana_eval_sparse.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/testsets/CA8/dataset_statistics.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/testsets/CA8/morphological.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/testsets/CA8/semantic.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/testsets/CA_translated/ca_translated.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Chinese-Word-Vectors/testsets/README.md" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Sentiment.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Untitled.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/ARIMAs-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/Untitled-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/信息技术服务业景气指数&amp;市场风险预警-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/信息技术服务业财务风险-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/房地产行业景气指数&amp;市场风险预警-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/房地产行业景气指数&amp;市场风险预警s-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/房地产行业财务风险-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/房地产行业财务风险s-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/汽车行业市场风险预警&amp;&amp;景气分析-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/汽车行业财务风险预测-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/ARIMAs.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRisk-lstm/caiwu_predict.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRisk-lstm/caiwu_predict.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRisk-lstm/caiwu_predict.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRisk-lstm/checkpoint" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_2/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_2/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_2/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_4/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_4/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/BusinessRiskModel/model_4/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-lstm/checkpoint" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-lstm/predict.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-lstm/predict.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-lstm/predict.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_1/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_1/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_1/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_2/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_2/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_2/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_3/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_3/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_3/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_4/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_4/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-hecheng-model/model_4/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-lstm/checkpoint" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-lstm/predict.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-lstm/predict.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-lstm/predict.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_1/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_1/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_1/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_2/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_2/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_2/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_3/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_3/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-kuosan-model/model_3/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-lstm/checkpoint" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-lstm/info_predicts.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-lstm/info_predicts.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info-lstm/info_predicts.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_1/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_1/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_1/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_2/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_2/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_2/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_3/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_3/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_3/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_4/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_4/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/Info/model_4/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/LeadingIndex.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-lstm/checkpoint" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-lstm/kuosan_predicts.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-lstm/kuosan_predicts.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-lstm/kuosan_predicts.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_1/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_1/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_1/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_2/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_2/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_2/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_3/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_3/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-kuosan-model/model_3/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-lstm/car_predicts.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-lstm/car_predicts.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-lstm/car_predicts.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car-lstm/checkpoint" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_1/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_1/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_1/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_2/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_2/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_2/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_3/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_3/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_3/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_4/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_4/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car/model_4/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hecheng-lstm/checkpoint" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hecheng-lstm/kuosan_predicts.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hecheng-lstm/kuosan_predicts.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hecheng-lstm/kuosan_predicts.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_1/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_1/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_1/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_2/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_2/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_2/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_3/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_3/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_3/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_4/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_4/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/car_hengchengModel/model_4/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/checkpoint" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/kuosan_predict.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/kuosan_predict.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/kuosan_predict.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/predict.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/predict.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/checkpoints-lstm/predict.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosan-lstm/checkpoint" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosan-lstm/kuosan_predicts.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosan-lstm/kuosan_predicts.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosan-lstm/kuosan_predicts.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_0/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_0/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_0/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_1/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_1/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_1/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_2/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_2/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/kuosanModel/model_2/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_0/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_0/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_0/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_1/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_1/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_1/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_2/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_2/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_2/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_3/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_3/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Models/model_3/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/Untitled.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/信息技术服务业景气指数&amp;市场风险预警数据.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/信息技术服务业财务风险数据.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/房地产行业景气指数&amp;市场风险预警.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/房地产行业财务风险数据.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/汽车制造企业财务风险评价.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/dataSets/汽车行业市场风险预警&amp;&amp;景气分析.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/output/房地产行业景气指数&amp;市场风险预警预测数据.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/信息技术服务业景气指数&amp;市场风险预警.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/信息技术服务业财务风险.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/信息技术服务业财务风险预测结果值.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/信息服务业市场合成分析预测数据.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/信息服务业市场扩散分析预测数据.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/.ipynb_checkpoints/经济因子-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/lstm/checkpoint" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/lstm/predict.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/lstm/predict.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/lstm/predict.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_1/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_1/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_1/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_2/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_2/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_2/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_3/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_3/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_3/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_4/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_4/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_4/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_5/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_5/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/model/model_5/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/房地产投资潜力指数-北京.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/经济因子.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/区域投资潜力预测-beijing/经济因子预测数据.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/房地产行业景气指数&amp;市场风险预警.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/房地产行业景气指数&amp;市场风险预警s.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/房地产行业财务风险.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/房地产行业财务风险s.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/房地产行业财务风险预测数据.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/汽车行业市场扩散9分析预测数据.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/汽车行业市场扩散分析预测数据.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/汽车行业市场风险预警&amp;&amp;景气分析.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/汽车行业市场风险预警&amp;&amp;景气分析预测数据.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RNN/汽车行业财务风险预测.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/LD.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/chengzhang.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/chengzhang_Model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/chouzi.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/司法.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/Model/经营力.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/RiskPredict/test.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/.ipynb_checkpoints/creditPredict-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/creditGrade_train_data1.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/creditPredict.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/test1.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/utilities.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/.ipynb_checkpoints/knowledgePredict-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/checkpoints-cnn/checkpoint" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/checkpoints-cnn/creditGrade.ckpt.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/checkpoints-cnn/creditGrade.ckpt.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/checkpoints-cnn/creditGrade.ckpt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/knowledgePredict.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/logs/test/events.out.tfevents.1540371146.ccipk80" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/logs/train/events.out.tfevents.1540371146.ccipk80" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/models/knowledgePredict-model/saved_model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/models/knowledgePredict-model/variables/variables.data-00000-of-00001" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/models/knowledgePredict-model/variables/variables.index" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/newdata.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/pred-model.pb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/utilities.py" />
+    <list default="true" id="f54859da-b344-47e3-929c-3a78ae233d1c" name="Default" comment="pycharm update@Mason1114 sentiment code.">
+      <change beforePath="" afterPath="$PROJECT_DIR$/NLP/Text_Sentiment.pb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/gcForest/gcForest.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/gcForest/test.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/gcForest/train.csv" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/tensorflow_files.iml" afterPath="$PROJECT_DIR$/.idea/tensorflow_files.iml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/CNN/dataSets/creditGrade_train_data.csv" afterPath="$PROJECT_DIR$/CNN/dataSets/creditGrade_train_data.csv" />
-      <change beforePath="$PROJECT_DIR$/CNN/dataSets/credit_Grade_train_data.csv" afterPath="$PROJECT_DIR$/CNN/dataSets/credit_Grade_train_data.csv" />
-      <change beforePath="$PROJECT_DIR$/CNN/dataSets/test.csv" afterPath="$PROJECT_DIR$/CNN/dataSets/test.csv" />
-      <change beforePath="$PROJECT_DIR$/CNN/dataSets/train.csv" afterPath="$PROJECT_DIR$/CNN/dataSets/train.csv" />
-      <change beforePath="$PROJECT_DIR$/MDP/dataSets/LeagueofLegends.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/LeagueofLegends.csv" />
-      <change beforePath="$PROJECT_DIR$/MDP/dataSets/_columns.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/_columns.csv" />
-      <change beforePath="$PROJECT_DIR$/MDP/dataSets/bans.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/bans.csv" />
-      <change beforePath="$PROJECT_DIR$/MDP/dataSets/gold.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/gold.csv" />
-      <change beforePath="$PROJECT_DIR$/MDP/dataSets/kills.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/kills.csv" />
-      <change beforePath="$PROJECT_DIR$/MDP/dataSets/matchinfo.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/matchinfo.csv" />
-      <change beforePath="$PROJECT_DIR$/MDP/dataSets/monsters.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/monsters.csv" />
-      <change beforePath="$PROJECT_DIR$/MDP/dataSets/structures.csv" afterPath="$PROJECT_DIR$/MDP/dataSets/structures.csv" />
-      <change beforePath="$PROJECT_DIR$/RNN/SP_model.py" afterPath="$PROJECT_DIR$/RNN/SP_model.py" />
-      <change beforePath="$PROJECT_DIR$/RNN/dataSets/train-test.csv" afterPath="$PROJECT_DIR$/RNN/dataSets/train-test.csv" />
-      <change beforePath="$PROJECT_DIR$/RiskPredict/dataSets/output_data.csv" afterPath="$PROJECT_DIR$/RiskPredict/dataSets/output_data.csv" />
-      <change beforePath="$PROJECT_DIR$/RiskPredict/dataSets/raw_data.csv" afterPath="$PROJECT_DIR$/RiskPredict/dataSets/raw_data.csv" />
+      <change beforePath="$PROJECT_DIR$/CNN/.ipynb_checkpoints/up_creditPredict-checkpoint.ipynb" afterPath="$PROJECT_DIR$/CNN/.ipynb_checkpoints/up_creditPredict-checkpoint.ipynb" />
+      <change beforePath="$PROJECT_DIR$/CNN/checkpoints-cnn/creditGrade.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/CNN/checkpoints-cnn/creditGrade.ckpt.data-00000-of-00001" />
+      <change beforePath="$PROJECT_DIR$/CNN/checkpoints-cnn/creditGrade.ckpt.index" afterPath="$PROJECT_DIR$/CNN/checkpoints-cnn/creditGrade.ckpt.index" />
+      <change beforePath="$PROJECT_DIR$/CNN/checkpoints-cnn/creditGrade.ckpt.meta" afterPath="$PROJECT_DIR$/CNN/checkpoints-cnn/creditGrade.ckpt.meta" />
+      <change beforePath="$PROJECT_DIR$/CNN/cnn.pb" afterPath="$PROJECT_DIR$/CNN/cnn.pb" />
+      <change beforePath="$PROJECT_DIR$/CNN/up_creditPredict.ipynb" afterPath="$PROJECT_DIR$/CNN/up_creditPredict.ipynb" />
+      <change beforePath="$PROJECT_DIR$/NLP/.ipynb_checkpoints/Sentiment-checkpoint.ipynb" afterPath="$PROJECT_DIR$/NLP/.ipynb_checkpoints/Sentiment-checkpoint.ipynb" />
+      <change beforePath="$PROJECT_DIR$/NLP/Sentiment.ipynb" afterPath="$PROJECT_DIR$/NLP/Sentiment.ipynb" />
+      <change beforePath="$PROJECT_DIR$/NLP/Untitled.ipynb" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/Industry-Predict-checkpoint.ipynb" afterPath="$PROJECT_DIR$/RNN/.ipynb_checkpoints/Industry-Predict-checkpoint.ipynb" />
+      <change beforePath="$PROJECT_DIR$/RNN/Industry-Predict.ipynb" afterPath="$PROJECT_DIR$/RNN/Industry-Predict.ipynb" />
+      <change beforePath="$PROJECT_DIR$/RNN/checkpoints-lstm/predict.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/RNN/checkpoints-lstm/predict.ckpt.data-00000-of-00001" />
+      <change beforePath="$PROJECT_DIR$/RNN/checkpoints-lstm/predict.ckpt.index" afterPath="$PROJECT_DIR$/RNN/checkpoints-lstm/predict.ckpt.index" />
+      <change beforePath="$PROJECT_DIR$/RNN/checkpoints-lstm/predict.ckpt.meta" afterPath="$PROJECT_DIR$/RNN/checkpoints-lstm/predict.ckpt.meta" />
+      <change beforePath="$PROJECT_DIR$/RiskPredict/.ipynb_checkpoints/Risk-checkpoint.ipynb" afterPath="$PROJECT_DIR$/RiskPredict/.ipynb_checkpoints/Risk-checkpoint.ipynb" />
+      <change beforePath="$PROJECT_DIR$/RiskPredict/Risk.ipynb" afterPath="$PROJECT_DIR$/RiskPredict/Risk.ipynb" />
+      <change beforePath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/.ipynb_checkpoints/creditPredict-checkpoint.ipynb" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/.ipynb_checkpoints/creditPredict-checkpoint.ipynb" />
+      <change beforePath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/creditPredict.ipynb" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/CreditGrade_Attention/creditPredict.ipynb" />
+      <change beforePath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/.ipynb_checkpoints/knowledgePredict-checkpoint.ipynb" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/.ipynb_checkpoints/knowledgePredict-checkpoint.ipynb" />
+      <change beforePath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/knowledgePredict.ipynb" afterPath="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/knowledgePredict.ipynb" />
+      <change beforePath="$PROJECT_DIR$/test.py" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -270,7 +51,7 @@
     <SUITE FILE_PATH="coverage/tensorflow$Cnn_Minst.coverage" NAME="Cnn_Minst Coverage Results" MODIFIED="1499852787868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CNN" />
     <SUITE FILE_PATH="coverage/ML$Cnn_Minst.coverage" NAME="Cnn_Minst Coverage Results" MODIFIED="1529914148363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CNN" />
     <SUITE FILE_PATH="coverage/tensorflow$test.coverage" NAME="test Coverage Results" MODIFIED="1499847898671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ML$test__2_.coverage" NAME="test (2) Coverage Results" MODIFIED="1535513286298" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ML$test__2_.coverage" NAME="test (2) Coverage Results" MODIFIED="1542205024286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ML$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1529915391986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ML Demo/financial" />
     <SUITE FILE_PATH="coverage/ML$SemaWiki.coverage" NAME="SemaWiki Coverage Results" MODIFIED="1528701016756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -282,11 +63,60 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Sentiment.ipynb" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/NLP/Sentiment.ipynb">
-          <provider selected="true" editor-type-id="ipnb-editor">
-            <state>
-              <selected id="1" />
+      <file leaf-file-name="uci_semg.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gcForestTest/lib/gcforest/datasets/uci_semg.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="437">
+              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gcForest.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gcForest/gcForest.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2166">
+              <caret line="118" column="25" lean-forward="false" selection-start-line="118" selection-start-column="25" selection-end-line="118" selection-end-column="25" />
+              <folding>
+                <element signature="e#586#602#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NLP/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="310" column="31" lean-forward="false" selection-start-line="310" selection-start-column="31" selection-end-line="310" selection-end-column="31" />
+              <folding>
+                <element signature="e#29#47#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="startAPI.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/NLP/startAPI.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="34" column="24" lean-forward="true" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+              <folding>
+                <element signature="e#119#128#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gcForest/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="57">
+              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -360,14 +190,23 @@
         <option value="$PROJECT_DIR$/ML_Demo/financial/utils/utilities.py" />
         <option value="$PROJECT_DIR$/ML_Demo/financial/creditGrade_train_data.csv" />
         <option value="$PROJECT_DIR$/ML_Demo/financial/creditPredict.ipynb" />
-        <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/RiskPredict/.ipynb_checkpoints/Risk-checkpoint.ipynb" />
         <option value="$PROJECT_DIR$/RiskPredict/Risk.py" />
         <option value="$PROJECT_DIR$/RiskPredict/test.py" />
         <option value="$PROJECT_DIR$/NLP/Untitled.ipynb" />
         <option value="$PROJECT_DIR$/ARIMA.ipynb" />
+        <option value="$PROJECT_DIR$/NLP/sentiment_API_test.py" />
+        <option value="$PROJECT_DIR$/news_spider/ownerShareInfo.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/NLP/Sentiment.ipynb" />
+        <option value="$PROJECT_DIR$/RiskPredict/Risk.ipynb" />
+        <option value="$PROJECT_DIR$/SemaWiki.py" />
+        <option value="$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/knowledgePredict.ipynb" />
+        <option value="$PROJECT_DIR$/gcForestTest/examples/demo_mnist.py" />
+        <option value="$PROJECT_DIR$/gcForest/test.py" />
+        <option value="$PROJECT_DIR$/gcForest/gcForest.py" />
+        <option value="$PROJECT_DIR$/NLP/test.py" />
       </list>
     </option>
   </component>
@@ -384,10 +223,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-374" />
-    <option name="y" value="-11" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1099" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -424,7 +263,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -438,20 +276,17 @@
               <item name="ML" type="462c0819:PsiDirectoryNode" />
               <item name="NLP" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.remoteExternalTools" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/CNN" />
@@ -473,19 +308,19 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\py_projects\ML\RiskPredict" />
-      <recent name="D:\py_projects\ML\ML_Demo\financial" />
-      <recent name="D:\py_projects\ML\ML_Demo\financial\datas\test" />
-      <recent name="D:\py_projects\ML\ML_Demo\financial\datas\train\Inertial_Signals" />
-      <recent name="D:\py_projects\ML\ML Demo\financial\data\train" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\py_projects\ML" />
       <recent name="D:\py_projects\ML\ML_Demo\financial\datas\test" />
       <recent name="D:\py_projects\ML\ML Demo\financial\data\train" />
       <recent name="D:\py_projects\ML\ML Demo\financial\data" />
       <recent name="D:\py_projects\ML\ML Demo\financial" />
-      <recent name="D:\py_projects\ML" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\py_projects\ML\gcForest" />
+      <recent name="D:\py_projects\ML\NLP" />
+      <recent name="D:\py_projects\ML\RiskPredict" />
+      <recent name="D:\py_projects\ML\ML_Demo\financial" />
+      <recent name="D:\py_projects\ML\ML_Demo\financial\datas\test" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -500,7 +335,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test (3)">
+  <component name="RunManager" selected="Python.test (1)">
     <configuration name="Unnamed" type="PyRemoteDebugConfigurationType" factoryName="Python Remote Debug" editBeforeRun="true">
       <module name="" />
       <option name="PORT" value="0" />
@@ -512,46 +347,6 @@
       </PathMappingSettings>
       <option name="REDIRECT_OUTPUT" value="true" />
       <option name="SUSPEND_AFTER_CONNECT" value="true" />
-    </configuration>
-    <configuration name="GAN_demo" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/GAN" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="tensorflow_files" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GAN/GAN_demo.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="Risk" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-        <env name="PYDEVD_LOAD_VALUES_ASYNC" value="True" />
-        <env name="DISPLAY" value="localhost:10.0" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/RiskPredict" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="tensorflow_files" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/RiskPredict/Risk.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -567,6 +362,66 @@
       <module name="tensorflow_files" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="demo_mnist" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="PYDEVD_LOAD_VALUES_ASYNC" value="True" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gcForestTest/examples" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="tensorflow_files" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gcForestTest/examples/demo_mnist.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="ownerShareInfo" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="PYDEVD_LOAD_VALUES_ASYNC" value="True" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/news_spider" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="tensorflow_files" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/news_spider/ownerShareInfo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="PYDEVD_LOAD_VALUES_ASYNC" value="True" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NLP" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="tensorflow_files" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NLP/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -591,7 +446,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="test (3)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -599,34 +454,15 @@
         <env name="PYDEVD_LOAD_VALUES_ASYNC" value="True" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/RiskPredict" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gcForest" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="tensorflow_files" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/RiskPredict/test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gcForest/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ML_Demo/financial" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="tensorflow_files" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ML_Demo/financial/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
@@ -760,19 +596,19 @@
     <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Jupyter Notebook.tensorflow_files" />
       <item index="1" class="java.lang.String" itemvalue="Python Remote Debug.Unnamed" />
-      <item index="2" class="java.lang.String" itemvalue="Python.GAN_demo" />
-      <item index="3" class="java.lang.String" itemvalue="Python.test" />
-      <item index="4" class="java.lang.String" itemvalue="Python.test (2)" />
-      <item index="5" class="java.lang.String" itemvalue="Python.Risk" />
-      <item index="6" class="java.lang.String" itemvalue="Python.test (3)" />
+      <item index="2" class="java.lang.String" itemvalue="Python.test (2)" />
+      <item index="3" class="java.lang.String" itemvalue="Python.ownerShareInfo" />
+      <item index="4" class="java.lang.String" itemvalue="Python.demo_mnist" />
+      <item index="5" class="java.lang.String" itemvalue="Python.test" />
+      <item index="6" class="java.lang.String" itemvalue="Python.test (1)" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.test (3)" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Risk" />
-        <item index="2" class="java.lang.String" itemvalue="Python.test (2)" />
-        <item index="3" class="java.lang.String" itemvalue="Python.test" />
-        <item index="4" class="java.lang.String" itemvalue="Python.GAN_demo" />
+        <item index="0" class="java.lang.String" itemvalue="Python.test (1)" />
+        <item index="1" class="java.lang.String" itemvalue="Python.test" />
+        <item index="2" class="java.lang.String" itemvalue="Python.demo_mnist" />
+        <item index="3" class="java.lang.String" itemvalue="Python.test (2)" />
+        <item index="4" class="java.lang.String" itemvalue="Python.ownerShareInfo" />
       </list>
     </recent_temporary>
   </component>
@@ -853,10 +689,66 @@
       <option name="project" value="LOCAL" />
       <updated>1540983332992</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="pycharm update@Mason1031  Model of EEAP project">
+      <created>1540983520502</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1540983520502</updated>
+    </task>
+    <task id="LOCAL-00011" summary="pycharm update@Mason1031 develop log.">
+      <created>1540984535044</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1540984535044</updated>
+    </task>
+    <task id="LOCAL-00012" summary="pycharm update@Mason1031 develop log.">
+      <created>1540984599009</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1540984599009</updated>
+    </task>
+    <task id="LOCAL-00013" summary="pycharm update@Mason1106 sentiment API test.">
+      <created>1541481092442</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1541481092442</updated>
+    </task>
+    <task id="LOCAL-00014" summary="pycharm update@Mason1114 log.">
+      <created>1542194212601</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1542194212601</updated>
+    </task>
+    <task id="LOCAL-00015" summary="pycharm update@Mason1114 sentiment API test.">
+      <created>1542196796687</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1542196796687</updated>
+    </task>
+    <task id="LOCAL-00016" summary="pycharm update@Mason190220 sentimentBash code.">
+      <created>1550675192834</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1550675192834</updated>
+    </task>
+    <task id="LOCAL-00017" summary="pycharm update@Mason0225 sentimentAPI code.">
+      <created>1551092132853</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1551092132853</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
-  <component name="TodoView">
+  <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -868,21 +760,20 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284974" sideWeight="0.4978701" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32618025" sideWeight="0.5085197" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.023834197" sideWeight="0.33333334" order="16" side_tool="false" content_ui="tabs" x="0" y="0" width="434" height="900" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5193133" sideWeight="0.53887117" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32618025" sideWeight="0.4914803" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="false" weight="0.36842105" sideWeight="0.42758253" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39669862" sideWeight="0.64744645" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38197425" sideWeight="0.27209798" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17252396" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4678423" sideWeight="0.2539936" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32618025" sideWeight="0.7981896" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32618025" sideWeight="0.20181043" order="17" side_tool="false" content_ui="tabs" x="0" y="0" width="434" height="900" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3153527" sideWeight="0.1799787" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29979253" sideWeight="0.48722044" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.36798337" sideWeight="0.42758253" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32676348" sideWeight="0.66347176" order="16" side_tool="true" content_ui="tabs" x="2439" y="706" width="810" height="625" />
+      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23390558" sideWeight="0.2518637" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.115548454" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24961832" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.036741216" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24920128" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997833" sideWeight="0.4946695" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -891,6 +782,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960597" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -900,6 +792,32 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -918,7 +836,14 @@
     <MESSAGE value="pycharm update@Mason0829 CCIP project code" />
     <MESSAGE value="pycharm update@Mason0829 add info" />
     <MESSAGE value="pycharm update@Mason1031" />
-    <option name="LAST_COMMIT_MESSAGE" value="pycharm update@Mason1031" />
+    <MESSAGE value="pycharm update@Mason1031  Model of EEAP project" />
+    <MESSAGE value="pycharm update@Mason1031 develop log." />
+    <MESSAGE value="pycharm update@Mason1106 sentiment API test." />
+    <MESSAGE value="pycharm update@Mason1114 log." />
+    <MESSAGE value="pycharm update@Mason1114 sentiment API test." />
+    <MESSAGE value="pycharm update@Mason190220 sentimentBash code." />
+    <MESSAGE value="pycharm update@Mason0225 sentimentAPI code." />
+    <option name="LAST_COMMIT_MESSAGE" value="pycharm update@Mason0225 sentimentAPI code." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -929,182 +854,11 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="14" />
+      <option name="time" value="15" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/GAN/out/006.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/datas/train/Inertial_Signals/body_acc_x_train.txt" />
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/datas/train/Inertial_Signals/x_test.txt" />
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/datas/test/y_test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="126" column="1" lean-forward="false" selection-start-line="126" selection-start-column="1" selection-end-line="126" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/datas/train/Inertial_Signals/x_train.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="775">
-          <caret line="31" column="23" lean-forward="false" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/datas/financial_test.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1" column="7" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/test.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/datas/test/Inertial_Signals/x_test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/datas/financial_train.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="12" column="22" lean-forward="false" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/boxplot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/py_package_env/Lib/site-packages/sklearn/tree/tree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-593">
-          <caret line="750" column="19" lean-forward="true" selection-start-line="750" selection-start-column="19" selection-end-line="750" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/datas/train/y_train.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9925">
-          <caret line="397" column="1" lean-forward="false" selection-start-line="397" selection-start-column="1" selection-end-line="397" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/financial_train.csv___jb_old___" />
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/tree.dot" />
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/train">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="454" column="17" lean-forward="false" selection-start-line="454" selection-start-column="17" selection-end-line="454" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/test">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="126" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/test.py" />
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/creditGrade_train_data" />
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/Industry-Predict.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/decisionTrees.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/financial_train.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="443" column="42" lean-forward="false" selection-start-line="443" selection-start-column="42" selection-end-line="443" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/creditPredict.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/creditGrade_train_data.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="91" column="359" lean-forward="false" selection-start-line="91" selection-start-column="359" selection-end-line="91" selection-end-column="359" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Credit-K-Means.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CNN/up_creditPredict.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ML_Demo/financial/utils/utilities.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="MarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="95">
-            <caret line="5" column="40" lean-forward="true" selection-start-line="5" selection-start-column="40" selection-end-line="5" selection-end-column="40" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/-893863641/-1227933812/tensorflow/python/client/session.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="677" column="6" lean-forward="false" selection-start-line="677" selection-start-column="6" selection-end-line="677" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/RiskPredict/.ipynb_checkpoints/Risk-checkpoint.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
@@ -1133,27 +887,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/000.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/001.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/003.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/out/005.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/007.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1163,27 +897,7 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/010.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/out/011.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/012.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/013.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/014.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1207,28 +921,120 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/out/014.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/013.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/012.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/010.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/007.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/006.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/003.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/001.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/000.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/news_spider/ownerShareInfo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NLP/7.py" />
+    <entry file="file://$PROJECT_DIR$/NLP/sentiment_API_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="760">
+          <caret line="41" column="31" lean-forward="false" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NLP/Untitled.ipynb" />
+    <entry file="file://$PROJECT_DIR$/NLP/cnn-text-classification-tf/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3895">
+          <caret line="215" column="32" lean-forward="false" selection-start-line="215" selection-start-column="32" selection-end-line="215" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GAN/GAN_demo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1938">
+          <caret line="107" column="48" lean-forward="false" selection-start-line="107" selection-start-column="48" selection-end-line="107" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NLP/cnn-text-classification-tf/text_cnn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="10" column="20" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RNN/Rnn_demo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RNN/Industry-Predict.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RiskPredict/Risk.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/RiskPredict/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="855">
           <caret line="45" column="63" lean-forward="false" selection-start-line="45" selection-start-column="63" selection-end-line="45" selection-end-column="63" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RiskPredict/Risk.py">
+    <entry file="file://$PROJECT_DIR$/RiskPredict/risk.pb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="240" column="0" lean-forward="false" selection-start-line="240" selection-start-column="0" selection-end-line="242" selection-end-column="55" />
-          <folding>
-            <element signature="e#1851#1874#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NLP/Untitled.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="0" />
+        <state relative-caret-position="589">
+          <caret line="31" column="10" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -1236,6 +1042,148 @@
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
           <selected id="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RiskPredict/Risk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="18" column="8" lean-forward="false" selection-start-line="18" selection-start-column="8" selection-end-line="19" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py" />
+    <entry file="file://$PROJECT_DIR$/NLP/Sentiments.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="433">
+            <caret line="42" column="10" lean-forward="false" selection-start-line="42" selection-start-column="10" selection-end-line="42" selection-end-column="10" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SemaWiki.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1843">
+          <caret line="112" column="34" lean-forward="false" selection-start-line="112" selection-start-column="34" selection-end-line="113" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CNN/Cnn_Minst.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="83" column="0" lean-forward="false" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/attention&amp;&amp;memory/Research_Invest/knowledgePredict.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gcForestTest/lib/gcforest/datasets/ds_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-798">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/py_package_env/Lib/pickle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4218">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gcForestTest/lib/gcforest/datasets/cifar10.py" />
+    <entry file="file://$PROJECT_DIR$/gcForest/train.csv">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gcForestTest/examples/demo_mnist.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="100" column="40" lean-forward="false" selection-start-line="100" selection-start-column="40" selection-end-line="100" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gcForestTest/lib/gcforest/datasets/uci_semg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/py_package_env/Lib/site-packages/sklearn/utils/validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="40" column="44" lean-forward="true" selection-start-line="40" selection-start-column="44" selection-end-line="40" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gcForest/gcForest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2166">
+          <caret line="118" column="25" lean-forward="false" selection-start-line="118" selection-start-column="25" selection-end-line="118" selection-end-column="25" />
+          <folding>
+            <element signature="e#586#602#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/py_package_env/Lib/site-packages/tensorflow/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gcForest/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NLP/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="310" column="31" lean-forward="false" selection-start-line="310" selection-start-column="31" selection-end-line="310" selection-end-column="31" />
+          <folding>
+            <element signature="e#29#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NLP/startAPI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="34" column="24" lean-forward="true" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+          <folding>
+            <element signature="e#119#128#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -1,0 +1,325 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+视频：大众途锐发动机进水
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255086771,
+				pid:1,
+				url:'http://video.sina.com.cn/view/255086771.html',
+				title:'视频：大众途锐发动机进水'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255086771/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+
+　　最新消息：大众中国宣布召回部分进口途锐因发动机存安全隐患
+
+ 　　央视315晚会第一枪，揭露大众途锐发动机进水严重质量问题。2016年10月福建宁德的黄女士花62万元购买了一辆大众途锐汽车，仅仅6个月这辆汽车突然无法启动。消费者黄女士称，车子刚刚打火的时候发动机里面有异响大概有三分钟自然熄火，再次打火打不着了。福州进口大众维修人员经过检查发现导致车辆熄火的原因是发动机进水。
+　　4S店给出的解释是更换新的发动机，但维修费用需要20多万。
+
+
+　　“大众途锐”怕淋雨，发动机频现报废！拿什么跟我谈越野？
+　　“发动机自动熄火，再也打不着了…”“方向盘也打不动，刹车也刹不住，那真的是听天由命…”近年来，一些“大众途锐”车主向4S店反映，发动机突然失灵。4S店维修人员经过检查，发现车辆熄火的原因，与发动机进水有关。有车主回忆，出事前一天她的车只是在外面淋了一夜雨，难道和这有关系吗？为了找到原因，车主决定做一个试验，她把水从车前部浇下去，让她没有想到的是，水沿着引擎盖和右前大灯的缝隙流进了发动机的进气口。车主们认为，途锐汽车进气口位置的设计是导致发动机进水的重要原因。面对该问题，大众给出解决方案：拆下进气管道的不必要的排水阀以强化排水功能。然而面对这样的解决方案，车主们也表示了自己的担心，这同时会降低途锐车的涉水深度。“我们不敢越野了，我们也不敢涉水了，等于我们买这个车的意义不存在了。” 
+
+
+　　陕西的兰女士的途锐车在4S店已经等7个月，广东罗先生的途锐已经在4S店放了8个月，福建黄女士已经在4S店苦等9个月。
+　　黄女士：现在大半年过去了，我的车贷还在还，每个月还要还13000，保险业浪费了大半年，这个损失谁来承担呢？
+
+　　文字实录：
+　　陈伟鸿：今天我们首先要来关注的是汽车消费，2017年中国汽车市场的销量达到了2888万辆，这个销量相当于全球汽车销量的三分之一。中国庞大的汽车消费市场对任何一家汽车企业来说都有着巨大的吸引力，于是我们看到很多车企他们来了，他们带着先进的技术，带着新颖的车型，当然也带着自己强势的品牌来了。他们都希望能够在中国这个全世界最大的汽车消费市场分得多一块的蛋糕。但是不管这些企业的知名度有多高，他们最终是否能够赢得中国消费者的信任和青睐，更多地是取决于他们对中国的消费者是否有一份发自内心的尊重。
+　　2016年10月福建宁德的黄女士花62万元购买了一辆大众途锐汽车，仅仅6个月这辆汽车突然无法启动。
+　　黄女士：车子刚刚打火的时候发动机里面有异响大概有三分钟自然熄火，再次打火打不招了。
+　　福州进口大众维修人员经过检查发现导致车辆熄火的原因是发动机进水。
+　　4S店总监说肯定车进水了，要不然被水泡过了。
+　　解说：4S店给出的解释是更换新的发动机，但面对20多万的维修费用黄女士无法接受。
+　　黄女士：他说你一定要说你没有涉水的话，你能讲出我产品有问题吗？
+　　解说：黄女士回忆出事前一天他的车只是在外面淋了一夜雨，难道和这有关系吗？为了找到原因黄女士决定做一个试验，把水从车前部浇进去，让她没想到的是水沿着引擎盖和缝隙流进了发动机的进汽口。
+　　这个不正常的现象让黄女士怀疑发动机进水正是因此所致，他决定再去找4S店讨个说法。这次4S店不再强调发动机损坏是黄女士涉水导致，但出现这种事件是小概率事件。
+　　2S店典长：这是小概率事件，何况是车呢。
+　　解说：2017年7月8日广东东莞的罗先生驾驶自己的2017款途锐经过红绿灯十字路口时发动机突然失去动力。
+　　罗先生：方向盘打不住，刹车盘也刹不住，听天由命。
+　　解说：罗先生的这辆途锐出现了同样的问题，发动机进水。
+　　罗先生：汽水管道拆解看了发现里面确实有水。
+　　解说：陕西西安蓝女士的途锐在行驶过程中突然熄火。
+　　蓝女士：听到那个声音是类似于烧开水的那个声音，发动机已经熄火了，再次尝试打火，车没有打着。
+　　解说：4S店维修人员检查发现导致蓝女士熄火的原因也是发动机进水。
+　　兰女士：他们说车辆进水你们自己维修，4S店的态度非常坚决，说车要修，不修拉倒。
+　　解说：上海的高先生发现自己的推瑞汽车虽然没有出现发动机严重损坏，但也存在进气口进水的问题，在向国家缺陷汽车召回中心投诉的时候发现有的车主也有同样的问题。车主发现问题的时间都是6—9月份，这个时候都是多雨的季节，难道发动机进水真的和下雨有关系吗？上海的金先生决定像黄女士一样做一次试验。金先生用水枪模拟车辆淋雨的状态，10分钟发现进气道末端原本干燥的地方已经被水浸水了1/3。
+　　金先生：反面最直观，很清楚，这么多的水。仅仅10分钟，太可怕了。
+　　解说：车主们认为途锐汽车进气口位置的设计是导致发动机进水的重要原因。
+　　金先生：顺着这条沟一路通过这里缝隙，最终进到那里，进气口像漏洞一样全部把水集中进去。如果发动机一旦开机，直接从这边一口吸进去，直接把发动机闷熄火了。
+　　解说：金先生告诉记者正是这个设计问题导致发动机存在进水、顶缸等安全隐患，与车主自身驾驶行为没有关系。
+　　金先生：如果出现顶缸失去动力，车灯没有了，方向盘助力没有了，刹车助力没有了，那时候就只能听天由命。
+　　解说：随着维权人数的增多车主们发现，4S店的态度已经悄然发生了变化，对所有回店保养的途锐直接拔掉进气管到下方的排水阀。
+　　4S维修人员：这是厂家是这样的。
+　　解说：一位不愿透露身份的4S店工作人员提供了一名途锐空滤进水和发动机进水的文件，长期在雨水行车时，售后解决方案是拆下吸入空气口的排水阀。这份文件下发文件2017年7月28日，很显然途锐发动机进水的根本原因，进口大众早已心知肚明。
+　　一个月后2017年8月22号进口大众终于在其官方网站上发出生命，大众进口汽车会为已售的部分2015—2017款途锐车型进行全面检测，并拆下进气管道的，面对这样的解决方案车主们表示了自己的担心。
+　　金先生：车子任何设计的零件你说不必要，你首先要告诉我们为什么不必要。
+　　排水阀位于进气口管道的中间位置，一旦拔到排水阀就形成一个开放的小孔，虽然可以解决一部分进气管排水的问题，但也增加了底盘的水吸进来的风险，降低了途锐车的涉水深度。
+　　金先生：它宣传是580毫米，拔掉这两个塞子造成我们一个不敢越野，第二我们也不敢涉水了，等于我们买这个车的意义就已经不存在了。
+　　高先生：它赌在哪儿，堵一般车主买了这个车以后不会去涉水啊，一旦涉水发生安全问题谁又对我们负责。
+　　2018年1月23日记者陪同途锐车主来到进口大众汽车中国总部，售后服务部常经理表示拔掉排水阀是德国总部给出的，进气口进水不是设计问题。
+　　常经理：设计的时候是考虑到发动机是可以少量进水的，它其实是为了更好地增强发动机的功晓吧，跟我们大多数人对这种认知是不是很匹配的，但是从他们工程师那边给到的信息是这样子的，就是我们可能说不能说滴水不漏。
+　　解说：至于如何彻底解决车主们所担心的问题，常经理始终回答方案还在研究，让车主继续耐心等待。
+　　常经理：具体日期我真给不到你，反正德国给我们的信息就是今年早些时候，但是早到哪年哪月哪日，肯定是2018年内，哪月哪日我现在没有明确的日期。
+　　解说：陕西的兰女士的途锐车在4S店已经等7个月，广东罗先生的途锐已经在4S店放了8个月，福建黄女士已经在4S店苦等9个月。
+　　黄女士：现在大半年过去了，我的车贷还在还，每个月还要还13000，保险业浪费了大半年，这个损失谁来承担呢？
+　　解说：质检总局启动缺陷调查并多次乐坛和敦促下，315国际消费者权益日之前，大众途锐发会召回，进气口处安放额外的导流板，车企态度终于有所转变，但解决方案能否彻底解决车辆进气口进水的问题，维护消费者权益，车主们还在拭目以待。
+
+
+
+
+
+责任编辑：陈永乐
+

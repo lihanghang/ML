@@ -1,0 +1,305 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+警惕“校园贷”骗局！借6000元利滚利被逼还100万
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:260368661,
+				pid:1,
+				url:'',
+				title:'警惕“校园贷”骗局！借6000元利滚利被逼还100万'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=260368661/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　校园贷成“校园害”学生借6000元利滚利后欠百万巨债
+　　最近，各大中专院校都陆陆续续放暑假了。但是，一些学生在学校时欠下了巨额的“校园贷”，很多人从最初只借6000元钱，到“滚雪球”般利滚利，欠债甚至累计超过百万元。近期，深圳警方侦破了一个诈骗了300多名学生的诈骗团伙，涉案金额超过1000万元。嫌疑人在行骗时，先对借款人进行测试和选择。那些超出支付能力、又有不良和奢侈消费习惯的学生，最容易成为诈骗对象。
+
+　　校园贷套路多环环逼人入套
+　　校园贷究竟有什么套路，能让这些学生进入连环套呢？几千元的借款，又是怎么变成上百万的呢？
+　　“校园贷”套路第一招：借钱很容易高额利息套住你
+　　小陈陷入校园贷骗局，是为了买一个新手机。他的同学迅速给他联系了一个专门从事小额贷款的所谓“朋友”。
+　　“校园贷”借款人小陈：这个“朋友”给我打了个借条，他说六千块钱你可以随时还，给人的感觉就是朋友帮忙这样子。
+
+　　这位“朋友”似乎很义气，没有说利息，也没有定还款时间，只说“一切好商量”。接过借款合同，小陈稀里糊涂签了字，然后迅速拿到了6000元借款。
+　　“校园贷”套路第二招：额外利息签完合同再告诉你
+　　此时，小陈才被口头告知额外的利息等费用。
+　　“校园贷”借款人小陈：看你借几天，算多少利息，比如我借6000，第二天还利息500元钱，还不上（再）罚你300块钱，那天你就要给（还）800块钱。
+
+　　签合同前，以为只是还本金，签合同后又被追加利息、手续费等内容，从此，借款人就被这份所谓的“借款合同”牢牢地把控住。
+　　深圳市公安局南山分局桃源派出所袁成彬：在我们侦办这个案件当中，就发现嫌疑人以5天为一个计费周期，收取30%的利息。如果出现不能按时还的情况，就要求受害人给高额的逾期费，我们这个案件当中逾期费以小时为计费单位，一小时500元。
+　　“校园贷”套路第三招：想方设法垒高债务让你还不起
+　　“校园贷”犯罪嫌疑人：当事人如果无钱偿还这笔钱的话，我们就会通过别人（借贷公司）借笔钱给他找别人，来借这笔钱平当事人的账。
+　　“校园贷”借款人小陈：然后他们还会装好人，比如说，我帮你，要不就我帮你把我大牛哥（放贷人）这个钱也还了，反正现在逾期，我帮你把逾期的钱也还了。
+
+　　抓住学生对社会了解不多、胆子普遍比较小，因害怕不敢求助他人的特点，借贷公司会找来多家放贷公司，给欠债学生继续借钱还账。此时借款人到手的现金又会大打“折扣”。
+　　“校园贷”借款人家长王女士：给（借）10万，就是也转到他银行卡上10万，但是马上不到两秒钟，又逼着他转给另外一个人转走8万，就实际上到他手上只有2万，这两万的话，就又还上一家的利息，只是利息，而且本金还没有还，那这样子的话，就是一辈子也还不起这个债了。
+　　就这样，故意让借款人借新还旧、虚增债务。而且，一些不法分子还互相勾结，逼迫借款人签下空白借条，甚至让一笔借款打几个借条等方式，垒高债款。
+　　“校园贷”套路第四招：上门催债让家长还钱才是目的
+　　而一旦还不起钱，“催债”的戏份就开始了。
+　　“校园贷”借款人家长王女士：家里的电话他们就一个一个打，到最后就是用那个“呼死你”的电话轰炸，然后，我们也没有这个能力还嘛，他们就采取很激烈的手段，弄胶水塞门锁，喷漆，然后恐吓，说要把孩子砍死，打残。
+
+　　由于借款条上有孩子的手印和签字，很多家长遇到上门催债时，都会抱着息事宁人的态度，还款做了结，很少愿意配合警方取证报案。
+　　原“校园贷”放款人栗某：没有钱可以，拿东西，你向警方报案，都是不害怕的，因为我们两个是经济纠纷。
+　　而这种软硬兼施的催债方式，不仅让许多家庭损失大笔钱财，身心也受到严重摧残，很多欠债人甚至被逼上绝路。
+
+　　警惕！“校园贷”进入美容院、手机店
+　　记者在调查时还发现，由于很多学生做什么整形、美容、买手机，因此不少“校园贷”公司开始与美容院、手机专卖店合作，将贷款与产品捆绑搭售，诱骗学生。
+　　在这里，提示学生一定要合理消费，一旦遭遇校园贷骗局，应当及时报警。
+
+
+
+
+
+责任编辑：刘万里SF014
+

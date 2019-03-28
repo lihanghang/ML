@@ -1,0 +1,307 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+五星酒店被曝“不换床单不擦马桶”：记者拿到更多未在网上公布的视频
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251621946,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251621946.html',
+				title:'五星酒店被曝“不换床单不擦马桶”：记者拿到更多未在网上公布的视频'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251621946/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　追踪|五星酒店被曝“不换床单不擦马桶”评测机构公布最新视频
+　　前不久，一家独立测评机构在网上曝光了北京五家五星级酒店，在客人退房后没有彻底更换床品、清洁浴缸及马桶圈的情况。涉及的酒店有北京W酒店、北京三里屯洲际酒店、北京希尔顿酒店、北京JW万豪酒店和北京香格里拉饭店。
+　　这一事件引起了广泛关注，但随后网上也出现了针对这家名叫蓝莓测评的调查机构的质疑。央视记者近日采访了这家调查机构的相关负责人，并拿到了更多尚未在网上公布的视频。
+　　调查机构：测评结果让我们很震惊
+　　在这家调查机构提供给记者的视频中，可以看到，北京三里屯洲际酒店与已经曝光的北京希尔顿酒店情况相同，床品、浴缸、马桶圈、漱口杯四个项目在客人退房后都没有更换清洗。北京JW万豪酒店、北京香格里拉饭店和北京W酒店三家酒店都是部分项目没有更换清洗。对于浴缸和马桶圈，五家酒店全都没有清洗。
+
+　　该机构负责人张路：“对这个结果我们是很震惊的，完全没有想到五家酒店都没有完整地去更换所有的床品，或者对卫生间的浴缸、马桶做清洁。”
+　　张路介绍，他们是专注当下中高端人群生活方式的独立调查机构，成立时间不到一年，这次调查引起的社会反应之大，令他们始料未及。
+
+　　记者：“当时咱们选择这五家是怎么选的？为什么全部是五星级酒店，没有分散开来有五星、有四星、有经济型酒店？”
+　　张路：“蓝莓评测定位的人群实际上就是中高端人群，我们比较关心在五星级范围之内到底这个测试的结果会是什么样？而且五星级代表的是最高标准的服务状态。”
+　　调查机构回应三大质疑
+　　五星酒店被曝“不换床单不擦马桶”，这一事件成为公众关注的焦点后，也有一些人对该调查的真实度和权威性提出质疑，比如视频中为何没有时间，另外是如何做到退房后再订房时入住的是同一房间。对此，该机构相关负责人也进行了一一回应。
+　　质疑一：视频中的时间线
+　　有网友质疑，视频中没有显示日期和时间，也无法确定各个片段的先后顺序，因而无法确定两段视频确实是在两天内分别拍摄的。
+
+　　该机构负责人张路：“我们做的这次测试，无论是第一天测试房间，还是第二天换了一位同事进入房间，每次进入房间我们会用免提的方式先给酒店的前台打电话，询问当天的日期及时间。但是出于对我们工作人员隐私的考虑，现在这段视频还没有放出去。”
+　　目前，该机构已经将电话确认日期的视频提供给央视记者。
+
+　　质疑二：连续两天订到同一房间的可能性
+　　很多网友对该评测机构能在五家酒店都成功地连续两天订到同一房间表示怀疑。对此，该机构发出声明：希尔顿酒店是他们直接在酒店客户端上指定房间办理入住，而其他酒店均是提前打电话给酒店预订指定房间。该机构负责人向记者展示了订房的相关单据和入住日期。
+
+　　质疑三：该机构的独立性
+　　据调查，这家机构和“穷游网”都同属于寰宇慧旅（北京）科技有限公司，法人代表均是肖异。网友质疑穷游网也有酒店预订等相关业务，这段视频的发布背后是否有商业目的。针对这个问题肖异给出回应。
+　　寰宇慧旅（北京）科技有限公司法人代表肖异：“穷游网和蓝莓评测虽然是属于同一个公司，但是它们是两个完全平行且独立的项目组。蓝莓评测因为做的就是消费者关心的各种各样的消费产品和服务的评测，所以它必须完全独立。”
+　　监管与自查为了消费者权益
+　　根据记者的调查，这家机构给出的回应可以证明视频是真实的。遭曝光的这几家五星级酒店确实存在“不换床单、不擦马桶”的现象。面对这样的问题，消费者、酒店、相关部门三者之间应该构成一个怎样的监管机制？让人们住得放心？
+　　央视评论员洪琳：独立测评机构以消费者身份来暗查，这点很关键，如果我们消费者自己足够细心，经过事前的相关准备，那么消费者自己也可以完成这种独立的暗查。酒店应该做的是自查和整改，但目前来看这几家酒店做出的回应很浓的公关味道，甚至可以说有些傲慢。无论是有关部门的监管与酒店的自查，其目的都是为了保障消费者权益。从这个角度讲，没必要对这样的曝光视若仇敌。把服务做好，实现共赢才是正道。
+
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

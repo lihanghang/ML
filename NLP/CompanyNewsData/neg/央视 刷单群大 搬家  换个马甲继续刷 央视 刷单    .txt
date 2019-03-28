@@ -1,0 +1,124 @@
+
+
+
+
+
+
+
+
+
+　　【相关阅读】央视315晚会曝光网店刷单：一千块钱刷一个钻
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'3957740810826751'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+　　央视财经微博：【315再行动：刷单群大“搬家”换个马甲继续刷】本台3·15晚会曝光了一些网店通过刷单在销量和好评上造假的内幕，引发社会关注，相关部门也表示，将会对这类网络不诚信的行为采取严厉打击措施。虽然在QT和YY的语音聊天室里，之前315晚会曝光过的刷单群已经无法打开，然而，在另一家名叫IS的聊天室里，记者又发现了刷单群的身影，这个群只是换了个马甲，连刷单的人都没变．．
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论
+
+
+
+
+
+
+
+
+
+　　【相关阅读】央视315晚会曝光网店刷单：一千块钱刷一个钻
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'3957740810826751'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+　　央视财经微博：【315再行动：刷单群大“搬家”换个马甲继续刷】本台3·15晚会曝光了一些网店通过刷单在销量和好评上造假的内幕，引发社会关注，相关部门也表示，将会对这类网络不诚信的行为采取严厉打击措施。虽然在QT和YY的语音聊天室里，之前315晚会曝光过的刷单群已经无法打开，然而，在另一家名叫IS的聊天室里，记者又发现了刷单群的身影，这个群只是换了个马甲，连刷单的人都没变．．
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

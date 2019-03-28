@@ -1,0 +1,84 @@
+
+
+
+
+
+
+
+　　新浪财经讯8月22日消息，微博大V“博联社马晓霖”讲述了自己在兰州中川机场的“天价餐”遭遇。
+　　博主谈到，兰州机场某餐厅一碗牛肉面要价78元，外加3元餐具费，共81元。
+　　“机场内外，百步之遥，为何牛肉面能翻价十倍？”博主质疑，难道只是简单的成本问题吗？
+
+　　你也遭遇过机场“天价餐”吗？快来【金跑道·国内机场口碑评选】吐槽分享！
+
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'4275756970317749'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+　　明星“挨宰”：一根面条3块钱 不是吃面这是吃钱
+　　事实上，机场的高物价实属老生常谈，连明星都曾纷纷中招。2016年8月，演员刘晓庆在某机场点餐后针对价格高达90元的一碗面，发布微博称：“记得上次是78元呀，又涨了？”
+微博截图
+　　这并不是刘晓庆第一次对机场的“高价面”表示惊讶。2015年10月，她发布微博表示：“平均每一根面条3块钱！欺负我们太饿了。不是吃面，这是吃钱啊啊啊。”
+微博截图
+　　另外，李易峰、黄晓明、巫启贤、黄安、何兵等数十名知名大V均讲述过在“机场被宰”的经历。
+　　多地表态：机场餐饮等价格不得高于中心城区
+　　不少地方也曾对机场餐饮价格做出规定。其中，广州市政府网站年初公布的《广州市民用运输机场管理办法》规定，2月1日起广州机场餐饮等价格不得高于中心城区。
+截图来源：广州市人民政府
+　　重庆市人民政府也于今年5月印发了《重庆市民用航空促进条例》。《征求意见》要求，“机场管理机构应当与取得经营权的单位、个人签订协议，明确其服务标准、收费水平、安全规范和责任等事项，并约定经营者提供的商品、服务的价格，不得高于重庆市中心城区同一商标、商号、品牌或者同类商品、服务标注的价格。”
+截图来源：重庆市人民政府网站
+　　业内人士：机场店租大约是市内餐饮店的2-3倍
+　　其实，“同城同质同价”并非新提法。以广州白云机场为例，早在2010年亚运会期间，省物价局就明令白云机场部分商家“同城同质同价”。从2016年开始，白云机场也大力倡导机场内商家“同城同质同价”。
+　　目前，白云机场餐饮实行的是价格星级管理。
+　　所谓“价格星级”分为五档，一星的餐厅单品价限在10元、套餐价18元、自助餐价28元、饮用水价3元、饮料价5元；二星餐厅单品价格不得高于20元，套餐价不得高于38元，自助餐价限价为48元；三星餐厅的单品、套餐、自助餐价分别限制在48元、58元、68元以内；对四星餐厅的单品价、饮用水价以及饮料价无限价；对五星餐厅的各类产品均不限价。
+　　而据《美食导报》调查发现，广州白云机场大部分餐厅皆为三星餐厅，肯德基、麦当劳等洋快餐的价格仍比市区要高。
+　　为什么机场餐饮价格居高不下呢？业内人士道出了一些端倪。店铺租金是餐饮经营成本的最大组成部分，机场店尤其明显，机场餐饮店的平均租金大约是市内餐饮店的2~3倍。
+　　与此同时，国内有大多数城市的机场，地处郊区，周围没有商圈，处于一个相对封闭的环境中。机场商家数量相对较少，在市场竞争不充分的环境下，消费者往往没有选择余地。“别无分店”的现实状况，限制了消费者的选择权。
+　　参考资料：
+　　《新规出台，机场“天价”餐饮时代即将终结？》，美食导报
+　　《一碗面卖78李易峰黄晓明吐槽过的高物价机场要管了》，每日经济新闻
+　　《一碗面90元！机场吃饭为啥这么贵？真相了》，财经网
+
+
+
+
+
+责任编辑：李彦丽
+

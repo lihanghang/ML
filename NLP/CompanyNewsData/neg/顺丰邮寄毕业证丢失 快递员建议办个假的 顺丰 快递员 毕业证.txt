@@ -1,0 +1,290 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+寄丢学生大学文凭还建议办假证？顺丰：正在努力寻找
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251345424,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251345424.html',
+				title:'寄丢学生大学文凭还建议办假证？顺丰：正在努力寻找'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251345424/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　顺丰邮寄毕业证丢失 快递员建议办个假的
+　　来源：济南时报　　
+　　小陈是山东大学（威海）法学院一名大四的学生，前不久学校向应届毕业生颁发了学位证和毕业证，由于人在上海实习，6月23日小陈拜托同学代领后将证书邮寄给她，邮寄时特别强调一定要本人签收，本以为不会出现问题，没想到5天过去仍未见快递的踪影。为此小陈多次致电顺丰速递，对方答复快递找不到了，小陈说，有一个快递员竟然问她可不可以去办个假证
+　　顺丰邮寄毕业证5天未到称“找不到了”
+　　“顺丰快递把我的学位书弄丢了。”27日18：20左右，有网友在微博上发帖称自己山东大学的毕业证、学位证被顺丰速递寄丢了。
+　　据了解，发微博的网友小陈是山东大学（威海）法学院一名大四的学生，前一段时间一直在上海实习，“学校发证书的时候公司有事走不开就没回去，只能拜托同学代领，再帮忙寄过来。”23日小陈的同学用顺丰速递将她的证书寄出，25日小陈查询的物流信息显示“因休息日或假期客户不便收件，待工作日派送”。周一上班后，小陈等了一天也没见到自己的快递，查询物流信息也没有更新，“打电话给顺丰，说是仓库里已经找不到了。”直至28日，5天时间过去了，装有小陈证书的快递仍未见踪影。
+　　今年9月，小陈即将研究生入学，学成毕业后还要面临就业，这一切都绕不开本科学历证书，“虽说可以去学校开证明，先不说证明管不管用，谁希望辛苦读了四年换来的不是沉甸甸的证书而是一纸证明呢？”
+　　失主称快递员建议“办个假证”顺丰回复正在核实情况
+　　“27日我找到顺丰的客服，客服说找不到就让我走理赔程序。”快递失踪后，小陈曾多次联系顺丰速递，对方的态度让她很失望，“这是找不到就算了的态度吗？”小陈表示自己并不关心赔偿，只想拿到自己的证书。更让小陈气愤的是快递员的态度，“物流信息只显示到25日，但期间投递过两次，是两个不同的快递员，只是都没送到我手上。”小陈说快递失踪后她联系过这两名快递员，二人均不承认是自己的责任，“不承认就算了，最可气的是其中有个人还问我可不可以去办一个假证。”
+　　28日下午，顺丰速递一工作人员回复，公司正在查找小陈的快递，目前尚未找到。至于快递失踪的原因，工作人员称涉及客户隐私不便透露。
+　　对于小陈所述快递员建议她办假证一事，顺丰速递工作人员表示正在核实情况，“公司是不允许这样的事发生的，如果属实会严肃处理，也会将处理结果告知寄件人与收件人。”
+
+ 
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

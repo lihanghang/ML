@@ -1,0 +1,325 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+测评：七家电商卖的小棕瓶只有小红书涉嫌售假？
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251986011,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251986011.html',
+				title:'测评：七家电商卖的小棕瓶只有小红书涉嫌售假？'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251986011/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　双11刚过，多位网友@中国消费者报微博，提醒小编看一段视频。小编看了，果然被震惊到了。
+　　据了解，早在11月9日，网易美学官方微博账号就发出上述视频。
+　　该平台通过天猫、京东、网易考拉海购、亚马逊、唯品会、聚美优品、小红书7大电商平台，分别购买到热卖护肤产品雅诗兰黛-小棕瓶眼霜，对其进行正品测评试验。
+
+　　为了检验国内各大知名电商平台售卖的小棕瓶是否为正品，该平台出动了多位小伙伴，将收货地址分散在江浙沪各地，以避免商家发现端倪，发货区别对待。
+
+　　对比结果显示，小红书售出的同款商品的外包装瓶盖在质感、字体、重量、颜色等细节方面均与其他平台售出产品存在较大区别。
+　　除了包装等，小棕瓶具体比较情况为：
+　　1瓶盖
+　　七瓶比较下来，唯一差异较大且肉眼一眼就能辨认出的，是小红书购买的小棕瓶。如果和天猫官方旗舰店的版本相比，小红书售卖的小棕瓶，有以下几点区别：
+　　★瓶盖质感偏粗颗粒，盖上字体更粗：上手略微有磨砂感，品牌名称字体较粗；而天猫的瓶盖则更细腻，字体也细一些。
+
+　　★瓶盖颜色明显偏黄：不知道大家在镜头或者下方动图中能否看出，我们打假办小伙伴右手小红书（也就是你们在图中看到的左边）买的小棕瓶瓶盖，明显更黄、色调更暖一些。
+
+　　此外，天猫的小棕瓶瓶盖内部带有一些细闪，这也是小红书那边售卖的产品所没有的细节。
+　　★瓶盖内部螺旋处立体感弱：相比于天猫购买的小棕瓶瓶盖内侧螺旋纹，小红书的螺旋立体感明显更弱一些，不知道是产品批次的不同，还是其他原因造成的差异。
+
+
+　　2瓶盖重量
+　　根据上称后的比较，6家售卖的小棕瓶瓶盖重量都是6克，除了小红书，仅仅为5克。
+
+　　3瓶口塑料盖
+　　小红书的小棕瓶最突兀，瓶口覆盖的塑料盖颜色最浅。
+
+　　4瓶身
+　　这一方面，七家售卖的小棕瓶看起来都没什么区别。
+　　随后，该平台致电雅诗兰黛客服中心咨询，得知目前该品牌只是与天猫、专属官网、招商银行网上商城和专柜进行了合作，在这上面售卖的都是品牌正品，其他的渠道也许有代理商、或者二次授权，但都不是品牌直属合作。若是要论包装，品牌直属正品的包装是不会有什么区别的。
+　　小编注意到，上述视频在微博平台被转发近8000次，近2000网友跟帖。
+　　今天11点15分，中国消费者报微博转发了上述视频，并@小红书：“到底怎么回事儿，这事儿应该及时回应啊。”
+
+　　截至发稿时，小编登录@小红书微博，发现目前仍无回应。
+　　虽然小红书还没有给出回应
+　　但是显然网友已经炸开了锅
+　　有吐槽的
+
+
+
+
+　　有说只相信专柜的
+
+
+　　还有质疑的声音
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

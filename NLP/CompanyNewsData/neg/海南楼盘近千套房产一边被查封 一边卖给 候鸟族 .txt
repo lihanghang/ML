@@ -1,0 +1,320 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+龙沐湾1号海景公馆
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:264587271,
+				pid:1,
+				url:'',
+				title:'龙沐湾1号海景公馆'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=264587271/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　调查丨海南楼盘近千套房产一边被查封，一边大肆卖给“候鸟”老人
+　　来源：中国房地产报
+　　中房报记者陈标志丨海南乐东报道
+　　在“海景公馆”居住不到一年的时间，中国某科学研究院退休高级工程师陈浩然获悉一个不好的消息：他的房子被法院查封了。
+　　陈浩然所买的楼盘叫“龙沐湾1号海景公馆”，位于乐东黎族自治县，这里地处海南岛西南部，挨着三亚的优势使其在房地产企业和购房者心中的地位骤升。“龙沐湾1号海景公馆”是一个近海房地产项目，共有990套房产，明知有957套被3家法院轮候查封，但开发商依然瞒天过海对外销售，将其中的491套房产卖给了多个省份到海南养老度假的“候鸟一族”。
+　　这个房地产项目所暴露出的问题，在当地并不是个案。2010年国际旅游岛规划实施以来，海南房地产开发热潮再起，全国各地大大小小的房地产开发企业纷纷抢滩海南岛，全岛的沿海土地资源被“围猎”，过热开发遍布全岛海岸线。一些市县也长期依赖卖地卖房增加财政收入，疏于有效管控。2017年中央环保督察组督查、2018年自贸区（自由港）设立后，海南对前述现象“踩了刹车”，最严格土地政策、最严限贷限购政策，引导海南房地产业转型升级，减少和摆脱海南经济长期对房地产的过度依赖。
+　　但此前过热和无序开发留下的“后遗症”，不止是一个不争的事实，并且还很棘手。
+　　“候鸟”高级工程师买房
+
+　　龙沐湾1号海景公馆，在美丽外表之下危情重重  中房报记者陈标志⁄摄
+　　这是一个位于海南岛西南沿海的高密度住宅小区，尽管占地面积并不大，却密密麻麻地盖了990套房子。开发商还给它取了个很有诱惑力的名字——“龙沐湾1号海景公馆”。
+　　今年68岁的陈浩然，就独自居住在“海景公馆”一套不足32平方米的房子里。但居住不到一年的时间，陈浩然就得知了一个不好的消息：他购买的房子已被法院查封了。
+　　退休前，陈浩然是中国某科学研究院一名高级工程师。5年前退休在老家济南养老的陈浩然，因为身体的原因来到海南生活，成为“候鸟”老人。
+　　陈浩然购买“龙沐湾1号海景公馆”的这处房产，也纯属偶然。
+　　“我患有冠心病，心脏都动过手术，像我这种病来南方养最适宜。”9月17日上午，陈浩然接受中国房地产报记者采访时称，他2013年来海南后，一直在三亚租房居住。去年10月份的一天，他从三亚住处去找球友打乒乓球的路上，鬼使神差般走进了临街铺面的一家房产中介门店。
+　　“那段时间我也有买房子的想法，就顺便走进去问问情况。”陈浩然说，中介人员向他推荐了龙沐湾1号海景公馆，“三四十平方米的小户型，单价在10000元左右，我感觉地理位置和价格还算合适”。
+　　按照房产中介人员的说辞，上述楼盘位于大三亚旅游度假圈——龙沐湾国际旅游度假区，距环岛高铁西线段尖峰站1.5公里、环岛高速西线段高速互通仅2公里。
+　　实际上，该项目位于乐东黎族自治县尖峰镇岭头村，距离三亚市区约110公里，海口市区约280公里的车程。
+　　热销房产背后的隐患
+龙沐湾1号海景公馆售楼处已人去楼空  中房报记者陈标志⁄摄
+　　10月17日上午，房产中介公司提供免费看房车，载着包括陈浩然在内的一车老年人，前往“龙沐湾1号海景公馆”看房。
+　　“看房车一辆接一辆送客户来看房，而且大部分是操着外地口音的老年人。”陈浩然告诉中国房地产报记者，尽管小区并不大，但老年人喜欢安静，而且从小区走10多分钟就到海边了。
+　　看了小区后，在中介及销售人员的洗脑下，陈浩然有些动心了。“当时没有感觉有什么异常，前来看房子的人来来往往很热闹，售楼处挂着的‘五证’齐全。”陈浩然说，如果要说发现的问题，也就是项目预售许可证的有效期为2016年5月25日至2017年5月25日，“我当时向售楼人员提出了疑问，对方一句‘正在补办’就把我蒙过去了”。
+　　当天，陈浩然与开发商乐东金地房地产开发有限责任公司（以下简称“乐东金地公司”）签订了一份《商品房认购书》，购买该小区B栋五楼一套建筑面积为31.77平方米的小户型房子，并一次性交纳了约32万元的房款及物业费。
+　　从吉林到海南养老的谢冬梅，与陈浩然购房经历有些相似。这位年过6旬的老人在接受记者采访时，说起房子的事，几度哽咽难语。
+　　“2017年9月底，通过三亚的房产中介，我来这里看房子。”坐在龙沐湾1号海景公馆隔壁的超市门口，谢冬梅后悔自己当初的决定，“当时我正在跟销售人员沟通时，一个朋友给我打来电话，说这里房子有问题。我拿着手机问售楼处的张经理，他接过电话把我朋友大骂了一通。”
+　　在龙沐湾1号海景公馆，与陈浩然、谢冬梅一样情况的购房者，多达491户，且均是全款购房。然而，接下来的遭遇让他们始料未及。
+　　一场购房骗局
+
+　　从外往里看，龙沐湾1号海景公馆给人一种可以托付的心动  中房报记者陈标志⁄摄
+　　“每位购房人手头都有一份《承诺函》，开发商承诺，在2017年12月31日前为所有业主办理完网签手续，如不能按时完成网签，退还全部的购房款。”购房人徐大海告诉中国房地产报记者，基于这份加盖公章的《承诺函》，大家都信任了开发商，“但事实上，开发商的承诺并没有兑现。”
+　　今年2月6日，乐东县房管局在网上发布一则公告公示，称龙沐湾1号海景公馆990套商品房中，有957套被3家法院轮候查封。中国房地产报记者了解到，陈浩然、谢冬梅等购房人购买的491套房产，就包括在957套被法院查封的房产之中。
+　　看到这则公告公示，近500户购房人顿时懵了，他们通过进一步打听，他们所全款购买的房子，其实早在2017年1月20日就被法院查封了。
+　　“两家开发商由于资金实力不够，只得向民间借贷开发项目，后来钱还不上了，法院查封了项目的房产。”购房人徐大海告诉记者，尽管房产处于查封状态，但开发商对购房人隐瞒事实真相，大肆对外销售房产，“单就我们购买的这491套房子，开发商至少卖了上亿元，但这些房款没有用于还债”。
+　　“现在住在小区的业主来自全国多个省份，大部分是从外地来海南度假养老的老人，而且许多业主是卖了老家的房产，来海南购房。”徐大海情绪显得有些激动，他说，“我就是卖了老家的房子才过来这里买房，这也是我唯一的房产。事情没有那么简单，要么给房子，要么退房款。”
+　　中国房地产报记者了解到，在该小区居住的老年人中，有退休老干部、大学老教授、科研人员、律师及媒体人，他们一合计，要求有关方面给个合理的说法。
+　　“我们就是想问问：开发商如此恶劣的违法行为，该不该得到法律的严惩？从2014年开始，至今已有5家法院对该楼盘的957套房产进行了11次轮候查封、扣押，乐东房管部门为何不收回开发商的预售许可证？2017年1月20日，我们购买的房子就被法院查封了，当地房管部门为何在2018年2月6日才发公告公示？”徐大海等购房人提出了他们的质疑，“另外，法院查封房产，并没有张贴封条和进行公告。”
+　　公安机关介入调查
+　蓝色圆圈就是龙沐湾1号海景公馆所在位置
+　　9月17日，中国房地产报记者在当地采访时见到，龙沐湾1号海景公馆售楼处已空无一人，但数块摆放在大厅一角的“最具投资潜力楼盘”“海南养生度假典范楼盘”等牌匾，却显得格外扎眼。售楼处的考究的装修，以及仍悬挂在墙壁上的小区园林景观规划图等，显示出该楼盘项目曾经的热闹和辉煌。
+　　记者也试图通过多种途径与开发商方面取得联系，但均未果。
+　　针对上述购房人的相关质疑，乐东县有关部门又会做怎样的回应？当天中午，记者与乐东县委、县政府相关负责人取得了联系。一名分管房地产工作的副县长表示，若要采访必须要经过县委宣传部的同意。而乐东县委宣传部一位主要负责人表示，记者采访需要提供相关的采访提纲。
+　　记者随后按照该负责人的要求，列出了5个方面的采访内容，并通过短信的方式发送给了这名负责人。但截至记者写稿时，并没有收到乐东县方面的回应。期间，记者还就相关采访事宜与上述负责人多次联系，得到的答复是，“领导去开会了，我在出差”。
+　　尽管乐东县方面没有正面回应，但记者还是从相关部门4月份答复购房人的“信访事项答复意见书”中获悉相关情况。乐东警方称，经调查，乐东金地公司以非法占有为目的，隐瞒事实真相，在已无权处置的情况下，将原先查封和抵押给他人的商品房售给现在居住的业主，其行为触犯了刑法的相关规定，涉嫌合同诈骗。
+　　目前，警方已对乐东金地公司以涉嫌合同诈骗案进行了立案侦查，开发商一位主要负责人已被依法控制。
+　　关于购房者提出的法院未实地查封、未在公众知悉的平台公示公告，未设定查封财产保管人及保管权限、未对被查封房屋和银行账户进行监管问题，海口市中级人民法院也回应了购房人的信访问题。
+　　法院认为，本案属于诉讼过程中采取的保全措施，对房屋采取保全措施的目的在于对其产权进行限制而并非实体处分；同时，也没有任何法律规定法院在诉讼过程中对房屋进行保全应当在公众知悉的平台公示公告、设定查封财产保管人及保管权限等。
+　　中国房地产报记者了解到，在当地，龙沐湾1号海景公馆并不是一个孤案；乐东县有关部门为此还专门成立了工作组，试图协调解决多个房地产项目“烂尾后遗症”问题。
+
+
+
+免责声明：自媒体综合提供的内容均源自自媒体，版权归原作者所有，转载请联系原作者并获许可。文章观点仅代表作者本人，不代表新浪立场。若内容涉及投资建议，仅供参考勿作为投资依据。投资有风险，入市需谨慎。
+
+
+责任编辑：陈永乐
+

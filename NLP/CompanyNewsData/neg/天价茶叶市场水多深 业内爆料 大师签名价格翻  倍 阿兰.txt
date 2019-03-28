@@ -1,0 +1,383 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:260275250,
+				pid:1,
+				url:'http://finance.sina.com.cn/wm/2018-07-13/doc-ihfhfwmv0418185.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=260275250/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　重磅调查：“天价”茶叶市场水多深？业内爆料：大师签个名价格翻10倍……
+　　近几年来，武夷山的岩茶，风头很足，简单的一盒茶叶，动辄就是所谓大师手工制作，著名坑口的原料，每斤上万元、十几万元甚至几十万元。很多消费者都在发出疑问，这些充满传说、故事连篇的天价岩茶，真的值那么多钱吗？315在行动的记者走进了武夷山茶区进行了调查。
+
+　　在福建省福州市五四路，不到一个平方公里范围内聚集了十几家茶叶经销店和品牌连锁店。经销的茶叶以福建产的岩茶为主，就是大家耳熟能详的武夷岩茶。
+
+　　今年五月，记者在这些茶叶经销店看到，几万元甚至十万元一斤的茶叶比比皆是，最高端的茶叶卖到10万元一斤。其中一种名为“牛肉”的顶级岩茶现在越来越抢手了。
+　　这种被简称为“牛肉”的牛栏坑肉桂，在市场上究竟有多火呢？一张顶级武夷岩茶价目表最近刷爆了茶友微信朋友圈。
+
+　　在这张武夷岩茶采购目录中，每一款茶叶都堪称天价。其中：九龙窠母树大红袍每斤520万元，远香每斤48万元，瑞泉圣匠每斤38.8万元，无极每斤37.5万元，天驿古茗每斤30万元，鹤顶红每斤19.8万元。
+　　花520万元买一斤九龙窠母树大红袍，可以在武夷山市区买10套八九十平米的大房子。这些茶叶半数以上比黄金还贵，很多都冠以大师茶的名号，茶叶这么贵能卖出去吗？
+
+　　在采购目录中，排名第六位的鹤顶红每斤19.8万元，记者找到了这款茶叶的一家经销店。茶商却回复说：“这款茶不太好拿，要预定。现货没货。”
+
+　　根据这些茶商的说法，这些少则几万元、多则几十万元一斤的天价茶叶，不仅有人买，而且还轻易买不到。其中一家茶商表示，他们上个月卖了五份十万元一斤的茶叶。
+
+　　记者注意到，在各大电商网站的茶叶店铺，牛栏坑肉桂也都是其镇店之宝。
+　　日春茶叶一款牛栏坑肉桂50克10000元，一斤10万元；孝文家茶的一款私房茶50克12000元，一斤12万元。
+　　这些品牌的电商平台和实体店经销商，都称自己在武夷山甚至牛栏坑有茶叶种植基地，茶叶就产自那里。
+
+
+　　记者调查得知，目前茶叶市场上，最红火的武夷岩茶，是一种名为牛栏坑肉桂的岩茶，价格是标注最贵的。市场上的商家，也都以售卖牛栏坑肉桂岩茶为荣。
+　　有这么多牛栏坑肉桂岩茶吗？这种茶的价格究竟离谱到何种程度呢？
+
+　　武夷山市区和度假区拥有几千家茶叶经销店。那么，零售市场上几万元、几十万元一斤的岩茶大师茶和品牌茶，究竟贵在哪里呢？
+　　一位武夷山市拥有几款岩茶顶级品牌的知名制茶大师说：其实这个东西，是一个噱头，卖几十万元的茶和其它茶差别在所谓的手工制作。
+
+　　茶的品质好坏主要取决于两个因素，种茶和制茶，也就是原料和工艺。
+　　武夷岩茶是中国传统名茶，属于半发酵的青茶，它的制作方法介于绿茶与红茶之间。
+　　以最著名的武夷岩茶大红袍茶为例，它的手工制作工艺是：采摘——倒青——做青——炒青——揉捻——复炒——复揉——走水焙——扬簸——拣剔——复焙——归堆——筛分——拼配等。其工序繁复，涉及到十多种技艺，需要至少几十个人在短时间内争分夺秒地做茶，任何一个大师根本无法独自完成。
+
+　　一位茶商向记者透露：“我们家做这个茶的人，必须要人手多，最少要30多个人做事情，你怎么一个人做得了。”
+　　很多茶商透露，当地一些所谓大师茶，用的原料和大家差不多，不过是制作过程中，有的是大师在制茶过程中负责监制，有的纯粹只是大师签了一个名，茶叶的价格就立即翻上几倍甚至十倍以上。
+　　在武夷山市数千家茶叶经销店中，经营大师茶和品牌茶的并不多，更多的是销售自创品牌的正岩茶、半岩茶或者洲茶，它们都是根据茶的生长位置来确定的。
+　　正岩茶产于武夷山中心地带，其品质高、味醇厚，岩韵特征明显；
+　　半岩茶产于武夷山边缘地带，其岩韵略逊于正岩茶；
+　　而洲茶泛指武夷山附近区域所产的茶叶，品质又低了一等；
+　　被市场追捧的牛栏坑肉桂则产自正岩的核心地带牛栏坑。
+　　那么，这种神秘的“牛肉”在武夷山市场的散装销售价是什么样的？
+　　315在行动记者走访了几家经销店，对于牛栏坑肉桂，茶商给出的价格相差巨大。
+　　有的说八千五一斤，有的说一万二一斤，是“正牛肉”（牛栏坑肉桂），而且是手工茶。而有的只有两三千元。
+
+　　同样是茶农自产自销的牛栏坑肉桂散装茶，为什么价格差异这么大呢？
+　　一家茶厂的老板给出了这样的解释：“你看‘牛肉’，它分‘牛头’、‘牛尾’、‘牛背’，如果是卖六千左右的，是种在比较高的地方，卖三千左右的，种在‘牛背’。”
+
+　　这位老板称，他家还有产自“牛尾”的牛栏坑肉桂，每斤卖两千元。在记者所调查的茶商和茶厂中，这家茶厂的牛栏坑肉桂销售价格最低，相当于别人牛肉价格的15-25%。
+　　茶商：“市面上98%的‘牛肉’都是假的，都不是牛栏坑产区的。我们这个‘牛肉’确实是牛栏坑产区的，它是‘牛背’种的，你拿去比，98%的‘牛肉’茶都能比下去。”
+
+　　然而，别的茶商一听价格，两、三千元一斤的所谓“牛肉”绝对是假的。
+　　茶商：“不可能是真的，不到四千你敢买吗？当地今年的牛栏坑青叶，最次的，或者最边上的，跟牛栏坑交界的地方最便宜都是500块一斤。我给你算，10斤青叶做成1斤精茶，成本就去了五六千了，还要加工，所以三四千一斤的‘牛肉’茶不可能是真的。”
+
+
+　　茶商说，2017年，一斤牛栏坑肉桂的成本价至少六七千元。因此他们断言：批发市场上一斤五六千元以下的所谓牛肉，肯定是假的。那么六千元以上的就一定是真的吗？很多茶商都在卖牛栏坑肉桂，都在说存货不多。那么，牛栏坑到底在哪里，“牛肉”的产量究竟有多大？
+　　武夷山市区一家茶店的店主阿青告诉315在行动记者，自己家在牛栏坑拥有一片茶园，大概有三四亩地。他三个哥哥也有茶园，加起来有15亩地。
+　　记者提出要去看她家在牛栏坑的茶园，阿青满口答应，并说进入武夷山景区后走半小时就到了。可奇怪的是，记者走了一个多小时，还是没有到达牛栏坑。
+　　这时，阿青突然改口说，到牛栏坑不是半个小时，而是两个多小时。任凭记者怎样说服，阿青都表示路程太远不去了，于是打道回府。
+　　牛栏坑到底在哪儿呢？在天心村，记者认识了村民阿兰，她说自家在牛栏坑有茶树，家里也做茶。
+　　茶农阿兰：“牛栏坑的‘牛肉’肉桂，我们没有卖那么贵，批发都是八千块。”
+
+　　天心村因为家家户户种茶、做茶、卖茶，也叫天心岩茶村，号称“中国岩茶村”，是牛栏坑的所有者。阿兰家的一楼是茶场，记者赶到时，茶工们正忙着做今年的新茶，茶香扑鼻而来。
+　　阿兰家里摆放着高级评茶员执业资格证书，阿兰说，她只有小学文化，但做茶有几十年了。八岁就开始做茶，家里九代都做茶的。
+
+　　尽管算得上是天心岩茶村的茶叶世家，阿兰却说她家在牛栏坑的茶树并不多。
+　　茶农阿兰：“没多大面积，就是二三十棵茶树，一年就几十斤茶叶，那一片面积大概有十几亩。”
+
+　　随后，阿兰带着记者去牛栏坑。天心村边上就是武夷山景区的入口，进入景区车行十多分钟后就到了一处山坡下，再步行两三分钟就进入一条沟谷。
+
+　　这里就是被茶商视为岩茶圣地的“牛肉”原产地——牛栏坑，它是一条东西走向的狭长沟谷。
+　　一进牛栏坑，四处遍布的茶企广告牌立即映入眼帘，这些牌子上写的大多是某企业“牛栏坑基地”之类的字眼。
+
+　　记者询问阿兰，挂牌子的企业是否真的是她村里的，茶农阿兰回答说有的是有的不是，有的企业她都不知道。
+
+　　在牛栏坑，有的是几分地上插一块茶叶基地牌子，有的茶园只有两三分地大却同时插着两三个不同企业的牌子。
+
+　　阿兰作为天心村的村民，对于牛栏坑这些广告牌上的绝大多数茶叶企业名字感到陌生，但她对这些牌子背后的秘密却了如指掌。因为她家的茶园里也曾插过别人企业的牌子，不过已经被她拔掉了。
+　　阿兰说，插牌子的这些企业并非真的在牛栏坑拥有茶园，而是外地企业与天心村的茶农达成了合作协议，给钱就让插牌子。
+　　茶农阿兰：“企业肯定要找一户人挂的。”
+
+　　进了牛栏坑约一百多米后就是阿兰家的茶园，她家茶园里果然没有插一块牌子。阿兰说，原来她这块地里有一家企业给五万元插牌子三年。由于这两年没有给钱，她家就把牌子拔掉了。在牛栏坑，好几户茶农也拔掉了企业插的牌子。
+　　天心村某茶场采茶工：“挂牌子的那些是骗人的，没挂牌子的才是真正的‘牛肉’，它只挂牌子不收茶叶”。
+
+　　经记者测量，整个牛栏坑大约有1.5公里，最宽处也就二三十米，最窄处只容一个人通过。这条坑谷到处散落着岩石，能种茶的地方不足一半，地上插着的各种企业的广告牌至少有六七十个。
+
+　　据村民讲，最近几年，国内近百家茶叶企业竞相在牛栏坑圈地插牌子，宣示其在牛栏坑拥有茶叶基地。
+　　福建省武夷山市武夷镇天心村村支书：“现在有很多，有些人不一定买茶叶，他立一个牌子或者是租出去，做宣传就是做个噱头，我在牛栏坑有基地。”
+
+　　茶叶企业在牛栏坑拥有茶叶基地，就意味着拥有最好的岩茶原料，而牛栏坑肉桂的品质是被专家认可的。
+　　原福建省茶叶质量检测站站长评茶师陈郁榕：牛栏坑这个地方，从地理条件来讲，属于幽谷坑涧的地貌类型，土壤风化得很好，而且四周都是岩壁还有树木，自然生态环境很好，具备了产出好品质茶叶的地貌特点。
+　　然而，多数在牛栏坑插牌子的企业并没有在牛栏坑种茶，也很难收到牛栏坑的茶青来做茶，但是市场上却到处售卖着所谓正宗牛栏坑的肉桂。天心村村支书告诉315在行动记者，真正牛栏坑的种植面积也就三十多亩。
+
+　　经过实地调查，315在行动的记者发现，武夷山核心茶区里的牛栏坑面积，最多也只有二十亩左右，年产肉桂岩茶最多也就一千多斤。那么，市场上家家都在售卖的牛栏坑肉桂岩茶，都是怎么来的？
+　　一些茶商告诉记者，市场上很多所谓牛栏坑肉桂其实里面暗藏玄机，市面上几乎没有，很多都是马头岩肉桂，甚至于别的山场的茶替代的，大多都是以次充好。
+
+　　那么，市场上是如何以次充好做出所谓牛栏坑肉桂的呢？这些茶商都不再细说。记者与阿青多次交往后，她终于说出了业内的一个秘密。
+　　茶商阿青：“茶叶这个东西水很深的，如果想跟你长期合作的话，我肯定跟你说得很清楚，一些所谓的牛栏坑肉桂是拼在一起。”
+
+　　与大红袍把不同茶叶拼在一起作为工艺不同，阿青所说的拼茶，并不是工艺上的要求，而是用便宜的茶拼起来，假冒牛栏坑肉桂茶卖高价。
+　　为了让记者一目了然，阿青的丈夫当场演示了如何用其它低价茶叶，拼出高价“牛栏坑肉桂”的过程。
+　　茶商阿青：“泡茶我们会调好几下，不是一下就能调出来的，所以，我们调得基本上，叶子很接近，香气厚度都很难分辨。”
+
+　　阿青夫妇拼出了三千元一斤、六千元一斤两款“牛栏坑肉桂”，随后，让记者和她店里批发价一万元一斤牛栏坑肉桂做比较。
+　　茶商阿青：“外观看不出来，我只能拼成气息相近的给你，但是，能有几个人喝得那么精准。”
+
+　　尽管三款所谓牛栏坑肉桂的口味有差异，阿青称都可以当做牛栏坑肉桂来卖，可以卖一万、两万、五万三个价位，只要讲出不同的故事。
+　　茶商阿青丈夫：“这三款都是‘牛肉’，为什么这个要卖五万、两万、一万？原因一，看‘牛首’由什么师傅做的、用什么工艺做的，其二这是‘牛心’，看是在哪里做的。”
+
+　　茶商阿青：“我现在告诉你，为什么这款茶卖八万，它是‘牛心’里面的，大师纯手工制作的。我这款茶必须卖你八万。那为什么这款茶卖五万呢，是‘牛肚子’的，我们把最基本的东西，展示在你们面前了。”
+　　在岩茶市场，各种天价的大师茶、私房茶、名家茶令人眼花缭乱，即使拥有十多年经验的茶商也感叹茶叶市场水太深，看不懂。
+　　茶商：“武夷山的茶之所以价格高，因为文化人喜欢把玩，它不是那么容易玩得清楚，所以说喝茶也是水很深。”
+
+　　【半小时观察】
+　　节目最后那位茶商的一声叹息，意味深长。喝茶是一件修身养性的好事，但也是普通民众生活中，最普通的一件事。但制造噱头，编造故事，端出所谓制茶大师，最终导致了茶叶市场上的种种乱象。天价岩茶的出现，归其根本，还是一个利字，为了挣取更多的钱。茶商，茶贩欺骗消费者的手法层出不穷，一些所谓大师，也鱼龙混杂，粉墨登场，一轮高过一轮的天价岩茶背后，真正种茶的茶农，和真正喝茶的消费者，成为了最终的受害者。茶叶是用来喝的，不是用来虚假炒作，欺骗消费者的，我们希望管理部门好好管管这些违规的商贩，我们也提醒消费者，茶叶没有天价，消费要当心骗子。
+　　如果你了解行业黑幕，如果你知道事实真相，如果你的消费权益正在受到侵害，央视财经“3·15在行动”征集新闻线索：315@cctv.com
+
+
+
+
+
+
+责任编辑：刘万里SF014
+

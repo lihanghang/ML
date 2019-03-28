@@ -1,0 +1,303 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:261907263,
+				pid:1,
+				url:'http://finance.sina.com.cn/wm/2018-08-22/doc-ihhzsnec1490449.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=261907263/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　“您的快递已丢失，请办理理赔！”诈骗新陷阱来了，请小心！
+　　网络购物已经成了平常事，随之而来的各种网购骗局也在不断地更新升级。
+　　最近，秦皇岛市民赵先生没有按期收到自己的快递包裹，却接到了一个自称“快递公司理赔中心”客服工作人员的电话，这个电话让赵先生差一点掉进骗子们精心设计的陷阱里。
+　　”快递逾期未送“主动理赔”暗藏玄机▲▲▲
+
+　　当事人赵先生：外地亲戚通过国通给我寄来一个手机，根据快递查询单我看到快递已经到了秦皇岛，可是却一直没有派送。
+
+　　就在赵先生焦急等待快递包裹的时候，突然接到了自称是某快递公司客服人员的电话。声称赵先生的快递，因为快递员疏忽在唐山的路途丢失了，还准确报出了快递单号和物品运输路线。
+
+　　快递包裹意外丢失，这样的结果让赵先生很生气。但是这个自称快递公司客服人员的态度很诚恳，并且还提出了一个让赵先生很满意的解决办法。
+
+　　赵先生：开始我很怀疑的，但对方说赔付事宜完全是公对公，透明操作对我没有任何风险。
+　　为了打消赵先生的顾虑，这个客服人员再三强调理赔业务是快递公司的一项正规业务，必须要按照一定的程序才能进行，后续赔偿工作是由其他公司的财务人员反复验证后才能完成的。
+
+　　接下来，对方告诉赵先生，最终赔偿款的给付还需要赵先生自己提供网上支付条件。
+　　虚假快递公司客服工作人员：我们要通过微信和支付宝给你，但是我们是正规途径，不可能发红包，必须走第三方银行系统，你需要提供相关信息。
+　　步步诱导“主动理赔”骗局需警惕▲▲▲
+　　“风险提示”、“正规途径”、“第三方系统”，这些看似言之凿凿的说辞让赵先生有点相信了。难道真的是自己的快递包裹出了问题？
+
+　　按照快递公司财务“客服经理”的要求，赵先生添加了对方为微信好友，很快对方发来了一张写着快速理赔的二维码，说只要赵先生扫码，填写了相关信息就能理赔退款了。
+
+　　赵先生扫码后，页面显示出“客户服务中心系统”界面，系统提醒登录支付宝账号，在“退款页面”赵先生选择了支付宝绑定的一张建设银行的信用卡。
+
+　　赵先生：他告诉我可以快速编一条88#88的短信给建设银行客服，然后就会重新收到确认码，再填入或告诉他就可以了。
+
+　　赵先生来不及多想，马上按要求通过个人手机给建设银行95533发送了一条短信，并很快收到了一个数字确认码，如果按照那个快递客服人员的说法，赵先生这时应该输入确认码。不过赵先生留了个心眼，他先打电话给了银行的人工客服，得知了一个让他震惊的消息。
+　　建设银行人工服务人员：这个短信千万不要轻易发出，它是授权第三方控制手机银行的，建议不要非本人使用。
+
+　　赵先生：这时候我就知道可能上当了对方这是要骗我信用卡的信息和钱，我再一次和对方详细问询时，对方很快微信拉黑了我。
+　　赵先生给银行打电话的当天，银行为了安全起见，暂时冻结了赵先生的银行卡。而事发七天后，赵先生也终于收到了自己的快递。
+　　针对赵先生遭遇的快递骗局，民警总结了这个新型网络骗局套路：谎称快递丢失→添加微信好友→发送假二维码或链接→最终盗取钱财。 
+ 
+
+
+
+
+
+
+责任编辑：王潇燕
+

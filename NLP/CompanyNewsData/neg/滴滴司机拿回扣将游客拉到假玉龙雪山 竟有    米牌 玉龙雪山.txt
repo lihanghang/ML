@@ -1,0 +1,325 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+多名游客曾被滴滴司机骗去假玉龙雪山
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:253900527,
+				pid:1,
+				url:'http://video.sina.com.cn/view/253900527.html',
+				title:'多名游客曾被滴滴司机骗去假玉龙雪山'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=253900527/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　司机拿回扣将两游客拉到假玉龙雪山：山上竟有4880米木牌
+
+　　周满林/丽江读本公号
+　　“丽江读本”微信公号1月29日消息，“去玉龙雪山不用买门票喂！”黑车、黑导的拉客与诱导消费行为，一直是丽江旅游市场整治的重点，读本君近几年都有过报道，但今天要说的这事，“见多识广”的读本君也没遇到过。
+　　黑车无良司机为了收取高额回扣，将游客骗至“李鬼景区”，是防不胜防的套路，而当无良司机套上了“滴滴司机”的羊皮，这套路就更深了……
+　　事件
+　　两名贵州女大学生打滴滴顺风车上雪山
+　　陈澜和卢洛（皆化名）是两名来自贵州的女大学生，1月25日，两人趁着寒假来丽江玩，她们最期待的景区就是玉龙雪山，到了丽江就买好了氧气瓶。
+　　1月26号早上9点多，两个女孩在君澜酒店附近打了一辆滴滴顺风车，目的地定位是“玉龙雪山国家级风景名胜区”。
+本文图片均来自“丽江读本”微信公号
+　　一位姓周的滴滴师傅接了单，她们的噩运之旅从此开始。
+
+　　“周师傅很热情，上车就跟我们聊家常，我们来到丽江，也很放松，缺乏了警惕性，基本上是他问什么我们就答什么。”陈澜说，周师傅是个看起来憨厚老实的中年人，一口略带川音的普通话又容易让人亲近，所以车里一开始气氛不错。
+　　然而就在这轻松的氛围中，宰人的刀朝姑娘们飞来了——
+　　第一刀
+　　非专卖店买的氧气瓶山上不能用
+　　周师傅看到两个女孩手持氧气瓶，问道：你们的氧气是在专卖店买的吗？如果不是专卖店的氧气去到雪山也用不了的。
+　　陈澜答，不是专卖店买的，于是周某说，“我带你们去花马街的一家氧气专卖店买吧。”
+　　就这样，陈同学和卢同学听了司机的建议，来到氧气专卖店买了三罐氧气，买氧气的时候周某也紧跟其后下了车，看她们付了钱。
+　　“还没经过我们的同意，销售员就直接把三罐氧气都拆了，应该是怕我们事后反应过来去退。”卢同学事后回忆说，当时周某和店员还推荐她们租了棉衣，总共花了280元。
+　　第二刀
+　　景区运政查滴滴我不敢去，我带你们从别的路“骑马上雪山”
+　　车子再次启动后，行至半路，周某又开始大吐“苦水”：“滴滴在我们这还不合法，你们要去的那条路进雪山我不敢去，被抓了要罚款一万多。”
+　　陈澜就问：“那我们怎么去呢？”
+　　周某说：“我带你们走另一条路上雪山，那里是村民自己搞的路，还可以骑马，很划算的，不然你们要坐索道上去，很贵。而且骑马上雪山路上景点更多，拍照更方便。”
+　　两个姑娘再次信以为真，还以为周师傅是在给她们省钱，想让她们玩得更好。
+　　车子行了半小时左右，到了一个“售票处”。周某：“上雪山，在那里买票就行了。”
+　　“门票380一张，看着我们付完760元后，司机才离开。”陈同学说，当时售票人员，还指着票上的地图告知她们，要经过哪些哪些景区，可以下来拍照游玩，并且可以包一顿火锅三文鱼餐。
+
+　　第三刀
+　　“玉龙神山”变“玉龙秃山”，还竖起4880米木牌
+　　骑马上山，两个姑娘以为马上可以一睹雪山真容，陈澜激动万分，还发了朋友圈：玉龙雪山的路上……
+
+　　“当时除了我们两个，还有一对男女和我们一起骑马上来的，但半路经不住颠簸就提前下山了。但当时我们互加了微信，她说等我上去拍到了美景给他们发点照片。”
+　　可她们骑着马一路颠簸，一路只有风沙，迟迟没能看到雪。她们忍不住问牵马的嬢嬢，雪山怎么没雪啊？被告知：“因为最近雪山没下雪，所以看不到。”
+　　得到这个答案的陈同学二人依然没有怀疑这里不是那个大名鼎鼎的“玉龙雪山风景区”。
+　　售票员说得天花乱坠的景区一个都没看到，“当时我们在一个叫‘玉龙水库’的地方停下，也就是他们路线上所说的玉龙湖，最后就到了一个竖着木牌的地方写着‘玉龙雪山海拔4880米’，其它就什么都没看着了。”陈澜说，那里什么都没有，只能看到远处有一点点雪山的影子。风大全是沙，自己白色的羽绒服都被吹黄了。
+游客所至玉龙雪山
+游客所至玉龙雪山
+此图为玉龙雪山风景区
+　　从山上下来已是下午4点半，两个姑娘以为，虽然运气不好“雪山”没下雪，但最起码能享受一顿地地道道的美味。可是说好的三文鱼火锅餐，端上来的盘子里，只有四片三文鱼孤零零地躺着。
+
+　　这时，陈同学两人终于开始怀疑是不是被人坑了。但由于人生地不熟，两人也没过多追究，吃了饭就坐公交回了市区。到了晚上，白天同行中途下山的游客在微信上呼他们，聊起了可能遭骗了的事。“那个游客在微信上告诉我们说，他们也是被滴滴司机拉去那里买票上的‘雪山’。”
+　　最后，两人在网上查了一下玉龙雪山风景区的图，才确认了她们白天去的地方确实不是他们想去的玉龙雪山。
+
+　　维权
+　　旅发委接诉后将两个姑娘接回市里并迅速开展调查
+　　“本来这个事，我们打算就这么认倒霉了，买了机票准备飞回贵州。但到了机场才发现机票买错了，还无法改签。于是越想越生气，这才想到要维权。”
+　　于是，昨天上午她们直接在机场就报了警，丽江市旅游发展委员会（下称：市旅发委）在接到投诉后，第一时间将两位游客从丽江机场接到市旅发委，并召集涉及此次游客投诉事件的各个相关部门人员，来到了市旅发委旅游稽查支队办公室。
+　　昨日下午4点多，在丽江市旅发委的召集下，市旅警支队、市运政、市工商、玉龙县旅发委联合执法，为两游客的投诉问题开展了“旅游调解”，渉事司机周某也被传唤至现场。
+
+　　在经过各部门的调解和说明，周某认识到自己误导游客上“雪山”的错误行为，并且承认自己是为了拿回扣，推荐游客从别的途径上“雪山”。为此，周某当场给游客赔礼道歉后，也拿出了1070块进行了赔偿。两位姑娘除了被骗去的钱财和滴滴顺风车费，没有索要任何额外的赔偿。
+　　此次投诉不仅涉及到“欺客”，还涉及到非法运营。市运政当场扣留了周某用来载客上“雪山”的轿车。而关于后续的具体惩罚，运政部门相关工作人员表示，“在经过进一步取证调查后，才能下定论。”
+　　市旅发委旅游稽查支队的一工作人员表示，“此次涉及到滴滴司机的欺客投诉，也是旅发委稽查支队成立以来遇到第一个案例。情况也比较特殊，关于投诉旅客提到马场景点、消费过的店铺之后相关部门都将回去逐一调查。”
+　　司机周某说，自己也不是专职跑滴滴，从四川来丽江做生意，已经来了20年。“因为常年给雪山附近一景区供蔬菜，对景区路线比较熟，偶尔会接几单顺风车。”
+
+
+
+
+
+责任编辑：陈永乐
+

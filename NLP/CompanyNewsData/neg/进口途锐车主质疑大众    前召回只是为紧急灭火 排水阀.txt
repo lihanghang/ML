@@ -1,0 +1,303 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+视频：大众途锐发动机进水
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255086771,
+				pid:1,
+				url:'http://video.sina.com.cn/view/255086771.html',
+				title:'视频：大众途锐发动机进水'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255086771/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+推荐阅读：
+央视曝光:大众途锐暗藏缺陷发动机雨淋进水频现报废
+大众致歉声明：4月30日开始召回为用户开设专属通道
+大众途锐发动机进水被召回部分平台下架问题车型
+专题：
+2018年315消费维权活动
+
+
+　　进口途锐车主质疑召回流程与方案，大众独家回应绝不姑息
+　　澎湃新闻记者吴冠视频编辑卫佳明（实习）徐大伟（实习）
+　　即使赶在315前夕启动召回计划，大众依然无法与途锐“进水门”投诉车主达成一致共识。通过对大众途锐“进水门”车主的采访，澎湃新闻记者了解到，目前车主们主要质疑点是：召回公告中，“拆下发动机进气管上不必要的排水阀”、“为发动机进气口增加导流板”两种做法根本不能彻底解决发动机进水问题。另外，途锐投诉车主还告诉记者，大众售后服务方面一位负责人当面质问车主“到底想要什么”，该言论进一步激化了车主负面情绪。
+　　据了解，从2017年媒体公开报道途锐“进水门”事件起至今，大众始终未接受任何媒体采访，仅通过官方渠道发布两次消息——第一次是2017年8月宣布将为所有车辆进行详细检查，第二次是2018年315前夕宣布向国家质检总局备案召回计划。两次公布的消息的核心内容均为“拔掉进气管道上不必要的排水阀”，第二次消息即召回公告中增加了一条“为进气口加装导流板”内容，但大众的做法在不少途锐车主们看来只是为315“紧急灭火”。
+　　“拔掉进气管道上不必要的排水阀”能否从根本上解决发动机进水问题？拔掉这个排水阀会不会降低途锐一直引以为傲的580mm涉水深度？为何说这个排水阀是“不必要的”？既然它是不必要的，那么大众为何还要给途锐装上这个“不必要的”零部件？大众是否针对这个问题做过严谨的实验？许多途锐车主向记者提出了对大众此次召回信息的质疑。
+　　对此，记者向大众进口车公关负责人求证了途锐车主所提出的质疑内容。该负责人在电话中向记者表示，车主们针对召回公告所反映的质疑内容都已了解，会第一时间向相关部门反映车主问题，并尽快协助大众内部相关部门与车主们进行更有效的沟通。对于前述“质问”车主的大众售后人员，该公关负责人告诉记者，“据我个人所知的售后部门领导和有印象的售后人员里，并无此人”。针对车主反映的厂商工作人员的态度问题，该负责人表示非常重视，会进行核查，一旦查实绝不姑息。
+　　对于大众此前为何始终不回应途锐“进水门”投诉车主质疑这点，上海途锐车主高先生的看法颇有代表性。高先生告诉记者，他与不少途锐车主沟通过后，都认为大众途锐此次315前夕的召回备案公告仅是一场针对投诉车主们的“忽悠”。
+　　“‘拆下发动机进气管上不必要的排水阀’，这个做法，根本不能彻底解决发动机进水问题。”此前接受过澎湃新闻采访的途锐车主郭先生的看法支持了高先生的观点。郭先生将自家车辆升高，然后站在车底垂直正下方为记者指出了这个“不必要的”排水阀的具体位置，“途锐发动机进气管道大致呈不规则‘U’型，大众召回备案内容中所提及的‘进气管道上不必要的排水阀’，位于（进气管道）这个‘U’型底部的最低点。（排水阀）方向正面垂直向下，离地面大概600mm左右。”
+　　郭先生将此前4S店为他拆下的这个橡胶排水阀放在记者手中，记者看到，这个橡胶排水阀呈圆柱形，横截面目测2-3平方厘米左右，底部有十字形切口。郭先生告诉记者，这个排水阀可以为发动机进气管道起到单向、同时向外部排水的作用，“但是，一旦进入进气管道的水量太多，或者这个排水阀被杂物堵住，水就会顺着进气管道直接进入发动机，这也是之前不少途锐进水‘爆缸’的直接原因。”郭先生说。
+
+　　“一旦拔掉这个排水阀，等于在‘U’型进气管道的最底部‘人工’造出了一个垂直朝向地面的‘洞’，”前述途锐车主高先生向记者表达了自己对于大众拔掉这个单向排水阀的做法的担忧，“汽车发动机原理大家都知道，一旦发动机启动，势必在吸气管道内造成负压，从而让进气口向（发动机）内吸入空气。如果没有拔掉这个单向排水阀，空气只能从唯一的入口，即发动机正常进气口进入。但是，现在大众与其4S店（拔掉这个单向排水阀）的做法，等于是让途锐进气管道的最底部出现了一个‘漏洞’，有一部分空气会从这个‘漏洞’里被吸进发动机。（拔掉排水阀后）如果车辆在夏季暴雨季节的高速公路上行驶，溅起的大量水花有很大可能性会跟着空气一起，从这个‘漏洞’里被吸进发动机进气管道，因为这个人工‘漏洞’没有任何防护措施。”此外，郭先生还告诉记者，据他了解，已有车主朋友告诉他自家车辆“即使4S店拔掉了这个排水阀，空滤还是有水迹出现。”
+　　对于郭先生“拆除排水阀反而更容易让发动机进气管道进水”的担忧，记者拨打了大众进口车的官方400售后投诉电话。一位工号为6127的售后方面接线人员告诉记者，大众方面已做过相应测试，“拔掉进气管道上不必要的排水阀”这个做法不会让水或其他杂物从底部阀门孔进入进气管道和发动机。但是，当记者询问具体测试情况能否透露时，该接线人员表示没有相关资料可以提供给记者。
+　　对此，高先生认为，大众不向外部公布实验情况是因为大众并没有做过相关实验来证实这个排水阀被拔除后造成的漏洞到底会不会增加发动机进水风险。在接受其他媒体采访时，高先生表示，早在2017年7月14日，大众进口车北京总部一位工作人员就曾告诉过他“大众已经安排技术人员分析研究这个（如何避免发动机进水）问题，一旦有消息会及时联系车主。”
+　　高先生向记者回忆了他8个多月来始终未能得到大众有效答复的投诉过程。“2017年6、7月份途锐‘进水门’爆出后，9月初，大众官网发布通告，说拔掉这个排水阀就可以避免途锐发动机进水，但我们当时就向大众售后热线反映了‘拆除排水阀反而更容易让发动机进气管道进水’这个问题，售后热线给我们答复永远是千篇一律的‘你们意见已经记录，我们会向有关部门反映’。”高先生说，“看到国内售后一直不回答我们问题，我只好写信给大众德国总部，结果德国总部又把皮球踢回给国内，我们的问题还是没有得到解决。大众的售后服务人员甚至质问我们受害车主‘到底想要什么？’还说‘进气管进水是正常的’，我们只想要排除任何可能存在的安全隐患并得到权威认证的解决方案，而不是大众对车主们敷衍了事的态度。”
+　　“从那时到现在，8个多月过去了，我们途锐‘进水门’车主永远是被大众和4S店告知，‘拆掉这个不必要的排水阀’，发动机就不会再进水了。但是，拆掉这个排水阀后，发动机进气管道上多出来的这个‘漏洞’，是不是会再额外增加进水风险？这点，大众从来都是避重就轻，始终不肯告诉我们实验数据。”高先生说，“大众到底有没有为车主们做这个实验，不得而知，我们对此非常怀疑。”
+　　另外，“召回公告中‘为发动机进气口加装导流板’这个做法，是否会影响发动机进气？是否会因进气不充分导致发动机积碳？这块导流板安装原理是什么？它能改变大众途锐进气口‘仰面朝天’、‘不再进水’的现状吗？它能改变大众途锐前大灯处这根把雨水导向进气口的‘导水槽’走向吗？”高先生告诉记者，大众同样并未就此类质疑为途锐“进水门”车主们解惑。“途锐发动机进气口‘仰面朝天’的状态根本无法通过加装导流板而改变，这个导流板只能减少沿前大灯和进气格栅进入进气口的雨水总量，但在特定情况下，如洗车时正面冲水，还是会有水进入进气管。只要导流板不能全部覆盖进气口，那么途锐发动机进水的现状就无法改变。”高先生说。
+　　值得注意的是，8个月来，在处理途锐车主投诉的态度上，大众售后的回应始终一致：“非常抱歉，已安排有关部门研究”——无论是因进气口进水导致发动机有“爆缸”潜在风险的上海车主郭先生和高先生，还是发动机已经进水“爆缸”的广东东莞车主罗先生，大众对他们的答复都是如此。罗先生在接受媒体采访时表示，自己给大众官方售后拨打的电话不下20次，通话时长起码6小时以上。但是，对于途锐车主们所提“拆除排水阀是否更容易让发动机进气管道进水”、“为发动机进气口加装导流板是否会影响发动机进气”等质疑，大众售后400电话由始至终只有一句“非常抱歉，已经安排技术人员研究您所反映的问题。”
+　　此前接受过澎湃新闻采访的湖北恩施途锐车主周先生也不能接受大众与4S店对待途锐“进水门”车主的态度。“9月首保时，我看到那样‘仰面朝天’的发动机进气口，又看到自己发动机空气滤芯是湿的，很担心自己车辆发动机也会进水爆缸，所以大众4S店跟我说拔掉这个（排水阀）就能让发动机不再进水时，我很怀疑。”周先生告诉记者，自己询问4S店人员如何证明拔掉这个排水阀可避免发动机进水爆缸时，不仅未能得到具体回复，还被要求签署一份“免责”协议。
+　　在周先生看来，这份协议体现的是大众对途锐“进水门”的开脱之意。在周先生出示的这份协议原件上，记者看到，周先生明确写上了“进口大众要求，非本人自愿”字样，旁边盖有大众4S店蓝色印章。该协议显示，大众进口汽车授权经销商以展开服务活动为由，向周先生阐述了（为车辆拔除进气口上排水阀的）原因，若周先生拒绝（拔除该排水阀）则车辆存在的风险和后果由周先生自行承担。
+
+　　“我始终担心拔掉这个排水阀会有风险，4S店对我（拔除排水阀后进气管是否还会进水）的问题并没有正面答复，所以并没有让4S店拔掉它。因此4S店让我签署了这样一份免责协议。”周先生对记者表示，4S店的态度让人十分失望，“（签完协议）之后就再也没有联系过我，我还是看到新闻说大众途锐召回，自己去网站上查了才知道我（的车）在召回范围内，大众这个召回新闻到底是对谁说的，是对媒体还是对车主？”
+　　此前接受过澎湃新闻采访的江苏常州途锐车主汤先生也告诉记者，自己的车辆在爆缸后4S店为其免费更换了发动机，但是换完发动机后车辆出现了严重拖当现象。“车子完全无法使用，就这情况下，我都根本没有接到4S店的任何召回通知。”汤先生说。对此，大众官方400售后人员在电话中告诉记者，针对车主逐个通知的召回工作将在4月30日后展开。
+　　据记者查阅相关媒体报道，此次大众途锐的召回主要是针对中国市场而进行。据了解，此种召回情况相对比较罕见。根据大众集团官方发布的消息，2017年大众品牌全球销量达1070万辆，创历史新纪录。其中，大众在中国市场（含香港地区和进口车）共交付汽车630万辆，同比增长5.1%，可见中国市场对于大众品牌意义之重大。
+　　51名途锐车主因为发动机设计缺陷进水致损向大众汽车（中国）销售有限公司（以下简称大众汽车）发起的诉讼有了最新进展。3月13日下午，当事双方代理律师在北京朝阳法院酒仙桥法庭的主持下进行了近4小时的庭前沟通，最终法庭同意车主提出的车辆鉴定请求，随后将启动相关鉴定工作。
+
+
+
+
+
+责任编辑：孙剑嵩
+

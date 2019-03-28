@@ -1,0 +1,332 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+唐山撤销收费站工作人员反对:青春都耗这了除了收费啥也不会
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:253200511,
+				pid:1,
+				url:'http://video.sina.com.cn/view/253200511.html',
+				title:'唐山撤销收费站工作人员反对:青春都耗这了除了收费啥也不会'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=253200511/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　唐山撤销收费站员工反对：我们青春都耗这了，除了收费啥都不会
+　　源自：观察者网
+　　现在看个新闻吧，每天都能被震惊，至于今日份，是这些被遣散的、三十四岁的收费站工作人员震惊的……
+　　唐山市人民政府新闻办公室官方微博@唐山发布1月8日称，从8日起，唐山城市路桥所有收费站停止收费。
+
+　　本来吧，这是件利民的好事（为什么说是好事，看文末的文章），但遭到了收费站工作人员的反对，因为撤销收费站对他们而言就意味着失去工作。
+　　今天，在网上搜了一下这事，发现还有网友爆料称，这些工作人员不满安置，私自组团跑去拦过路车辆，据称这些人是临时工，当时是花了钱进收费站工作。
+
+　　后来刷微博时，又看到一段视频。视频内容应该是当地政府部门召集收费站工作人员做思想工作的，政府部门人员称，遣散员工会根据劳动法给出相应赔偿，人事等部门也已经开会谈过这事，遣散人员可以留下联系方式，若有合适的公益岗位，可以通知他们。
+　　这个政府人员还讲到，大家都应该再去人才市场参加应聘，每个人参加工作都应该要知道面临再次择业的风险，诸如此类……
+　　然而，其中有一位收费站工作人员便站出来指称，当时进收费站还有领导收了钱呢，“反正都是你们领导一句话，就不管我们老百姓死活，就是这意思了呗”……
+　　另一位则接着说，我们来的时候都很年轻，我现在36了，人家都要30以内的，一听我36了，对不起，我们不要你了，“我们把青春都耗在这了”，“我们学东西也学不了了，比20多岁的都慢了，也都不方便了，都不喜欢我们这样的劳动力了”……
+
+　　政府人员：“每个年龄都有每个年龄段的优势。”
+　　收费站人员：“我们的优势都放在收费站了，收费站撤销了，我们的优势就没有了”。
+
+　　政府人员：“那你们还有工作经历呢。”
+　　收费站人员：“收费站的工作经历（笑）？只会收费。”“如果在饭店端盘子，知道我会报菜名，但现在我啥也不会啊，我就会收费。”
+
+　　呵呵，先不管是不是存在劳务纠纷什么的，就光是看到这段“大言不惭”的说法，真是太不可思议了；如果真如他们所说，除了收费、其他啥都不会，那也真是可悲……
+
+　　嗯，不知道大家怎么看这种事…………
+　　最后，关于唐山收费站问题，还搜到这么一篇报道：
+
+　　道路凹凸不平、损毁严重，周边居民进出市区、走亲访友还得交钱“买路”，位于唐山市开平区胶泥庄村西205国道上的唐山东出口路桥收费站（以下简称东出口收费站），多年来一直是周边过往居民的“心病”。多位唐山市市民向《中国消费者报》反映，这个收费站早在2009年就已被河北省政府明文要求取消。但时至今日，这个收费站还在延续收费。那么，是什么原因让这个收费站一直“坚守”呢？
+唐山市东出口收费站
+　　收费站以公司名义收费
+　　7月26日，中国消费者报记者驱车从唐古路出唐山市区，沿205国道东行20公里左右，驶入唐山市开平区洼里乡后营村路段，平坦的道路变得颠簸起来。随行的唐山市市民告诉记者，再有5公里，就是位于唐山市开平区胶泥庄西450米处的东出口收费站。
+
+　　记者观察车外发现，路面破损越来越严重，而被车辆碾压形成的坑坑洼洼也越来越多。很多坑里都是污浊的积水，一些骑自行车或摩托车的乡民不得不推着车子前行，而过往车辆也开始减速慢行，即便如此，车轮溅起的泥水还是会甩到一些躲避不及的行人身上。
+　　离收费站口200米时，坑洼的路面又平坦起来，记者驱车驶入收费站口，趁着前面车辆缴费的空隙，记者观察收费窗口两侧，并没有发现收费标准和收费年限的提示标牌。
+　　“路况这么差，怎么还要收费？”记者按照收费员的提示拿出5元钱后问。
+　　“收费期限是20年，还没到期呢。”收费员瞄了一眼记者答道。而对于记者“怎么不见收费标准和收费年限标志牌”的提问，对方递过一张盖有唐山城建路桥收费章“唐山城建路桥投资有限公司”公章的收据后，就不再回答。
+　　记者登录全国企业信息公示系统（河北）查询发现，唐山城建路桥投资有限公司成立于2000年9月15日，股东为唐山方正房地产经纪有限公司和唐山市路桥建设有限公司，而该公司经营期限（截止时间）标注为2021年12月31日。
+　　随后，记者输入唐山市路桥建设有限公司查询，结果显示该公司成立于1998年10月14日，股东类型为“自然人股东”。
+　　附近居民反映强烈
+　　记者从收费站附近经过的几位村民处了解到，收费站所在的205国道唐古路段是连接唐山市区与该市古冶区的重要要道，大约从2004年开始设站收费后，不仅来往于古冶区和市区的车辆要交费，沿线开平区、古冶区、滦县的居民走亲访友，只要开车出行，也得掏“买路钱”。
+　　7月26日，记者辗转河北省有关部门找到一份《河北省政府办公厅关于唐山市东出口路桥收费项目有关问题的复函》。这份回复函显示，收费站的前身是位于唐山市区东出口处的立交桥收费项目。2003年，唐山市政府向河北省政府办公厅提交《关于东立交桥收费站移址并重新核定收费标准和收费年限的请示》（唐政呈【2003】54号），2004年4月30日，河北省政府复函同意将该收费站更名为唐山市东出口路桥收费项目，并将收费站点向东迁移至大约20公里外的现址。同时，批复了该收费站的收费标准，而收费年限，也确实如收费员所说为20年。
+　　“205是国道早就有了，收费站设立前后并没有对道路重新进行修整，收费站在此收费道理何在？”家住开平区洼里村的居民刘先生告诉中国消费者报记者，差不多五六年时间了，自己曾多次向省市有关部门反映，但都没有得到满意的答复。
+　　“差不多11年了，每天10块钱，这么些年就是这些上下班的人交的过路费也够修路了吧。怎么这坑坑洼洼的路面就没人管护？”家住唐山市区但工作在古冶区的市民陈先生抱怨说。
+　　早被明文取消
+　　几位居民向记者提供了一份落款时间为2009年12月8日的河北省政府办公厅公函。随后，记者通过河北省有关部门证实了这份复函的真实性。记者注意到，这份题为《关于唐山市中心城区环线项目设站收费有关事项的复函》的函件，函件是河北省人民政府办公厅针对唐山市政府《关于唐山市中心城区环线周边三座收费站提高收费标准并延长收费年限的请示》（唐政呈〔2008〕166号）的回复，其中明确表示：对于东出口路桥收费项目，自发文之日起2个月内由唐山市政府买断其经营收费权后取消。
+　　“既然省政府早在2009年就有文件要求地方政府取消，为什么6年来这个收费站依然收费呢？周边居民都表示无法理解。
+　　中国消费者报记者通过查询河北省政府信息公开专栏发现，河北省人民政府办公厅在2014年1月27日曾公布一份《河北省人民政府办公厅关于唐山市中心城区二环路和唐古快速路项目收取机动车辆通行费的复函》（冀政办函〔2014〕7号），在复函中，河北省政府称，同意唐山市市中心城区二环路和唐古快速路项目建成后，收取机动车辆通行费偿还贷款本金。建成后取消唐山市中心城区外环路收费项目。该项目共设5个收费站，在原唐丰快速路收费站、西南外环收费站、银河路收费站基础上，在二环路北环王千庄附近和唐古快速路卜大寨村附近各增设1个收费站，同时取消唐丰路、东外环收费站及唐山市东出口路桥收费站。
+　　多部门说不清原因
+　　7月28日，记者致电唐山市交通运输局办公室，就居民反映的问题试图与对方沟通，对方一位工作人员称该收费站不属交通局管辖，应该向城管部门咨询。
+　　在河北省网络问政综合服务平台上，记者看到有网友反映称，唐山东出口路桥收费站违规收费多年，只顾收费、不管养护、进出口周边破烂不堪。7月28日，唐山市交通运输局回复称不属于其管辖范围，并贴出市城管局答复：唐山东出口收费站属唐山路桥公司管理，是个人企业。不属于城管局管理。
+　　唐山市城市管理局外环管理处一位不愿透露姓名的工作人员在电话中告诉记者，“东出口收费站收费是经营性收费，归属唐山城建路桥投资有限公司管理，我处无权过问。”
+　　该工作人员还称，为改善古冶区居民出行环境，唐古快速路工程已建通车，且暂未设收费站，群众自古冶至唐山市区可走未收费的唐古快速路，不必绕行旧的唐古路。
+　　然而，对于这样的说法，很多居民并不认同。
+　　中国消费者报记者驱车在唐山市开平区北部的洼里、后营、夏庄等地采访了解到，旧的唐古路是直通市里的，而新开通的唐古快速路则只与唐山市区南环路相通，两者比较起来，新路还是偏远些，特别是家住收费站附近村庄的人，根本无法选择绕行。
+　　“既然已经撤销，为啥还要收费？”7月28日，记者就周边群众的疑问致电唐山城建路桥投资有限公司，对方一位工作人员称”领导不在，无法回答”为由拒绝接受采访。
+
+
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

@@ -1,0 +1,318 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+互动百科成虚假广告“垃圾站”
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251059473,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251059473.html',
+				title:'互动百科成虚假广告“垃圾站”'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251059473/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　（央视财经讯）互动百科网号称是全球最大的中文百科网站，领先的社会化知识媒体平台，为数亿中文用户免费提供海量、全面、及时的百科信息。但记者调查发现，互动百科上有些词条却很奇怪。有一个词条名叫“极藻5s”，称含有“真核盐藻、极地蛹虫草”等五大稀缺成分，“被誉为神丹妙药”，不仅能“美容壮阳”，甚至还能“明显抑制肿瘤生长”。产品见证中，一位肝癌患者服用“极藻5s”仅仅7天，癌细胞就不见了。可是如此神奇的产品，在国家食品药品监督管理总局网站上却查不到任何相关信息。
+　　词条显示，“极藻5s”的拥有者为“上海心知元电子商务有限公司”。该公司工作人员承认，“极藻5s”是他们公司销售的一种食品。
+　　上海心知元电子商务有限公司副总经理李析：属于新资源食品。
+　　我国《食品安全法》规定，食品广告不得含有虚假内容，不得涉及疾病预防、治疗功能。但知元公司却利能用百科词条，堂而皇之地将违禁内容发布了出来。
+　　上海心知元电子商务有限公司副总经理李析：因为它（百科）讲的是我们科学上面的知识，并不是我在推产品，它虽然是在侧面，打擦边球在推你的产品。
+　　用科学的名义进行推广，通过这样的方式，心知元公司产品的销售异常火爆。
+
+　　上海心知元电子商务有限公司副总经理李析：一个月，在我们这边，就这一个单品，销售将近一万盒，极藻5s。销售最旺的时候是下单，它就下一万五千盒。
+　　在互动百科上，利用这种方式推广产品的词条还有很多，比如“B365酵素”、“补肝素”、“神经酸”、“仙人鞭”等产品，各种疗效方面的描述极为夸张。
+　　互动百科上还有大量的医疗机构以及行业名人的词条，在“陕西永寿邵小征中医门诊”词条中显示，该门诊位于陕西省永寿县，至今已有百年历史，是“一所集医疗、预防、保健为一体的综合性医疗机构。其负责人邵小征1978年出生，西安医科大学临床医学专业毕业，1989年，也就是11岁，就开始主持或参与完成科研课题十多项；在
+　　2001年，也就是23岁大学三年级时，其学术报告获得了“国家医学进步奖”。那么真实的情况又如何呢？记者来到陕西永寿县，几经打听，在渠子村这座小楼的一层的一个门面房内，找到了互动百科词条中介绍的这家“综合性医疗机构”。
+记
+　　记者：这就是那个邵小征中医门诊？
+　　邵小征的父亲：嗯，我是他父亲，
+　　记者：您是他父亲？
+　　邵小征的父亲：我是他父亲，人不在。
+　　渠子村的村民告诉记者，他们从没听说过“陕西永寿邵小征中医门诊”，倒是邵小征的父亲在村里开了个卫生室。
+　　记者联系了西安医科大学，也就是现在的西安交通大学医学部，核实邵小征学历，校方称查无此人。另外，永寿县卫生和计划生育局，早在2014年就在政府网站上回复过患者的咨询：“经我局核查，我县确无邵小征中医门诊机构，也无邵小征个人医疗执业注册信息。请慎重考虑，请勿上当受骗！”
+　　那么，这么多内容虚假的词条究竟是如何登上互动百科平台的呢？客服人员在电话中称，互动百科的词条可以通过网站上的入口自己免费创建。
+　　互动百科客服人员：你在我们网站上创建个账号，然后再编辑就可以了。
+　　记者：需要花钱吗？
+　　互动百科客服人员：不需要。
+　　那么，内容虚假夸张的词条可以自己免费创建吗？记者打开了互动百科的官网，按照要求进行注册登录后，进入了“创建词条”的页面，记者虚构了一个名为“鱼油牡蛎粉”的产品，“对呼吸系统疾病疗效显著”，提交审核后很快接到通知“鱼油牡蛎粉”词条版本已被删除，原因是经评审，“内容不适宜作为百科词条被收录”，记者又虚构“冰糖叶青素”、“西柚叶酸素”等几个产品来创建词条，都遭遇了同样的命运，甚至记者虚构的“茯苓盐藻膏”还因为“词条名称不符合规范”被冻结了。
+　　互动百科客服人员：冻结了之后就是这个词就锁定了，您就是编不了了，谁上来编都编不了，您可以记个电话咨询一下付费那边。
+　　互动百科的客服人员给了记者一个“付费”部门的电话，记者和对方取得了联系。
+
+　　互动百科业务人员：这个介绍一下，免费的是什么呢，免费的话就是您自己可以直接免费创建词条，这种的话我们是不参与的，第二种的话是，本身我们百科就是商业化的，就是我们可以在一些相关的百科词条里面，就可以放您的这个广告，我们收您的是广告的费用，本身创建这个词条我们不收费用的。但是您假如说您要是没有费用的情况下，我们是不给您创建的。
+　　记者：等于是我必须买你们的广告，买了你们这种的推广，附带着把这个词上去，是这个意思不？
+　　互动百科业务人员：对对对。
+　　不付费不给上，交了钱就能上，真的是这样吗？记者声称要上一个“保健食品”的词条，互动百科的工作人员要求，除了支付所谓的广告费，还需要提供公司的营业执照，经营许可证以及保健食品广告审查表。但是记者手中只有一家公司的营业执照，根本没有另外两份材料。
+　　互动百科业务人员：如果说像您说的，如果说没有太齐全的这种资质的话，都可以想办法给您去弄，一般你比如说像做保健品的，可能要保健品的一些资质的广告审核表，小公司很多都是没有的，这个我们也知道，所以我们这边的话可以去操作这一块儿。
+　　负责与记者接洽的业务员承认，经他的手创建了互动百科词条的保健食品，有资质的少之又少。
+　　北京互动百科网络技术股份有限公司业务员：说实话咱们这保健食品，资质少，有资质的少，真的我遇到的这么多客户里边，真的资质特别全的太少了。
+　　记者：十个里面能有几个？
+　　北京互动百科网络技术股份有限公司业务员：十个有一个就不错了。
+　　在缴纳了4800元开通了一个名为“百科词条认领”的服务后，因为“名称不符合规范”冻结的词条“茯苓盐藻膏”被成功创建，后面带着一个“已认领”的标志，成为了互动百科千万个词条中的一员。而且买一赠一，还可以免费创建另一个词条，于是记者虚构的另一个产品“肉桂地龙蛋白素”的词条也很快出现在了互动百科上。就这样，在没有任何相关资质，也没有保健食品批号的情况下，虚构的产品就这样顺利的登上了互动百科的平台。“本品是保健食品”、“减少三高危害”等功能性描述醒目呈现。
+　　这位互动百科的业务员告诉记者，不仅产品可以花钱上，人物同样也可以。
+　　记者：创建一个医生或者是医学专家这样的词条，费用大概是多少。
+　　北京互动百科网络技术股份有限公司业务员：现在是这样，现在是一年是1980元。
+　　记者：比如行医资格这种不用提交吧？
+　　北京互动百科网络技术股份有限公司业务员：没有，不需要。
+　　在缴纳了1980元之后，这个记者虚构的老中医“王旭之”成功登上了互动百科，个人简历、科研成果、专业特长一应俱全。
+　　（本文编辑：魏园园）
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

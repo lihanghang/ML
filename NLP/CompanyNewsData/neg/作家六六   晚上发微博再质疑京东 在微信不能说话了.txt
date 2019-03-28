@@ -1,0 +1,74 @@
+
+
+
+
+
+
+
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'4217937789835558'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+
+　　事件回顾：
+　　作家六六转文斥京东售假无赖：客服一口咬定是发错货
+　　京东回应作家六六：商家发货失误指控内容严重不实
+
+　　新浪财经讯3月15日晚，作家六六发微博再次质疑京东售假货，并称自己微信不能说话了。“微信不能说话了，我发这吧！大家说，我微信后台9000多条投诉，微博一万多投诉，N多实锤在手，我说什么呢？这就是我们生活在这个城市的成本。我们除了工作，供房，听老板训，训娃，养老，维护好最少一家教育单位关系，维护好最少一家医院关系，还要为买一件商品，一张票，一顿饭，一次旅行，开一张或关一张卡扯皮。这就是我说，孩子啊！可一定要往开里想，！等你坚强地活下来，才知道过去经历的那些事儿，哪叫事儿啊！谁不负重前行？”
+
+　　3月13日，作家六六转文斥京东售假无赖，称客服一口咬定是发错货。“这篇文章的题目不是我起的，而是我中欧的师姐，04级EMBA的程茉，在依法依规走正常投诉路线无门的情况下，请求我一定要将京东劣迹公之于众，以此避免更多消费者受害。”
+　　3月14日，针对作家六六对于京东全球购的指控，京东方面发布声明称，商家承认是发货过程中出现了失误，并非售假，无权要求商家提供十倍赔偿。
+　　而针对与京东客服沟通的过程，京东方面则表示经过调取录音和其他原始资料发现，内容存在多处严重不实，已经涉嫌夸大编造和诽谤，并表示可以随时对外公布双方的通话录音。
+
+
+
+
+
+
+
+
+
+
+
+
+
+责任编辑：陈永乐
+

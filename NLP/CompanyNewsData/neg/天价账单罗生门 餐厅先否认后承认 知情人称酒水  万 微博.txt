@@ -1,0 +1,317 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+上海一餐厅现41万天价晚宴价单餐厅负责人：当晚是迪拜王子请客
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:263513396,
+				pid:1,
+				url:'',
+				title:'上海一餐厅现41万天价晚宴价单餐厅负责人：当晚是迪拜王子请客'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=263513396/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+推荐阅读：
+40万天价账单餐厅老板：迪拜人请吃饭菜品为私人订制
+上海40万“天价账单”续：市场监管部门介入调查
+8人消费40余万？当事饭店辟谣：最高标准是人均千元
+8人一顿饭41万？餐厅：账单PS的店里人均消费八百
+
+
+　　上海“天价账单”罗生门|餐厅先否认后承认是迪拜王子请客知情人称酒水48万元
+　　刘名洋张彤
+　　8个人就餐，一共点了20道菜，算上服务费，总价超过40万元一份“天价账单”引发关注。重案组37号注意到，上述账单共有20项菜品，绝大部分为鲍鱼、野生响螺、鳄鱼尾等珍品。其中“清酒冻半头鲍”、“鳄鱼尾炖汤”每例价格超万元。今日上午，当事上海“西郊5号”餐厅前台工作人员曾否认“天价账单”。下午，餐厅老板孙兆国告诉重案组37号，晚宴为“迪拜王子请人吃顿饭”，菜品属于私人定制，食材是从各地运送，当天晚宴是其亲自下厨。重案组37号从知情人处获悉，当晚“富二代”蒋鑫曾在该餐厅用餐，并自带了48万元酒水。“但并不是蒋鑫结账，蒋鑫只是把账单拍照发了微博，没想到之后引起这么大的关注。”今日下午，上海市长宁区市场监管局一名工作人员告诉新京报记者，已经介入调查此事。
+　　部分菜品单价超万元
+　　重案组37号注意到，网传“天价账单”出自一家名为“西郊5号”的餐厅，位于上海西郊宾馆。台号为901，用餐人数为8人，显示结账时间为18日晚10时20分。
+　　账单显示，所点菜品共有20项，包括有机泡菜、芦笋、凉拌菜等素菜，但绝大部分菜品为螃蟹、花胶、鲍鱼等海珍品，另有包括可乐等在内的饮料，以及香烟。
+　▲图为8人消费40万元“天价账单”。网络图片
+　　上述菜品中，单价最高者是“鳄鱼尾炖汤”，每例价格是1.68万元。此外，“清酒冻半头鲍”、“野生大黄鱼”两例菜品，单价也在万元以上。其中，“清酒冻半头鲍”共计8位，总价10.24万元。
+　　菜单中，另包含550元的司机餐，以及将近3.8万元的服务费，总价共计418245元，账单右下角有手写标注“实收”40万元。
+　　一顿饭吃掉40万，上述账单引发网络关注。今日，重案组37号联系当事餐厅，一名负责人回应称，账单上部分菜品并非由饭店供应，亦没有见过网传“天价账单”。
+　　他表示，一般情况下，饭店的消费水平在人均600至1000元，远未达到“天价”水准，“除酒水，6人花费3万元的情况都不可能存在。”
+　　此外，当事饭店一名工作人员介绍，在饭店就餐分包房和大厅两种，包房人均最低消费800元，至少4人才能在包房就餐。另外，在饭店大厅或者包房就餐，饭店会收取10%服务费。
+　　上述工作人员称，店内没有网传账单上的清酒炖冻半头鲍、长江蟹等菜品，最贵的菜品是牛排和海参，单价300元左右。
+　　餐厅总经理：晚宴没有官员和明星参与
+　　重案组37号通过公开资料查询到，“西郊5号”餐厅位于上海最大的五星级花园别墅式国宾馆西郊宾馆，曾接待包括英国女皇、德国首相科尔、美国总统布什等百余位名人政要。
+　　该餐厅董事兼总经理为“名厨孙兆国”。在其个人微信公众号“捕味者”中可以看到，其从业34年，是法国美食协会会员，上海西郊5号餐厅总经理兼主厨，国家高级裁判员、中央电视台特邀美食专家评委，曾获中央电视台2台全国电视烹饪大赛全国总冠军。
+▲孙兆国展示大黄鱼。网络图片
+　　重案组在天眼查上查询到，孙兆国是上海润荪文化传播有限公司的法人，此外还是6家公司的高管，分别为上海兔川义食品贸易有限公司、上海兔营川餐饮管理有限公司、上海半饱餐饮管理有限公司、上海润荪文化传播有限公司、上海翼玛餐饮管理有限公司等。在这7家公司中，孙兆国在其中5家公司持股比例最高，拥有实际控制权。
+　　今日下午，孙兆国向重案组37号证实上述账单，并称晚宴实际是“迪拜王子请人吃饭”，菜品属于私人定制，食材是从各地运送，当天晚宴是其亲自下厨。
+▲微博认证为央视《中国味道》总顾问董克平发布孙兆国当晚晚宴合影。网络图片
+　　对于晚宴的价格，孙兆国称，“在迪拜这根本不算什么。”他表示，该饭店是合法经营，所用的食材没有野生保护动物，符合国家规定。
+　　孙兆国称，参与饭局的人“没有明星也没有领导”。有知情人表示，参加饭局的人有蒋鑫，蒋鑫是这家餐厅的常客。对此孙兆国只回应，“我明确告诉你，买单的人不是蒋鑫。”
+　　重案组37号注意到，账单中有一道名为“烧酒酱肉”的菜品，有网友质疑酱肉的制作食材是猪肉，“迪拜人怎么会吃猪肉呢？”
+　　对此，孙兆国回应，参加晚宴还有其他人，“迪拜人不吃猪肉其他人可以吃。”但就当晚晚宴具体参加人员，他拒绝透露。
+　　截至发稿前，就“迪拜王子请人吃饭”这一说法，重案组37号未从其他渠道证实。
+　　知情人：“富二代”蒋鑫当晚在该餐厅就餐
+　　重案组37号注意到，此次“天价账单”事件爆料人微博名为@Snake_Kane。他先是于9月18日晚间10时许发微博称，“人均五万的晚饭（不是炫富）我反正是第一回吃”，并配有鲍鱼、海螺、螃蟹等菜品图片，定位地点为上海西郊5号。随后，上述博主又发了上述消费40余万的“天价”账单。
+▲发布“天价账单”爆料人，发布的晚宴菜品图片。微博截图
+　　事情发酵后，重案组37号私信该微博用户，表示希望了解相关事宜，但均未得到回复。今日下午，上述微博用户把此前发布的微博删除。
+　　多名网友指出，微博用户@Snake_Kane，人称“蛇哥”，系中国富人榜排名第37名的蒋泉龙儿子蒋鑫。公开资料显示，蒋泉龙个人财富为103亿元，其企业是中国规模最大的稀土和耐火材料生产商之一，公司中国稀土控股为上市公司，是中国南方最大的稀土生产企业。
+　　重案组37号在@Snake_Kane微博页面上看到，该用户有一个名为“蛇哥的群”的微博粉丝群，群内共有95名成员。
+　　一名知情人士向重案组37号透露，上述爆料人为蒋鑫，为泛亚环保的总裁。且事发当晚，蒋鑫确实和朋友在该餐厅就餐，并自带48万元的酒水。“但并不是蒋鑫结账，蒋鑫只是把账单拍照发了微博，没想到之后引起这么大的关注。”
+　　据其提供的一份刷卡小票信息显示，一名为“大海”的客户于9月18日23时05分，使用招商银行信用卡消费40万元。与今日网传“天价账单”的消费时间、金额、餐厅信息以及付款人签名均一致。
+　　重案组37号注意到，多名网友称，自己此前在“西郊5号”餐厅用过餐，环境较好，但菜品太贵。订餐平台上显示，这家位于上海市长宁区虹古路669号的“西郊5号”餐厅，人均消费816元。
+　　一位曾在餐厅用过餐的顾客于2018年4月10日晒菜单评论称，在这家餐厅就餐，人均消费800~1000元。“两个人就餐一般是人均的两倍，购买酒水的话是人均消费的四倍。”
+▲此前在“西郊5号”就餐顾客在美团评价餐厅时上传的菜品。网络图片
+　　并补充写道，就餐前的小菜是78元一位，招牌牛排318元一位，蟹肉鱼籽320元一位，红酒或香槟800~1200元。最后两个人在这家餐厅共消费3400元。
+　　今日下午，上海市长宁区市场监管局一名工作人员告诉新京报记者，已经介入调查此事。目前上海长宁区市场监管局工作人员已经到饭店调查，调查结果将会及时公布。
+　　编辑：杨梓铭
+
+
+
+
+
+责任编辑：王潇燕
+

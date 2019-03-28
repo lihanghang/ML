@@ -1,0 +1,288 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+视频：标致轿车定速巡航失控高速狂奔10分钟车主称呼救后挂空挡降速
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:261055834,
+				pid:1,
+				url:'',
+				title:'视频：标致轿车定速巡航失控高速狂奔10分钟车主称呼救后挂空挡降速'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=261055834/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　最新进展：标致总部：已初检定速巡航失灵车辆目前不否认不肯定
+　　相关报道：标致车定速巡航失灵高速狂奔4S店教车主挂空挡降速
+
+
+　　标致轿车定速巡航失控高速狂奔10分钟4S店检测出错误代码
+　　央广网北京8月6日消息（记者杨博宇）据中国之声《新闻纵横》报道，现在许多司机朋友都对定速巡航系统不陌生，因为该系统可以按司机要求的速度，不用踩油门踏板自动保持车速，使车辆以固定的速度行驶。既减轻了疲劳，也减少了不必要的车速变化，可以节省燃料。
+　　不过，今年三月发生了“奔驰汽车失控事件”，定速巡航是否靠谱引发舆论关注。虽然事后第三方出具的司法鉴定意见书综合认定，该车辆在连霍高速相关路段行驶过程中不存在失控情况，车主也表示尊重该意见，但仍一度引发人们对于汽车定速巡航安全性的讨论。
+　　近日有媒体报道，江西九江的一位标致车主称，日前在福银高速行驶中定速巡航失控、刹车失效，最终在4S店电话指导下挂空挡后车速才得以下降，对于出现定速巡航失控的原因，4S店尚未作出明确诊断。
+　　江西九江的车主毛先生介绍，事发时间为7月28日上午9点多，当时他正驾车行驶在福银高速前往湖北十堰的途中。前面有一辆车挡住了他，他想解除定速巡航后加速超车，但是定速巡航不知为何无法解除，定速巡航速度栏的三个横杠一直在闪。
+　　毛先生表示，一早从孝感出发驶上高速后便开启了定速巡航，发现失灵后曾试图刹车，但并没有效果。以时速110公里的速度行驶了10多分钟，在这期间，他还拨打了110以及4s店救援电话。根据4s店技术人员的指导，在挂空挡后，车辆逐渐减速，定速巡航解除，刹车恢复。
+　　毛先生称，7月30日，从湖北十堰返回九江之后，他开车前往4S店检测，电脑的确读出了巡航系统错误代码，但具体原因并不清楚。4s店在与东风标致武汉总部确认后，决定先更换定速巡航拨杆。但对于这样的解决方案，毛先生并不认可，由于配件需要订货，目前也并未更换。
+　　毛先生说：“行车电脑报的错误代码是P1671，显示一个巡航系统的信号不可用，具体我不太了解是什么意思。但肯定与定速巡航有关，也能与我行车电脑的里程匹配得上。”
+　　据了解，毛先生的车辆于2015年10月在江西九江万顺鑫4S店购买，目前尚在质保期内。根据毛先生提供的事发视频显示，出现状况时行驶里程为34000多公里。毛先生称，该车除了加了一个外接的行车记录仪，其它的车体电路没有进行过改装。
+　　毛先生表示，从7月30日起，他曾就相关问题致电东风标致客服，但一直没能给出具体解决方案。昨天（5日）上午，厂家的一位客服负责人回电，表示可以进一步对车辆进行检测。毛先生告诉记者：“我们约了周二后做远程检测，目前是口头上传这段故障代码，他再把整段代码上传到武汉总部。”
+　　昨天（5日）下午，记者致电九江万顺鑫4S店，工作人员表示对于此事的处理进展并不知情。该4s店一叶姓技术专家此前也拒绝了媒体的采访。
+　　随后，记者联系到东风标致总部一位刘姓客服负责人，这位负责人表示，由于故障并未再现，尚不能确定客户反映问题出现的原因。下一步将对毛先生的车辆进行进一步检测。该负责人说：“首先，他的车出问题后到4S店去维修了，之后故障没有再现。其次，该用户可能内心还存在担心和顾虑，我们也站在用户的角度着想，通过总部远程诊断的方式，帮他的车辆再做一次检测。再次，如果后续该故障再现，我们的员工会到现场去处理。在沟通完了之后，用户还是非常认可和接受的。”
+　　有关此事的相关进展，中国之声将继续关注。
+
+
+
+
+
+责任编辑：王潇燕
+

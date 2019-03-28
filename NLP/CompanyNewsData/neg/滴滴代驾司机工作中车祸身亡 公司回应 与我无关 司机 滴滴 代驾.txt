@@ -1,0 +1,304 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+滴滴代驾：你为谁打工？
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251460303,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251460303.html',
+				title:'滴滴代驾：你为谁打工？'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251460303/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　“滴滴代驾”司机工作中车祸身亡滴滴公司回应：与我无关
+
+　　（央视财经讯）相信大家都有过在高峰期和下雨的时候打过出租车吧？那感觉简直“酸爽”。就算是平时选择乘坐出租车也会有诸多不便，比如交班的时候，去的地方太远师傅不愿意搭，本身比较偏僻的地方可能连出租车都见不到。
+　　但是自从有了网约车，这些不便都消失了。无论什么时间什么地点，只需要拿出手机，选定地址，就可以方便的乘车。除了便利还是便利。
+　　可是在享受便利的同时，我们也不能忽略因为网约车而出现的新问题。虽然有关部门一直不断地在完善相关法律，但是在网约车这方面，还是有很多的空白。2016年11月26日凌晨一起悲剧就发生了。
+　　这天，一男一女酒吧喝完酒后出来准备回家，出于安全他们选择在滴滴代驾平台，找了一位代驾司机王永康，驾驶自己的保时捷豪车回家。由于对路况不熟悉，平时可能也很少有机会接触到这类豪车，在一个急转弯，轿车失控冲进了池塘。两名车主第一时间逃了出来，而王永康因为撞击昏迷而无法自救。等到被救出来的时候，已经溺水身亡了。
+
+　　这看起来就是一起非常普通的车祸，但是在索赔的时候，却牵扯出了许许多多的问题。车还好说，保险公司有保险理赔，可是人没了，留下孤儿寡母靠什么生活呢？王永康是在提供劳务的过程中死亡，根据我们国家的法律规定，雇员在从事雇佣活动中遭受人身损害，雇主应当承担赔偿责任。王永康的家人认为，王永康生前作为滴滴出行公司网络平台上的代驾司机，在工作中出了意外，滴滴出行公司应该负有一定的赔偿责任。
+
+　　可是法院是谁主张谁举证的原则，可是证明王永康与滴滴公司的劳务关系成了难题。车祸发生之后，王永康在滴滴代驾平台的账号被封禁无法登陆，家人无法通过手机了解到王永康的代驾记录。现在，唯一能证明王永康身份的，只有滴滴出行公司发给代驾司机的工作服、工牌。
+
+　　然而，在滴滴出行公司看来，仅有工牌和工作服，并不能证明王永康和滴滴出行公司构成劳务关系。
+　　王永康到底是为谁打工？在王永康家人看来，这原本根本就不是一个问题，现在却成了大问题。王永康明明是在滴滴出行的软件上注册成为代驾司机，经过培训、通过考试上岗，还在滴滴公司领了工作服、工作证，他肯定是在给滴滴打工呀！可是王永康突然离世，他生前到底有没有和滴滴出行公司签订过劳务合同？王永康的家人提供不出来，滴滴公司也予以否认。根据《劳动法》规定，不管是劳务外包的形式还是企业自有员工，任何用工单位都必须和员工签订劳务合同，并缴纳保险。但滴滴出行公司声称，原告告错了人。滴滴代驾平台的实际运营方是杭州快智科技有限公司。而在滴滴平台上注册的司机，比如王永康，他是和一家叫做江苏邦芒服务外包有限公司签订的劳务合同。因为杭州快智公司和江苏邦芒公司与本案有直接利害关系，所以也被追加为了本案的被告。
+
+　　这份传说中的劳务合同是否存在呢？收到传票后，江苏邦芒公司查阅了公司所有和代驾司机签订的劳务合同，并没有发现王永康的记录。
+　　王永康虽然是滴滴平台上的代驾司机，但并不意味着和滴滴公司有劳务关系。关于这个问题，滴滴出行公司做了如下解释。
+　　滴滴出行公司：代驾司机不是在为滴滴工作，是在为劳务公司工作，不应把这个概念混淆。不是说你在哪个平台上接单你就是在为谁工作，平台它只是提供一个信息，这个单你可以接也可以不接，完全取决于代驾司机个人意志。你接了单之后就代表劳务公司和客户之间发生的一个代驾的关系，而不是和滴滴公司发生这么一个关系。
+　　到现在为止，本案的滴滴出行公司、杭州快智公司、江苏邦芒公司，三个被告，都不承认自己是王永康的老板，更没有人愿意承担赔偿责任。很快，另外一家公司——浙江外企德科人力资源服务有限公司浮出了水面，表示愿意承担赔偿责任。
+
+　　要说这可真是踏破铁鞋无觅处，得来全不费工夫啊，王永康为谁打工？一开始始终没人承认，现在老板突然间从天而降。
+　　在原告方看来，外企德科公司自认是“老板”，并愿意承担赔偿责任的行为有些奇怪，因为外企德科公司是从2016年底才开始接手滴滴代驾司机的签约工作，王永康生前并不知晓有这样一家劳务公司存在。而且，代驾工作从网络报名、面试、培训、奖惩，均是由滴滴出行公司决定，和外企德科公司并没有关系。
+　　尽管原告方并不认可，外企德科公司一再强调，他们带了调解方案来开庭，希望能与王永康家人达成和解。
+
+　　由于外企德科公司愿意在王永康死亡事件中承担七成责任，并提出了总计60.5万元的赔偿方案，家属经考虑后与外企德科公司达成了调解协议，不再追究其他问题。
+　　虽然案件经调解结案，但是该案承办法官提醒，在这种互联网合作模式下，书面劳务协议缺失，实际雇主不明，法院审理起这类案件困难重重。
+
+　　采访中法官告诉我们，在“互联网+”和共享经济的大环境下，因提供劳务引发的纠纷属于新型疑难案件，因为一旦发生问题，很难找到雇主，对方有的仅仅只是一个平台，有的可能是平台后面的实体经营者，或者是小微企业，他们一般是通过虚拟网络进行联系，不像我们平时面对面交流，白纸黑字签协议，所以通常形成的都是电子证据。如果不注意保存的话，一旦出现纠纷，平台经营者不愿意提供这个电子证据，受损方或者劳务提供方就会处在一个很困难的境地，就像今天这个案子中的原告。
+　　所以在这里提醒大家，参与到网络+并且提供劳务的一方，对网络签约一定要慎之又慎，同时做好证据保全工作，这样一旦发生法律纠纷的时候，才能找到你的实际签约方，或者劳务接受方，对你的权利或个人利益才有所保障。
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

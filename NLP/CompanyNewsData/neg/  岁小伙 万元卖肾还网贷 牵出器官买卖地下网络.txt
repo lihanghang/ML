@@ -1,0 +1,294 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:258519871,
+				pid:1,
+				url:'http://finance.sina.com.cn/wm/2018-06-01/doc-ihcikcev9303164.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=258519871/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+
+　　▲小伙4万卖肾还网贷男子花40多万换肾失败牵出黑中介。新京报动新闻出品
+　　从黑市上买回的肾最终没能救活沈之。去年底，沈之去世。　　2017年6月8日晚，身患尿毒症5年的沈之，和肾源提供者王俊，在停业一年的湖南湘潭市华侨中医院三楼碰面。这是二人第一次见面：他们通过职业中介介绍约定，来这里进行肾移植手术。　　40岁的江苏淮安人沈之和20岁的广西桂林人王俊，都希望通过这场手术之外的交易，开始新的生活——沈之期待摆脱透析生活，王俊希望还上网贷。　　湘潭市卫计委提供的资料显示，手术后三天，沈之被告知肾移植手术失败。索赔没有进展后，沈之向湘潭市长热线举报，称经熟人介绍到湘潭某民营医院进行治疗（实际是非法进行人体器官移植），该院以治病为由骗取其50余万元。该案最初由湘潭市卫计委调查。　　当年8月24日，湘潭市公安局对此事立案侦查。侦查中发现该案“黑中介”犯罪团伙与北京、河南、湖北等地的组织出卖人体器官的“黑中介”保持密切联系，形成涉及全国10余个省份的犯罪网络，且“黑中介”之间以虚假身份、单线联系，通过互联网物色经济条件较差、年龄二十岁左右的器官提供者，诱导提供者自愿低价出卖人体器官，且在无任何医疗保障措施的情况下进行活体器官移植手术。　　2018年5月10日，湘潭市岳塘区检察院以涉嫌非法组织出卖人体器官罪，对主要犯罪嫌疑人提起公诉。湘潭市岳塘区检察院认为，该犯罪团伙中介与中介之间环环相扣、分工协作，非法肾脏交易形成如流水线作业的产业链，上述犯罪团伙在其他地方作案的可能性也极大，但很难找到证据。如果这起手术没有失败，这个团伙不会被暴露。　　武警总医院器官移植科主任陈新国表示，目前器官短缺是全球性问题。公开数据显示，中国每年等待器官移植的患者约有30万人，但是每年器官移植数量仅约1万例。
+
+　　▲2017年6月8日晚，沈之在这家医院进行肾移植。新京报记者赵朋乐摄
+　　━━━━━
+　　寻找肾源
+　　2012年，34岁的沈之检查患有尿毒症，为维系生命，他每隔一天就得去医院做透析。
+　　沈之向湘潭卫计委供述称，原本其乐融融的生活一下子被打乱，病痛折磨使得他无法再做重活。虽然透析有医保报销，但大部分药还需要自费，为治病，还向亲戚朋友借了一些钱。　　沈之生于1978年2月，家住淮安市经济开发区。在江苏淮安一家医院治疗期间，他认识了病友李建国，两人聊起过买肾移植。但由于沈之只是当地一单位合同工，收入不高，根本没钱买肾做移植手术。　　2017年初，沈之所在的村子被划为拆迁范围，他家分到三套房子，还拿到一笔价格不菲的拆迁补偿款。这让他又燃起换肾的希望，“换了肾就可以摆脱透析生活了。”沈之与妻子多次找到李建国，请他帮忙联系中介。　　李建国也是一名尿毒症患者，与中介薛飞有过接触。十年前，薛飞曾找李建国表示可以帮忙换肾。“当时我已经做过手术，所以没有合作，不过存下电话。”李建国在检方的供述中称。　　2017年5月，在沈之请求下，李建国联系薛飞。检方资料显示，薛飞在器官移植中介中，只负责寻找买肾者，联络卖肾者另有其人。薛飞找到在此前的一桩肾交易中认识的同行冯涛。　　冯涛本职是一名医疗器械销售员，他通过一个专门的器官移植QQ群联络其他中介，拿到卖肾人王俊的联系方式。　　此时的王俊，正处于无法偿还网络贷款、焦头烂额的时候。他由于收入低，通过网络贷款公司借了两万多元钱。为还钱，他辗转借了好几家网贷公司的钱，拆东墙补西墙，最终还是没还上。　　王俊是广西桂林人，1997年11月生，初中没毕业就外出打工。王俊向湘潭卫计委称，一开始，他与老乡合伙经营工地食堂，赚了些钱，但老乡退出后，生意慢慢变差，王俊也沉溺于网络游戏，几乎没有收入。其实他家境并不算差，但很少向家人说自己的事，宁愿借钱也“不想家人知道我没钱”。　　就在这时，一位网贷公司的人告诉王俊有个赚钱的机会，给了他一个QQ。成为QQ好友后，对方（也就是冯涛）告诉王俊需要去武汉，并给他买了车票。到武汉后，王俊被安排做了体检，得知需要卖肾后，王俊有些犹豫，但他身上的钱却不够买一张火车票回家。权衡之下，他最终同意把自己的肾4万卖掉。　　湘潭警方发现，与王俊联系的网贷公司人员，用的是没有绑定身份证信息的临时QQ号，很难找到具体是谁。此前，有媒体报道称，贷款公司向借款人支招，“没有钱卖肾还钱。”　　检方的资料显示，中介称呼王俊这样的卖肾人为“小孩”，意思是20岁左右年轻的供体，肾源比较好。当时在武汉与王俊同住的还有五位“小孩”。　　等待几天后，中介薛飞与王俊联系，为他买了去长沙的火车票，并安排在小旅馆住下，等待手术。
+　　停业的医院
+　　卖肾人到位，6月初，薛飞开始着手联系医院手术。检方资料显示，在长沙没有医院愿意做，他想到了离长沙只有一小时车程的湘潭，就开车去“碰下运气”。薛飞“幸运”地找到位于湘潭市岳塘区的华侨中医医院，这家医院位于芙蓉大道旁，由于涉嫌非法集资已经停业一年，只有几个值班人员留守。华侨中医医院大楼有5层，淡黄色的墙砖显得有些破旧，医院的招牌矮矮的掩映在树木中，如果不走到跟前，很难注意到。“隐蔽性好。”薛飞向检方供述称，他通过工作人员找到医院的临时负责人周庸“院长”，他们协商借用华侨医院的手术室做一台肾脏移植手术，场地使用费三万元。薛飞当时自称姓刘，叫刘刚，是湘雅附三医院的医生。为促成手术，冯涛临时担起联络医生的职责。检方资料显示，他把这项任务以“医生10万包干”的价格转包给李华。李华曾经做过医药代表，也接换肾中介业务，在医疗微信群里认识冯涛。事实上，李华的中介业务也在患者这块，平时接触医生并不多，为做成这单生意，他在求职网站上自己找医生。经过查询，李华找到外科医生黄生和麻醉师张义。黄生是哈尔滨一家骨伤科医院医生，由于不满意收入，就在网上发布求职信息。简历中，他自称是泌尿外科医生，有20年手术经验。在张家口涿鹿县一个计生站上班的张义，因上班待遇不是很好，加上家里负担比较重，想周末能够做点兼职，同样发布了简历。他的麻醉师证是2013年考过的。李华在网上搜到两人的信息后，分别打电话表示有一个手术“私活”，麻醉师6500元，包含自带的500元三只肌松（麻醉药）的费用，医生手术费六万。检方资料显示，黄生有过犹豫，但李华告诉他，这台手术非常简单、好做，即使出事也不会找到他，最终打消顾虑。同时，李华之前在网上联系过的医师吴宁，也被叫来做手术助手，费用两万元。就这样，三人于2017年6月8日，赶到湘潭准备手术。
+　　失败的手术
+　　这是一场从开始就可能失败的手术。弃用将近一年的手术室极其简陋，布满灰尘，无菌环境非常差。检方资料显示，医生到医院后发现很多手术器材缺失，薛飞在外面买了补齐。准备手术时，医生又发现手术室内的电刀是妇科用的，无法用来取肾，“院长”周庸临时从外面借了电刀，晚上11点多才拿回来。沈之看到手术室比较脏，觉得不靠谱，曾提出不想做，但钱已经提前交了，有点不知道怎么拒绝。手术正式开始前，医生黄生看了肾移植手术双方的资料和一些检查结果，认为匹配条件不好，再加上手术室条件恶劣，觉得不符合手术条件，风险很大。他把这一情况告诉李华，李华、薛飞等人商议后，依然决定继续手术。湘潭市岳塘区检察院公诉人向记者透露，犯罪嫌疑人过于贪心，虽然手术失败率比较高，但他们抱着侥幸心理，希望手术能够成功。对于这一情节，在量刑上可能会酌定加重处理。手术助手吴宁回忆，肾移植手术完成后，他发现肾脏颜色不好，告诉黄生。黄生将情况告诉李华，李华表示还是进行缝合。手术进行到次日凌晨七八点才结束，沈之被推出病房时，李建国注意到尿袋里没有尿，随口问了一句，有人谎称，“已经换了一袋”，但实际并没有。黄生知道手术已经失败，因为条件好的话，这个手术完成后应该就要出尿了。但王俊和沈之都不知道这些情况。手术完成后，王俊拿到4万块钱和3000元红包。沈之支付给李建国手术费用等共计46万元，李建国给了薛飞40万，薛飞支付给李华和医生18万元。
+
+　　▲2017年6月9日，手术失败后，沈之被这辆救护车送往长沙。
+　　“每个环节都有中介”
+　　做完手术，王俊被安排在医院休息四天，院长夫人煮好荷包蛋，每天送过来给他吃。之后，王俊租住在医院附近的小旅馆中，等伤口长好，坐火车回到广西。手术当天，沈之被华侨中医医院的急救车送到长沙泰和医院。薛飞打点了这家医院的医生，帮忙收治在外院做移植手术的沈之。检方资料显示，在泰和医院，沈之被给予抗感染、抗排异治疗，但一直是无尿状态，超声检査报告提示右侧髂窝移植肾血液显像欠佳，经过几次血液透析后仍然是无尿。主治医生告诉沈之，要么继续透析，要么进行肾移植。2017年6月14日，沈之移植的肾已经坏死，进行肾脏摘除手术。之后，沈之家人要求薛飞等人退款，要回近20万元。但剩余的钱一直没要回来，找不到薛飞，沈之及家人多次前往湘潭找周庸要钱。无果后，沈之打市长热线举报，这起非法器官买卖交易才进入人们的视野。湘潭市卫生计生综合监督执法局最先进行行政侦查，据媒体报道，最开始沈之并没有透露是因为买肾，只说遭遇医疗诈骗。“可能把向相关部门反映作为要钱的筹码，那边说退钱的时候，沈之就不积极反映了，不给他又打电话，反反复复很多次。”后来，卫计委才意识到这是一起非法组织出卖人体器官犯罪案件，由公安机关介入调查。湖南湘潭警方通报称，侦查中发现该案“黑中介”犯罪团伙与北京、河南、湖北等地的组织出卖人体器官的“黑中介”保持密切联系，形成了涉及全国10余个省份的犯罪网络，且“黑中介”之间以虚假身份、单线联系，通过互联网物色经济条件较差、年龄二十岁左右的器官提供者，诱导提供者自愿低价出卖人体器官，且在无任何医疗保障措施的情况下进行活体器官移植手术。检方资料显示，上述手术后，李华有意培养自己的医生资源。2017年10月31日，他约山东的一位护士和医生助手，到郑州谈今后合作事宜，被公安机关抓获。李华供述称，“换肾整个过程，包括找患者、找供体、找医生、找医院、找医疗器械等环节很多，每个环节都有中介，甚至中介找中介，很多时候我连患者本人、医生都从来没有见过，在哪里做的手术也不知道，反正就是拿中介费，因为不和患者直接接触，所以赚的就少。”湘潭市岳塘区检察院认为，该犯罪团伙中介与中介之间环环相扣、分工协作，非法肾脏交易形成如流水线作业的产业链，上述犯罪团伙在其他地方作案的可能性也极大，但很难找到证据。如果这起手术没有失败，这个团伙也不会被暴露。
+　　卖肾者身体虚弱很后悔
+　　　　去年年底，遭遇此次手术失败的沈之去世。　　2017年11月份，湘潭市卫生计生综合监督执法局办案人员前往江苏回访时，沈之的精神状态尚可，“开车很快。”沈之告诉办案人员，当时他想，如果手术成功，他还要包5万元红包给中介们，再去外地玩几天。　　湘潭卫计委工作人员称，如今，曾经胖胖的王俊很虚弱，经常卧床休息，提水时手都抖，为照顾他的情绪，办案人员没有告诉他家人，只说他因打架需要做个笔录。当时王俊虽然还清贷款，但手机欠费交不起，口袋里只有五块钱，他很后悔，但是已无法挽回。　　介绍沈之换肾的李建国，由于身体原因被取保候审，如今他依然需要在医院透析治疗。李建国一直认为，自己是出于好意，帮沈之询问，拿的6万好处费，在沈之手术失败后立即归还，没想到沈之将自己告发。　　武警总医院器官移植科主任陈新国接受记者采访时表示，由于尿毒症患者只能依靠透析维持生命，每周至少三次透析，少去一次就无法达到身体电解质平衡，毒素积淀，严重时会直接威胁生命。直接进行肾移植手术可以使患者生活质量提升。“肾移植的配型比较严格，患者等待几个月甚至几年的都有。”　　陈新国表示，目前器官短缺是全球性问题。公开数据显示，中国每年因终末期器官衰竭而苦苦等待器官移植的患者约有30万人，但是每年器官移植数量仅约1万例。　　中国人体器官捐献与移植委员会主任委员、前卫生部副部长黄洁夫在接受媒体采访中提到，器官捐赠短缺并非器官移植最大的难点。
+　　“难点首先是经济原因，很多病人没有钱接受移植，其次是没有那么多够资质的医院和医生可以做移植手术，服务能力有限。”黄洁夫说，2007年中国颁布《人体器官移植条例》，2011年把器官买卖和非自愿摘取器官纳入刑法调整范围。在过去的10年中，中国共破获器官移植“黑中介”32个，捣毁14个非法器官移植窝点，立案调查18所医疗机构，抓获犯罪嫌疑人174人。　　陈新国认为，除国家严厉打击器官买卖外，加大器官捐赠宣传也非常必要。黄洁夫也曾说过，“应该让更多的人知道，人的生命虽然是有限的，但是可以通过器官捐献，使一个人的生命在另外几个生命中得以延续。（文中人物除陈新国、黄洁夫外，其余均为化名）
+　　新京报记者赵朋乐 编辑曹林华李骁晋校对 吴限
+　　值班编辑 吾彦祖花木南 
+
+
+
+
+
+
+责任编辑：梁斌SF055
+

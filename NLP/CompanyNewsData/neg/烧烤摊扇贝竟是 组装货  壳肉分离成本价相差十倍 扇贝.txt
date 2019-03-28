@@ -1,0 +1,306 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+当心了烧烤店扇贝可能是组装的正值夏日烧烤季
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:260293908,
+				pid:1,
+				url:'',
+				title:'当心了烧烤店扇贝可能是组装的正值夏日烧烤季'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=260293908/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　记者调查|壳肉分离烧烤摊扇贝竟是“组装货”？
+　　来源：“中国消费者报”微信公号
+　　“中国消费者报”微信公号7月14日消息，听过电脑可以组装，却没有听过扇贝也可以组装，扇贝一直都是烧烤市场上美味的食物，一直深受食客的追捧。然而最近爆料烧烤上的扇贝居然是组装的，而不是货真价实的，这是怎么回事呢？
+　　暗藏玄机的扇贝
+　　在烧烤店里，记者发现了一个奇怪的地方：有的地方的烤扇贝，可以轻易的把贝肉夹起来，贝肉并没有和贝壳连在一起。而有的店的烤扇贝，则是肉和壳粘在一起的，不会轻松脱离。
+
+　　通过网上查询，记者发现有网帖称，这种壳肉完全分离的扇贝是组装货！
+　　其实早在2014年，记者通过调查就发现，组装扇贝活跃在北京市场，商户为了节省成本，循环利用扇贝壳，配上冰冻扇贝肉，“组装”烤扇贝。
+
+
+　　当记者问烧烤店店员为什么烤扇贝的壳和肉是分离的，店员的解释是因为扇贝壳很脏，需要壳肉分开彻底清洗。
+
+　　市场调查：成本相差十倍
+　　然而事实真的是这样的么？为了一探究竟，记者来到了海鲜批发市场进行走访调查。
+　　据商户的介绍，售卖的纯鲜扇贝有三种，个头大小不一，价格也有所差别，小红贝价格最为便宜，但是由于个头小肉硬，并不适合做烧烤使用。不过我们在海鲜市场发现，与这种纯鲜扇贝相比，冰冻扇贝肉不仅个大饱满，价格也更为低廉，只需15元一斤，一斤有20多个。
+
+　　商家还说，一般烧烤店都喜欢买这种冰冻扇贝肉，因为这种冰冻的比较好保存。接下来我们算了这样一笔账，纯鲜扇贝每个价格5到8元不等，而冰冻扇贝肉只需五毛钱左右，同样是扇贝，但成本却相差了十倍之多。
+
+　　两种扇贝烤熟后区别明显
+　　随后，记者购买了纯鲜扇贝和冰冻扇贝，分别处理后进行对比。通过观察，记者发现烤好的两种扇贝肉还是有很大的不同的。纯鲜扇贝烤好后，是可以很明显的看到扇贝柱的，并且肉质紧实。
+
+　　而冰冻扇贝肉，烤好后，肉质比较松散，并且看不到明显的扇贝柱。
+
+　　对于这种“组装”扇贝网友有话要说
+　　莓的鹿苑長春：不一直是这样吗．．．
+　　风起云相随：正常了，见怪不怪了，要不然你以为街头那些十块钱三个的烤生蚝这么便宜。
+　　蓝色的草虫：哼哼，吃到不是拼装的会感觉赚到。
+　　梁賢鉎：花那么多钱吃了个假的
+　　可是小编还是有一个大大的问号，既然有这么多的烤扇贝用的都是冰冻扇贝肉，可是那么多的扇贝壳都是从哪儿来的呢？
+　　有商家专卖扇贝壳，比扇贝肉还贵
+　　小编上网搜索发现早在2015年新晚报记者就调查过这些扇贝壳的来源。
+　　记者来到一家无名的海鲜贝壳批发店，这家店可以批量给烧烤店供应扇贝壳。这位女老板还表示，每个扇贝壳价格在2元，一斤23到24元。这个价格是冷冻扇贝肉的2倍，而且她不乐意降价。“即便你一次性要个百八十斤，我也只能在总价上给你便宜十来块钱。”
+　　真是没想到这扇贝壳竟然比冷冻扇贝肉还要贵。
+　　扇贝的辨别
+　　新鲜的扇贝肉非常有弹性，色泽鲜亮，肉和壳一般不会脱离，煮熟的扇贝肉被食用完后，贝壳内会留有痕迹，不会出现光秃秃的情况。但是有时原生态的扇贝在清洗时也有可能因厨师用力过猛给弄下来，但是通常情况下，贝壳上都会留有些许痕迹。此外，我们还可以看看扇贝的外壳，新鲜扇贝会显得很脏，经过多次反复使用的扇贝壳则是非常干净光洁的，冰冻以后的扇贝肉呈现出黄色，还有点黑，不新鲜的扇贝还会有一股腥臭味。
+
+
+
+
+
+责任编辑：刘万里SF014
+

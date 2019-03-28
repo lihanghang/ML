@@ -1,0 +1,134 @@
+
+
+
+
+
+
+
+
+
+图片来源微博。
+　　一口茶竟要48元！微博网友@打桩模子日记称，6日下午，两名日本学生去豫园游玩时遭遇“茶托”，被带到金陵东路229号2楼的豫园茶馆喝茶被“宰”。
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'3961516199704432'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+图片来源微博。
+　　结账时得知共消费了2100多元，两人身上的现金1000多元全部被强行掏空。
+图片来源微博。
+　　就在晚上8点左右，这两名学生在外滩派出所领回了被诈的钱，但被要求这事到此为止。目前，相关部门暂未回应。（来源：上海电视台）
+报案受理单。
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论
+
+
+
+
+
+
+
+
+
+图片来源微博。
+　　一口茶竟要48元！微博网友@打桩模子日记称，6日下午，两名日本学生去豫园游玩时遭遇“茶托”，被带到金陵东路229号2楼的豫园茶馆喝茶被“宰”。
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'3961516199704432'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+图片来源微博。
+　　结账时得知共消费了2100多元，两人身上的现金1000多元全部被强行掏空。
+图片来源微博。
+　　就在晚上8点左右，这两名学生在外滩派出所领回了被诈的钱，但被要求这事到此为止。目前，相关部门暂未回应。（来源：上海电视台）
+报案受理单。
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

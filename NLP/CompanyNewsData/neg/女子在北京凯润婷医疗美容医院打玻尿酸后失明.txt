@@ -1,0 +1,336 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+这家美容院太嚣张！女子打玻尿酸右眼失明
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:253038921,
+				pid:1,
+				url:'',
+				title:'这家美容院太嚣张！女子打玻尿酸右眼失明'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=253038921/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　这家美容院太嚣张！女子打玻尿酸右眼被致失明家人讨说法被打骨折
+　　（北京时间记者李辉报道）23岁的刘悦（化名）是北京一家医院的儿科护士。爱美的刘悦在北京凯润婷医疗美容医院打了一针玻尿酸后，因填充物渗入血液循环造成视网膜中央动脉阻塞，瞬间右眼失明，后经多家三甲医院诊断，复明可能性很小。对此，北京凯润婷医疗美容医院回应称，护士为顾客注射玻尿酸本应有医师在旁指导，但当晚医师都已下班，只有该护士一人为刘悦注射。
+　　记者以普通消费者的名义去该美容医院咨询时，工作人员称在该医院打玻尿酸医生100%有资质，100%安全。
+　　23岁女护士注射玻尿酸致右眼失明
+　　据刘悦介绍，之前突然接到的一个电话改变了她的生活。电话是北京凯润婷美容医院打来的，电话那端的销售咨询人员向刘悦介绍了整形手术的种种好处，爱美的刘悦有些心动了，在网上查了查这家美容医院。
+　　“我也不知道他们是怎么得到我的联系方式的，但是那个销售人员说我只要去店里，就送我体验项目，我在网上查了这家医院，看上去规模挺大，资质也可以，就想着应该可以信得过。”刘悦说。
+北京市凯润婷医疗美容医院（北京时间记者拍摄）
+　　于是刘悦来到了凯润婷医院，经医生推荐后决定注射伊婉系列的玻尿酸。第一次注射在了太阳穴部位，第二次注射在额头。“第二次打时，打完额头就青了，注射的部位出现凹陷，医师说没事，让我下次再来注射一次。”刘悦回忆说。
+凯润婷医院店内显示的价目表（红线标注区域为刘悦所打玻尿酸产品）
+　　几天后的11月23日，刘悦第三次来到凯润婷医院，准备再次在额头部位注射玻尿酸。此时刘悦已经花费了近1万元。因为有了前两次的经历，这次刘悦已不那么紧张，闭上眼睛静静地躺在美容医院提供的床位上，等待注射过程的结束。
+　　刘悦告诉北京时间记者，谁知道一针注射下去，她额头部位的面部皮肤瞬间变白，为她注射的医师高亚欣和助理非常紧张。“医师让我睁眼睛，问我还能看见东西吗，我一睁眼睛，右眼已经毫无光感了。”刘悦说。这位医师和助理赶紧叫来了另一位貌似更资深的医师前来查看，对方也束手无策。
+　　刘悦要求医师赶紧送自己去医院救治，于是，凯润婷医院派人将刘悦送到了同仁医院，挂上了急诊。
+　　“当时那个急诊的医生听我说了情况之后，直接就说，这种情况抢救也没有什么意义了，已经没有恢复的可能。”随后刘悦被转到了协和医院进行抢救，后又在解放军304医院做了手术。经过近一个月的治疗，刘悦的视力仍无法恢复，医生说刘悦的右眼彻底失明了，继续治疗已没有意义。
+多家三甲医院的诊断证明显示刘悦视网膜中央动脉阻塞。（刘悦供图）
+　　在垫付完半个月医药费后，凯润婷美容医院就拒绝继续支付医药费，称让家属先垫付，费用最后一起算。“我自己承担了2万多元医药费，我跟母亲去美容医院要求报销医药费，遭到了医院的拒绝。”刘悦说，出事后，院方没有人向其道歉，涉事医师也以状态不好、休假等为由拒绝与其见面。
+　　家人讨说法反被院方打断肋骨
+　　无奈，2017年12月20日，刘悦的母亲、舅舅、舅妈等人来到凯润婷美容医院，向院方讨要说法，院方说周五会给出答复。12月22日，刘悦和母亲、舅舅等一起再次来到凯润婷医院。这次一位自称是院长的人和他们谈判，提出如果走诉讼程序，院方最多赔偿8万元，如果愿意私下解决，可以赔偿更高金额的损失。刘悦的家人觉得孩子的右眼失明了，是一辈子的大事，不能简单用钱解决，一定要院方给出说法。
+　　谈判不欢而散，因不满院方的态度，刘悦的家人拿出横幅，准备在医院门口拉横幅抗议。据刘悦介绍，几名医院工作人员见状，粗暴的上前抢横幅，刘悦的大姨便在医院大门口高声呼喊“医院把我孩子的眼睛打瞎了。”
+　　“这时，从医院的负一层跑上来将近四十个人，和我的家人发生激烈的言语争吵，随即动起手来。”刘悦拿出自己录下的一段手机视频给记者看，视频中，几名身穿黑衣服装的强壮男子对着刘悦的大舅拳打脚踢，动作十分粗暴。
+　　刘悦说，这些人动手打大舅的时候，有人把医院的大门关上锁起来，还用宣传海报把玻璃门挡上，不让外面的人看到里面的情况。“我想拍视频记录下他们的行为，有一个女的一把把我推倒，我趴在了地上，手机也摔碎了。”刘悦说。
+刘悦的被摔裂的手机（刘悦供图）
+　　事后经检查，刘悦的大舅胸部闭合性损伤、左侧两根肋骨骨折，头皮多处有血肿，腰背部多处软组织挫伤。刘悦的膝盖半月板撕裂，其他几位家人也有轻微的皮外伤。院方有3名男子因殴打刘悦以及家人被拘留10日。
+刘悦的大舅被打之后（刘悦供图）
+刘悦大舅被打后的诊断书（刘悦供图）
+　　“我的右眼失明了，医院不但不道歉不解决问题，还殴打我的家人，现在我只想求一个公平公正的处理结果。”刘悦说，她是北京某医院的儿科护士，右眼失明对她以后的生活造成的影响是不可想象的。
+　　“视力对于儿科护士来说尤其重要，单眼失明的人，对于距离和定位的感知能力会变差，比如给幼儿打针要求非常精细、注射位置要准确。我肯定无法继续从事护士职业了，对以后的日常生活也会带来诸多不便。”刘悦说，她希望有关部门能够进行调查，给她一个可以信服的结果。
+　　注射医师并无“医师”资质
+　　官方网站资料显示，北京凯润婷医疗美容医院（原北京史三八医疗美容医院），创立人史三八女士于1985年投入整形美容行业，至今30余年。医院坐落于北京市繁华的国贸商圈，经营面积约4000平米，在职工作人员200余人。北京凯润婷医疗美容医院，设有无创注射中心、整形美容中心、医学美肤中心、口腔美容中心、美学设计中心、网电咨询中心、VIP客户服务中心，专业的团队将传统的医美项目调研改良、树立行业专注、关爱、认真、时尚的服务标准。为追求美、崇尚美的求美者构建一个交流、分享、共进的美形服务的场所。
+凯润婷官网首页截图
+　　公开报道显示，北京凯润婷医疗美容医院是第二季《中国新歌声》唯一指定美丽合作伙伴。
+　　北京时间记者在凯润婷美容医院官网上查看医生资质、医生团队等板块，均未看到给刘悦进行玻尿酸注射手术的医师高亚欣的个人资料介绍，而在官网上展示的一张照片专家团队照片中，记者看到高亚欣，该图片显示其头衔为“医师。”
+凯润婷官网显示为刘悦注射玻尿酸的是一名医师（手机官网截图）
+　　随后记者登陆北京市朝阳区卫生和计划生育委员会的官方网站，经查询发现，凯润婷美容医院有进行医疗机构的备案，审批机关是朝阳区卫生局，级别显示为一级，类别是美容医院，备案的诊疗科目包括：医疗美容科；美容外科；美容牙科；美容皮肤科；美容中医科、麻醉科等。
+北京市执业医师与医疗机构信息查询官网截图
+　　记者在该网站查询高亚欣的执业信息。当输入高亚欣的资料后，执业医师信息查询系统显示，没有查询到符合条件的执业医师。
+北京市执业医师与医疗机构信息查询官网截图
+　　有关部门正在调查涉事人员资质打人者或被追究刑责
+　　12月27日，北京时间记者和刘悦一起来到了朝阳区卫计委反映情况，相关工作人员询问刘悦是想做医疗事故鉴定还是举报非法行医？“如果举报有人非法行医，我们受理后60个工作日内给结果。要想查询医师的详细资料，需去监督所。”工作人员说。刘悦表示，怀疑给自己注射玻尿酸的医师没有相应的资格证，已经向监督所打电话举报。“如果监督所接到投诉电话，已经受理了，那和我们这是一样的。只不过时间不一样，我们是通过系统，一级一级转到他们那。”工作人员建议刘悦在家等消息。
+　　该工作人员表示，也可以去医调委，通过第三方机构进行调解。至于到底是不是医院造成的伤害，只能通过鉴定的方式。“如果进行鉴定，需要和涉事医院一起去朝阳区医学会医疗事故鉴定办公室，如果医院不同意去，也可以到我们这来填一张表，申请单方的医疗鉴定。”工作人员称，还可以走司法途径，索要相应的损失，至于打人的事情则要通过报警来解决。
+　　随后，记者和刘悦又来到了北京市朝阳区卫生监督所，相关工作人员表示，在系统中查询发现，为刘悦注射玻尿酸的高亚欣的职业资质为“护士”，并非凯润婷官网标注的“医师”，卫生监督所对刘悦此前电话投诉的医院及医生资质情况正在调查中。
+　　“我们会在7天内派调查员去凯润婷了解情况，调查涉事机构和人员的资质。如存在违法行为，会根据相关法律条款进行处理、处罚。”至于此事是否属于医疗事故，工作人员则建议联系卫计委并进行鉴定。如果认为整形医院在医疗资质方面进行虚假宣传，则建议向工商部门投诉。
+　　记者还跟随刘悦一起来到了朝阳起双井派出所，工作人员表示3名男子因殴打刘悦及其舅舅被刑拘十日。目前，刘悦已将自己和舅舅的诊断记录等提交给法医，准备进行伤情鉴定。负责民警说会根据伤情鉴定结果，决定是否追究3名打人者的刑事责任。
+　　1月3日，刘悦告诉北京时间记者，她刚从双井派出所获悉，其舅舅的伤情被鉴定为轻伤二级，警方将追究打人者的刑事责任。
+　　记者暗访：涉事美容院称打玻尿酸100%安全
+　　12月27日下午，记者以普通消费者的名义进入凯润婷美容医院咨询打玻尿酸项目。该美容医院生意相当红火，有近20名消费者正在排队等待咨询美容整形项目。大约等待20多分钟后，一名姓贺的女性工作人员接待了记者，她介绍说该院提供的玻尿酸产品有保证，有多个进口品牌和国产品牌可选，进行注射的也全部都是有资质的医生。
+　　当记者询问在额头打玻尿酸是否有副作用或者是否会影响眼睛视力等，该工作人员表示：“像我们四五千平的大医院你不用担心，肯定没有问题。我们的医生100%有资质，安全问题100%放心。打玻尿酸没有副作用，全脸都可以打，敏感肌肤也可以打，不会过敏。”
+　　她还表示，医院注射玻尿酸的医生全部都有资质，博士级别的医生就有好几个。“我们不像小医院，随便学几天就可以注射了。卫生局查的多严啊，只要医生非法行医，立马会被派出所抓起来。我们是正规大医院，你看大厅、楼上排队的那么多人都是打玻尿酸。”
+　　1月4日上午，记者致电凯润婷医院并表明记者身份。凯润婷医院医务中心的总监承认了由于医院的过失导致的刘悦右眼失明。“当时我也和她们（指刘悦家人）谈了，她们索赔金额和我们能接受的相差太大，我就告诉她们走法律程序吧。”这位女总监说，当时没有谈妥，刘悦的家人返回医院大厅大吵大闹，医院的人才和她们起了冲突。该总监也承认被警方拘留的三人均为凯润婷工作人员。
+　　对于刘悦所说的当时打人的有“四十人左右”，该总监回应说：“没有那么多人。”
+　　对于为刘悦注射玻尿酸的高亚欣的资质问题，该总监并未回答为何高亚欣的职业资质为“护士”，而官网显示为“医师。”该总监说：“护士是可以为顾客注射的，但是必须在医师的指导下，她（指刘悦）那天晚上来的时候医师都已经下班了，所以就高亚欣一人为她注射了。”
+　　对此说法刘悦回应到，不仅事故当晚的注射，之前两次注射也都是高亚欣带着助理完成的，她一直不知道为自己注射的“高医生”其实是“护士”。
+　　打玻尿酸不当致失明、瘫痪全国类似事件屡有发生
+　　记者在网上查询公开报道发现，类似的事件在全国各地已发生多起，每年都有不少女孩因注射玻尿酸失明、大面积脑梗死、甚至中风瘫痪。
+网上类似事件频频发生。（百度相关新闻搜索截图）
+　　相关医学资料显示，人的面部有3个区域血管非常丰富，一个是眉间，二是太阳穴，三是老百姓常说的“三角区”，这3个区域的血管是相通的，如不慎将玻尿酸等填充物直接注射入或过快注射压力过大导致填充物渗入血液循环，则黏稠的填充物可能在血液中形成血栓，阻塞视网膜中央动脉。
+　　视网膜中央动脉阻塞一旦发生，患者几分钟内便可失去光感。如果患者不能及时到正规医院进行血管扩张等紧急救治，眼睛复明的可能性将微乎其微。
+
+
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

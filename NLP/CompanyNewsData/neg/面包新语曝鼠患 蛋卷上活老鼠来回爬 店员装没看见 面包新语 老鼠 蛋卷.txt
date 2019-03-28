@@ -1,0 +1,329 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+面包新语又出事了！一只硕鼠在蛋卷上来回爬行店员竟装作没看见
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251452222,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251452222.html',
+				title:'面包新语又出事了！一只硕鼠在蛋卷上来回爬行店员竟装作没看见'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251452222/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+　　网红店“面包新语“惊曝鼠患！活老鼠在蛋卷上来回爬，店员还装没看见…
+　　来源：成都商报
+　　251452222　　7月31日晚，一段面包店内惊现老鼠的视频在微信朋友圈疯传。
+
+　　视频显示，一只老鼠在店内橱柜的待售食品上自由爬行，不少网友看后都表示十分恶心，并对这家面包店的食品卫生安全表示质疑。
+　　经证实，这段视频内容真实，发生在7月31日下午5点多的无锡“面包新语”茂业店。
+　　目前该店已经停业整顿，相关部门正在进行调查。
+　　1
+　　柜台糕点里惊现活老鼠
+　　从视频中可以看到，一只活生生灰黑色的老鼠在现烤脆皮蛋卷上爬行着，各种撒欢，而一旁则是各类待售的蛋糕和面包，最终镜头拉出画面中出现了面包新语四个字。
+
+　　另据@看看新闻KNEWS 消息报道，“这么大的老鼠，店员都装作没看到，竟还让里面员工不要出去宣传。”
+
+　　至于为什么会有老鼠爬进食品箱，面包新语无锡分公司总经理石先生告诉记者， “它是一个盛放蛋卷皮的容器，是一块角落区域，至于老鼠怎么进去的我们还在找（原因）”。
+　　石先生还表示，当地食药监第一时间来到现场检查，对店里所有的证照以及食品进行检查，暂未发现违规现象。
+　　2
+　　该店已停业，销毁所有产品
+　　据@江苏新闻消息，无锡市梁溪区市场监督管理局的工作人员连夜责令这家店面整改，销毁店内所有面包，要求查明老鼠来源，以绝后患。如果一旦确认是店方自身原因导致，店家还将面临处罚。
+　　8月1日，面包新语发布官方声明称：
+　　总部已在第一时间责令无锡茂业加盟店将相关产品全部下架。
+　　涉事门店所在的无锡梁溪区市场监督管理局相关负责人表示，该局已责令该门店“停业整顿”。
+
+
+　　3
+　　已经不是首例！
+　　据了解，面包新语来自新加坡，是全球第一家挂牌上市的面包企业，有着“面包界星巴克”之称，在成都也有多家门店。然而曝出这样的事已经不是首例。
+　　早在2012年，贵阳一家面包新语店内就曾惊现“老鼠吃面包”事件。
+△照片上，一只成年灰色大老鼠，悠闲自在地啃着面包。
+　　当时面包新语的官方微博针对此事连发了3条微博，声明中表示上海新语面包食品有限公司已于2012年7月与该地区加盟商解除了《特许经营合同》。“目前贵阳已无BreadTalk面包新语品牌授权门店，将针对贵阳原加盟商非法使用公司知识产权的侵权行为追究法律责任。”（来源：贵州都市报）
+　　而2014年，上海一家面包新语也被顾客拍到，有老鼠在啃食面包。
+
+
+　　当时上海店家回应称，“因为附近有工地施工，鼠患泛滥才导致店内也出现了老鼠”。
+
+　　面包新语在无锡遭遇老鼠事件，导致不少消费者对成都的面包新语也有了担心。
+　　为此，记者今日上午随机采访了2家面包新语门店，春熙路相关工作人员告诉记者，无锡店老鼠事件后，引起了成都面包新语的重视，“上面已经做了统一通知，目前所有门店基本都知晓了这个事情。”
+　　339面包新语的工作人员表示，自开业以来，一直都很重视卫生问题，每个月都会请专业的消杀公司进行消杀，夏季也是每个月两次。
+　　春熙路店王店长告诉记者，无锡和四川采取的是特许加盟片区的形式，由不同的公司进行管理，同时各自都有独立的供应商，此次事件与成都方面并无直接关系。
+　　网友评论：
+　　@范金穗儿：那么大一只看着都恐怖
+　　@青荷包紫鳞：刚刚有人买走了，香喷喷的吃完了，然后就看到这个视频了
+　　@朴觅轩：老鼠：其实我是质检员
+　　@鞋贩：有一只老鼠就有一窝老鼠！这个店是怎么开的！
+　　@就着雨水冲咖啡：发生这种事情经理一般都是直接吃掉销毁证据
+　　@大家好我叫馒头：看销售员淡定的模样，就知道这种情况肯定不少见
+　　@碧水清波2009：酒店厨房的老鼠比这大多了，你们是没见过，我见过老鼠咬食各美食材，反正我现在尽量不在外面吃
+　　这么大一个品牌，
+　　屡次爆出食品安全问题。
+　　希望各位食品店家
+　　能够真正加强卫生举措，
+　　为消费者们提供安心的食品安全环境！
+　　同意的点zan！
+　　记者费成鸿
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

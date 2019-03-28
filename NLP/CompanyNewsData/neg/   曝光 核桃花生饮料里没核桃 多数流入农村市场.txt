@@ -1,0 +1,357 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+#315晚会#核桃花生饮料里没核桃
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:255086726,
+				pid:1,
+				url:'http://video.sina.com.cn/view/255086726.html',
+				title:'#315晚会#核桃花生饮料里没核桃'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=255086726/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　“核桃花生”饮料里没核桃：一罐“添加剂料汁”兑出8000瓶饮料，多数流入农村市场
+　　“稳定剂，安赛蜜，阿斯巴甜，山梨酸钾，甜蜜素…”各种添加剂+两吨纯净水+核桃香精=市场上热销的这款“核桃花生”。这款产品既没有添加核桃，也没有添加花生，核桃的味道靠的是核桃香精，一罐料汁能生产出8000瓶“核桃花生”。一些从业者告诉记者，这些跟风模仿的产品，主要是销往一些三四线城市及农村市场．．．
+　　在甘肃天水郊区的集市上，记者看到一款红色的饮品礼盒，上面写着高钙核桃。
+　　超市经营者：“这个批发价23元，这个是核桃的。”
+
+　　记者在秦安县一家专营饮料的商店门口看到，名为承德杏仁露的产品至少有三种。而在县城的集市上，像这样销售承德杏仁露产品的商店至少有十多家，每一家都把产品放在醒目位置，这些产品和某个标注“露露”品牌的杏仁露都不一样。
+　　超市经营者：“这是承德的杏仁露，真的。这个也好着呢，都拿的这个。”
+　　在山西大同市一些县城的小超市里，也能看到一些名为承德杏仁露的礼盒产品。
+
+　　超市经营者：“这也是杏仁露，一般都是送人，送人送得可多了。”
+　　调查中，一些生产厂家负责人告诉记者，这些产品一般销往三四线城市和农村市场。
+　　承德市宏运达饮品有限公司：“商超，小超市，它就往县城里卖得快。”
+
+　　这些核桃露、核桃花生饮品、杏仁露等模仿的是市面上流行的产品类型，有的甚至连包装设计也一并模仿。
+　　然而，记者调查发现，在这些产品的背后，其实另有玄机。
+　　金顺源食品有限公司，是山东枣庄众多饮料加工厂中的一家。公司负责人徐经理告诉记者，正在生产的这款核桃花生是它们春节期间的主打产品。主要销往三四线城市和乡村。    
+
+　　进入公司调配车间之前，记者看到一个池子，徐经理说，这里本应是用来给工作靴消毒的。
+
+　　山东枣庄市金顺源食品有限公司徐经理：“至少走两步，两只脚都得沾上消毒液，脚上的菌就没有了。没用也得有，没有就不合格，你可以不用，但是你必须得有。”
+　　消毒用的池子成了摆设，灌装车间的空气净化设备同样也成了摆设。
+
+　　山东枣庄市金顺源食品有限公司徐经理：“这个车间得有四台空气净化器，四台有两台是假的，那两台真的也不管用。”
+　　达不到要求的不仅仅是消毒池和空气净化器。按照规定，调配车间应该是密封状态，与外界相对隔离，但实际上也做不到。
+　　山东枣庄市金顺源食品有限公司徐经理：“申证的时候都是密封的，都是隔离开的，但是你一旦生产的时候必须得撤掉。”
+　　实际上，我国《饮料生产卫生规范》对于饮料生产过程中的消毒、空气净化等都作出了详尽的规定。然而，在金顺源食品有限公司，按规定必须配备的一些设施均成了应付检查的摆设。
+　　车间里正在忙碌地生产，脏乱的地上随意地堆放着产品包装及成品。
+　　那么，这款核桃花生的原料究竟是什么呢？在配料时，徐经理一边称量各种添加剂，一边给记者作详尽的介绍。
+　　山东枣庄市金顺源食品有限公司徐经理：“稳定剂，这是安赛蜜增加甜味的，阿斯巴甜也是增加甜味的，山梨酸钾，甜蜜素。”
+　　按照企业标准，这时还应该再加入白砂糖来提高甜度。徐经理告诉记者，为了节约成本，实际上并没有加白砂糖。
+　　山东枣庄市金顺源食品有限公司徐经理：“这一锅就得加两袋子白糖，两袋子就670元、680元。”
+　　记者：“如果加这个呢？安赛蜜啊（添加剂）？”
+　　徐经理：“这个东西便宜，这个总共一缸料汁才400元。”
+
+　　将调配好的甜味剂和酸味剂倒进搅拌罐，与两吨纯净水进行搅拌。徐经理告诉记者，最后还有一道重要工序，那就是添加核桃香精。
+　　山东枣庄市金顺源食品有限公司徐经理：“主要提的味还是在香精上面，加核桃香精，还要加香精，临打料的时候加。”
+　　加过香精搅拌之后，罐子里的料汁已经变成了乳白色，通过管道输送到灌装车间，包装、打包之后，就可以销售了。
+　　记者很是惊讶，这款名叫核桃花生的产品，在生产过程中既没有添加核桃，也没有添加花生，但产品外包装上却赫然写着核桃花生，还印着核桃花生的图片。
+　　根据《预包装食品标签通则》规定的基本要求，预包装食品包装应真实准确，不得以虚假、夸大、使消费者误解或欺骗性的文字、图形等方式介绍食品，也不得利用字号大小或色差误导消费者。
+　　山东枣庄市金顺源食品有限公司徐经理：“标的核桃，都是水饮料。”
+　　徐经理承认，产品中并没有添加核桃，核桃的味道靠的是核桃香精，一罐料汁能生产出8000瓶核桃花生，这样的产品，成本其实非常低。
+
+　　山东枣庄市金顺源食品有限公司徐经理：“卖的就是水，这个不会亏钱的。”
+　　枣庄市康源食品有限公司主打的是这款高钙核桃，公司负责人坦承，这款产品也是用香精和添加剂调配出来的，里面没有核桃成分。
+　　山东枣庄市康源食品有限公司负责人：“它没有蛋白质，蛋白质是零。”
+　　记者：“那等于里面就没有核桃的东西了？”
+　　负责人：“嗯！”
+　　这家企业也将蛋白质含量为零的指标标注在了产品包装上。
+
+　　除了用各种添加剂调配核桃露，记者调查时发现，还有的企业生产的核桃露是用花生酱来调配的。
+　　饮料企业销售员：“肯定花生酱的量大，基本主要是这个花生酱来调。”
+　　饮料企业销售员：“花生酱加得多一些。”
+　　饮料企业销售员：“实话实说，核桃粉加花生酱。”
+　　国家标准规定，核桃露或核桃乳是以核桃仁为原料，不得使用除核桃仁以外的其他核桃制品及含有蛋白质和脂肪的植物果实种子、果仁及其制品。这些企业为什么要用花生酱来代替核桃酱呢？
+　　饮料行业从业人员：“花生酱便宜，你想想花生才多少钱，核桃能有多少钱。”
+　　枣庄市某饮料添加剂供应商：“1吨核桃酱7.5万元，不开税票。开税票8万，花生酱12元1公斤，合1.2万元每吨。”
+　　原来，之所以用花生酱代替核桃酱，是因为花生酱的价格远远低于核桃酱。
+　　山东枣庄金顺源食品有限公司徐经理：“打核桃浆，枣庄人说傻子才打核桃浆呢。”
+　　这些跟风模仿的产品虽然是以花生酱为主，却还是要用大大的字体强调核桃概念。
+　　饮料行业从业人员：“我们的定性就是在跟踪中模仿，在模仿中创新。”
+
+　　除了在产品类型上跟风模仿，有的公司在外包装上也是煞费苦心。产品都和某品牌核桃乳非常相似。六个纯核桃只多了一个字；六仐核桃、还有六禾核桃。只是一笔一划的差别。外观设计、包装色调、构图、代言人形象也是他们模仿的主要内容，让人难以分辨。
+
+　　枣庄市旭日食品饮料有限公司杨经理：“矮罐的，也是仿六个核桃的，六个核桃一做矮罐的，今年这儿也做了。跟着明星转，它停咱就停，它走咱就走。”
+　　一些从业者告诉记者，这些跟风模仿的产品，主要是销往一些三四线城市及农村市场。
+　　第97届全国粮酒商品交易会参展商：“这个好卖，能挣钱。”
+　　国家知识产权专家咨询委员会委员陶鑫良教授表示，这种故意模仿他人知名产品的行为涉嫌违规。
+　　国家知识产权专家咨询委员会委员陶鑫良：“实际上最后就是要以假乱真，也可能就是成本比较低的质量比较差的，来冒名顶替，归根结底它实际也是，想把人家的商誉转化成自己的商业资源。”
+　　记者调查发现，这些跟风模仿的产品，类型上偷梁换柱混淆概念，产品外包装上打擦边球，跟风模仿的手段可谓五花八门。
+
+　　这是一些企业跟风模仿某品牌的豆奶产品，生产出的豆禾豆豆奶、豆中豆豆奶、豆友豆豆奶、豆本豆奶。这些豆奶产品，虽然在包装上也用大字突出了豆奶字样，但真正的产品类型却并非豆奶，而是复合蛋白饮品、调制豆奶饮料、风味饮品等。
+　　枣庄市奕瞻生物科技有限公司负责人：“跟豆本豆几乎一样，几乎差不多，可以把它当豆本豆看。
+　　记者：“咱等于是做个顺风车？”
+　　枣庄市奕瞻生物科技有限公司负责人：“对，我们很感谢它。”
+
+　　由枣庄初亢食品饮料有限公司，模仿某品牌的小茗同学的小茖同学乳酸菌饮品，半个笔画的差别足以乱真。
+　　枣庄市初亢食品有限公司负责人：“咱这个是小茖同学，这个是按照那个小茗同学来运作的。”
+
+　　有的企业模仿某品牌的旺仔牛奶的一款名叫旺好牛仔的风味饮料。不仔细看还真看不出两者的不同。
+　　枣庄市康源食品有限公司销售人员：“人家都是旺仔牛奶，咱是旺好牛仔，就相当于打个擦边球。”
+　　有的企业模仿某品牌的红牛饮料，带有红牛字样，外包装设计和某品牌相似的跟风产品。
+　　有的企业模仿某品牌的椰汁产品，大都冠以海南、椰汁、正宗等字样。
+
+　　枣庄市溢香园食品科技有限公司销售：“写这个正宗海南，正宗海南到底正宗在哪儿？它就是包装。天哪！哥你可能捣了，你要这样说，一板一眼的话，产品没法卖了。”
+
+　
+
+
+
+
+
+责任编辑：孙剑嵩
+

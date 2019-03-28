@@ -1,0 +1,295 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+ofo巡视员因接受采访被当场开除：干好自己的活不要惹火上身
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251987785,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251987785.html',
+				title:'ofo巡视员因接受采访被当场开除：干好自己的活不要惹火上身'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251987785/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　ofo维保员因受访被开除后又被“召回”
+　　晨报记者　叶松丽
+　　在建德路、瑞金二路附近给ofo小黄车做街面维保的郭师傅这两天可郁闷了。在街头工作时，只因回答了记者几句话，竟然就被主管人员不分青红皂白当场开除了。
+　　昨天下午，晨报记者就此事跟ofo公司的相关负责人取得联系，就此事进行沟通。该公司调查了解情况后，发现相关部门行事武断粗鲁，立即纠正错误，目前郭师傅已经重新回到了工作岗位。
+　　被开除后还收到“封口令”
+　　有媒体报道称，一段时间以来，建德路、瑞金二路附近的居民反映，本来很狭窄的建德路人行道，却经常被乱停乱放的共享单车侵占，路人过往很不方便。记者到实地察看，了解到现场情况跟居民反映的一致。
+　　在那段报道中，现场的ofo维保人员郭师傅接受采访称他们（维保）的时薪只有20元，但是工作量非常大，骑车人图自己方便，随便把车一停就走了，他一个人拼命干，双拳难敌四手，忙不过来。
+　　因为现场有记者采访，郭师傅整理好现场的车子后，就把当时的情况向自己的上级汇报。让郭师傅万万没想到的是，“上级”一句话，就把他当场开除了，理由是“私自接受记者采访”。
+　　事实上，在郭师傅的手机短信上，记者看到这样的话：“在（再）跟各位师傅们说一次，一律不准接受采访，问什么都不清楚，不知道，就只管干好自己的活就行了，不要惹火上身。”这是郭师傅们的“领导”下了封口令。
+　　郭师傅愿意回原岗位
+　　昨天下午，记者就此事跟ofo  公司的相关负责人进行了沟通。该负责人非常重视，当即对事件进行了调查。随后该负责人通过微信向晨报记者发来了说明。
+　　该负责人说，经他们调查核实，郭师傅为ofo委托的第三方市容公司聘请的兼职人员，其日常工作为搬运整理违规停放的单车，确保市容整洁。第三方市容公司有严格的管理制度，不允许员工接受记者采访。但ofo认为，该市容公司此次对郭师傅的处理方式过于武断和鲁莽。因此，他们第一时间联系该员工进行了沟通，并且也与第三方市容公司进行沟通，希望第三方公司召回此名兼职员工，挽回影响。若第三方公司不予接受，ofo也愿意招聘郭师傅为ofo的全职运维人员。
+　　ofo公司随后告诉记者，当事第三方市容公司对当时的处理方式表达了歉意后，也愿意第一时间召回此名兼职员工。
+　　昨天傍晚，郭师傅在电话里告诉记者，他接受这一处理方式，也愿意重新回到岗位上，继续为ofo  工作。对于这家公司的随意性，郭师傅没有回应。
+　　记者从ofo公司了解到，郭师傅等人，都是这家市容公司为ofo  聘请的临时工，没有任何合同。
+
+
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

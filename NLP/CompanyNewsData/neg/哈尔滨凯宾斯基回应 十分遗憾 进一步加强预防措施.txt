@@ -1,0 +1,78 @@
+
+
+
+
+
+
+
+
+
+
+  　最新消息：
+   哈尔滨香格里拉酒店：已开展内部调查马上采取措施
+   哈尔滨对凯宾斯基喜来登等3家涉事酒店依法处罚
+　　五星级酒店被曝用马桶刷刷茶杯哈尔滨旅游局介入
+　　三家五星级酒店曝出卫生丑闻均称正在调查
+　　专题报道：
+　　五星级酒店被曝泛黄马桶刷刷茶杯
+
+
+
+.weiboListBox{padding:010px015px;border:1pxsolid#ccc;margin-top:10px;background-color:#fff;}
+.weiboListBoxp{font-size:12px;line-height:20px;}
+.weiboListBoxlabel{width:auto;height:auto;margin:0;background:none;float:none;}
+.weibo-list{background-color:transparent;}
+.weibo-list.weibo-list-item{margin-top:-1px;border-bottom:none;border-top:0pxdashed#ccc;padding:15px010px;overflow:hidden;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:320px;}
+.weibo-lista:link,.weibo-lista:visited{color:#0082CB;}
+.weibo-lista:hover{color:#c00;}
+.weibo-list.weibo-list-metaa:link,.weibo-list.weibo-list-metaa:visited{color:#666;}
+.weibo-list.weibo-list-metaa:hover{color:#c00;}
+.weiboListBoxlabel{padding-left:3px;}
+.weibo-commentbox.weibo-commentbox-formtextarea{width:315px;}
+
+
+
+
+
+
+
+$(function(){
+	Weibo.encoding='gbk';
+	varwbList1=newWeibo.Widgets.List({
+	source:'#weiboList01',
+	showUserCard:true,
+	stat_click:true
+	});
+	Weibo._getRequest({
+	url:'http://topic.t.sina.com.cn/interface/api/html?api=statuses/show_batch',
+	data:{
+		ids:'4189525430989990'
+	},
+	onsuccess:function(data){
+		if(!data.html){return}
+		SINA.query('#blk_weiboBox_01')[0].style.display='block';
+		wbList1.reset(data);
+	}
+	});
+});
+
+
+　　新浪财经讯12月27日消息，有视频爆出哈尔滨凯宾斯基、香格里拉、永泰喜来登3家星级酒店存在工作人员用马桶刷刷茶杯、浴巾蘸马桶水擦地等行为。今日，哈尔滨凯宾斯基酒店在其官方微博做出回应。
+　　哈尔滨凯宾斯基酒店表示，酒店管理团队近日得知，在酒店内据报发生不符合卫生标准和制度流程的事件。目前，酒店已和地方当局合作，进行全面调查核实。对于该事件的发生，“我们表示十分遗憾，目前酒店已经进一步加强预防措施，确保我们所有的员工均能按照最严格的卫生标准执行操作。”
+　　以下为回应原文：
+　　哈尔滨凯宾斯基酒店致力于为顾客创造友好与安全的环境，并秉承实施最高的专业操作规范。酒店管理团队近日得知，在酒店内据报发生不符合卫生标准和制度流程的事件。我们对于此事件予以极高度的重视，已经和地方当局合作，进行全面调查核实。对于该事件的发生，我们表示十分遗憾，目前酒店已经进一步加强预防措施，确保我们所有的员工均能按照最严格的卫生标准执行操作。
+
+
+
+
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论

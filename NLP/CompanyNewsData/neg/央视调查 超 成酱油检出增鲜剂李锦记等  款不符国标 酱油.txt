@@ -1,0 +1,320 @@
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+
+
+
+
+向前
+向后
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:266627955,
+				pid:1,
+				url:'https://finance.sina.com.cn/wm/2018-10-15/doc-ihmhafir7326465.shtml',
+				title:''//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=266627955/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　推荐阅读：
+　　海天味业发澄清公告：被抽检产品不构成食品安全问题
+
+　　你吃的酱油为啥这么鲜？有猫腻！29款不达标，知名品牌都检出问题↓
+　　现在，超市中的酱油品种繁杂，
+　　除了传统生抽、老抽，
+　　还有海鲜、增鲜、菌菇酱油等，
+　　价格和普通酱油相差好几倍。
+　　传统工艺经谷物发酵制成的酿造酱油，
+　　是许多家庭的首选，
+　　图个味道纯正，吃着放心，
+　　然而，有些酱油生产企业
+　　在标签上标明是酿造酱油，
+　　实际上衡量酱油品质的核心成分却是零。
+　　那为什么这些酱油这么鲜呢？
+　　这背后究竟隐藏着什么猫腻？
+　　江苏省消费者权益保护委员会近日发布的酱油比较试验结果显示，120个酱油样品中，有29个不符合国家标准要求，存在钠含量超标、虚标营养成分等问题。
+　　比较试验29款酱油不符国标
+
+　　在本次抽取的120个酱油样品中，有23个样品营养成分明示数值与实际检测数值不符。
+
+　　标称B.B．牌一款儿童酱油样品；
+　　标称李锦记牌锦珍生抽样品；
+　　标称美味思牌本酿鲜特级生抽酱油样品；
+　　标称珠江桥牌草菇老抽样品；
+　　标称日本丸天生鱼片用配制酱油样品；
+　　标称日本朝紫配制酱油样品，
+　　以上几种品牌的钠含量不符合国家标准要求。 
+　　酿造酱油的核心成分是氨基酸态氮，这也是衡量酿造酱油品质的最核心指标之一。
+
+　　一款标称宿迁市泗洪县华美调味品厂生产的蟹园牌红烧老抽，标签上显著标示着“酿造酱油”的字样，但经过检测，氨基酸态氮含量为0.01g/100ml，仅为标准最低限值的四十分之一，可以说约等于没有。 
+
+　　检测机构工程师高帅：没有达到我国酿造酱油的最低标准要求，甚至就不能叫做酱油，它的标签上却显著标示着酿造酱油的字样。
+　　超7成酱油检出增鲜剂
+
+　　值得注意的是，检测发现，超7成酱油检出了增鲜剂，虽然目前我国并不限制增鲜剂在酱油中的使用，但专家指出，不排除有些样品是通过添加增鲜剂等来提高酱油的品质。
+
+　　在市场调查中记者发现，目前市场上销售的酱油品种非常繁杂，诸如海鲜酱油、高鲜酱油、草菇酱油、儿童酱油、生鱼酱油等名称不一而足。
+　　这些标称为海鲜酱油、增鲜酱油、菌菇酱油的商品外包装上的配料表往往都标着一些与味精成分相同或类似的增鲜剂成份。
+
+　　记者注意到，在江苏省消费者权益保护委员会这次比较试验的120个酱油样品中，有86个样品检出了增鲜剂，占比超过70%。 
+
+　　检测人员表示，生产厂家将增鲜剂或者称之为增味剂的添加剂加入酱油并不只是增加口感那么简单。 
+　　原来，国家标准规定，在酱油的包装上要直接明示出相应的生产工艺和最主要品质指标——氨基酸态氮的含量，产品的氨基酸态氮含量不得低于其在标签上明示的含量值，当然也不能低于国家标准的最低限值。
+
+　　检测机构工程师高帅：国家标准规定酿造酱油品质指标一般包含四项，分别为氨基酸态氮、全氮、可溶性无盐固形物和铵盐，其中氨基酸态氮为重要指标，决定着酱油的质量等级，品质指标不合格意味着相关企业以次充好，欺骗消费者。如果品质指标没有达到我国酱油标准的最低指标，意味着消费者有可能买到的不是酿造酱油。
+
+　　检测人员表示，目前我国并不限制增鲜剂在酱油中的使用，但是企业使用增鲜剂的目的不应该是用于应付酱油的氨基酸态氮含量检测，这种针对性的应付背离了酱油标准制定的初衷。
+
+
+
+
+
+
+责任编辑：李思阳
+

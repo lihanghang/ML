@@ -1,0 +1,329 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+视频加载中，请稍候...
+
+
+
+
+自动播放
+
+
+
+
+
+
+
+
+
+
+play
+15岁女孩上班迟到被罚深蹲
+
+
+
+向前
+向后
+
+
+
+
+
+
+/*自动播放1*/
+varAUTOPLAY=1;
+/*连播1*/
+		varCONTIPLAY=1;
+/*处理自动播放选项和cookie*/
+(function(){
+varTool=CommonTool;
+varchk=Tool.byId('J_Video_Autoplay');
+varua=navigator.userAgent.toLowerCase();
+varisIOS=/\((iPhone|iPad|iPod)/i.test(ua);
+if(isIOS){
+console.log(chk.parentNode.style.display);
+chk.parentNode.style.display='none';
+return;
+}
+chk.parentNode.style.display='';
+varclickCookie=function(){
+Tool.bindEvent(chk,'change',
+function(){
+varchked=chk.checked;
+Tool.writeCookie('ArtiVAuto',(chked?1:0),24*365*10,'/','.sina.com.cn');
+});
+}
+varbyCookie=function(){
+varcoo=Tool.readCookie('ArtiVAuto');
+if(coo){
+if(parseInt(coo)==0){
+chk.checked=false;
+AUTOPLAY=0;
+}
+}
+};
+clickCookie();
+byCookie();
+})();
+
+/*获取第一个视频vid*/
+varfirstItem=CommonTool.byClass('J_Play_Item','J_Play_List')[0];
+varfInfo=firstItem.getAttribute('play-data').split('-');
+varfVid=fInfo[0];
+varfPid=fInfo[1];
+
+varsinaBokePlayerConfig_o={
+container:"J_Article_Player",//Div容器的id
+width:525,
+height:430,
+playerWidth:525,//宽
+playerHeight:430,//高
+autoLoad:1,//自动加载
+autoPlay:AUTOPLAY,//自动播放
+as:0,//广告
+pid:fPid,
+tjAD:0,//显示擎天柱广告
+tj:0,//片尾推荐
+continuePlayer:1,//连续播放
+casualPlay:1,//任意拖动视频
+head:0,//播放片头动画
+logo:0,//显示logo
+share:0,
+			thumbUrl:""
+};
+
+
+
+
+(function(){
+vartoggle=function(id,hide){
+vare=CommonTool.byId(id);
+varpar=e.parentNode;
+if(hide){
+CommonTool.addClass(par,e.className+'_disabled');
+}else{
+CommonTool.removeClass(par,e.className+'_disabled');
+}
+}
+varscroll=newScrollPic();
+scroll.scrollContId="J_Play_List";//内容容器ID
+scroll.arrLeftId="J_Player_Prev";//左箭头ID
+scroll.arrRightId="J_Player_Next";//右箭头ID
+scroll.listEvent="onclick";//切换事件
+scroll.frameWidth=532;//显示框宽度**显示框宽度必须是翻页宽度的倍数
+scroll.pageWidth=133*3;//翻页宽度
+scroll.upright=false;//垂直滚动
+scroll.speed=10;//移动速度(单位毫秒，越小越快)
+scroll.space=15;//每次移动像素(单位px，越大越快)
+scroll.autoPlay=false;//自动播放
+scroll.autoPlayTime=5;//自动播放间隔时间(秒)
+scroll.circularly=false;
+scroll._move=scroll.move;
+scroll.move=function(num,quick){
+scroll._move(num,quick);
+toggle(scroll.arrRightId,scroll.eof);
+toggle(scroll.arrLeftId,scroll.bof);
+};
+scroll.initialize();//初始化
+toggle(scroll.arrLeftId,scroll.bof);
+})();
+
+
+	varautoPlayCheck=$("#J_Video_Autoplay")[0].checked;
+		varautoPlayFlv=0;
+		varautoPlayH5=false;
+		if(autoPlayCheck){
+			autoPlayFlv=1;
+			varautoPlayH5=true;
+		}
+		
+	varflashConfig={
+		url:"",	//flash播放器地址,
+		container:"J_Article_Player",
+		id:"myMovie",
+		width:525,
+		height:430,
+			params:{
+			allowNetworking:"all",
+			allowScriptAccess:"always",
+			wmode:"opaque",
+			allowFullScreen:"true",
+			quality:"high"
+			},
+			attributes:{},
+			flashvars:{
+				autoPlay:autoPlayFlv,//是否自动播放
+				loop:0,		
+				autoLoad:1,
+				thumbUrl:'',
+				tj:0,
+				as:0
+			},
+			h5attr:{
+				autoPlay:autoPlayH5,//是否自动播放
+				controls:true,//是否显示控制条
+				loop:false,		
+				poster:'',//视频加载前欲加载的图片地址，即播放器一开始显示的截图
+				preload:'auto'
+			}
+	};
+		
+		
+	
+	
+		varvideoList=[
+						{
+				video_id:251505000,
+				pid:1,
+				url:'http://video.sina.com.cn/view/251505000.html',
+				title:'15岁女孩上班迟到被罚深蹲'//,
+			//swfOutsideUrl:"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/video_id=251505000/s.swf"
+			},
+				
+	
+		]
+	
+	
+
+		
+	(function($){
+	varPlay={
+		init:function(flashConfig,videoList){
+			this.flashConfig=flashConfig;
+			this.videoList=videoList;
+			this.playVideo=playVideo;
+			this.prev=this.current=0;
+			this.length=this.videoList.length;
+			this.contNode=$("#J_Video_Autoplay");
+			this.titleNode=$("#J_Video_Source");
+			this.playListNode=$("#J_Play_List.J_Play_Item");
+			if(videoList.length!==1){
+				//显示小图
+				CommonTool.byId('J_Play_List_Wrap').style.display='';
+			}
+			if(videoList.length<5){
+				CommonTool.byId('J_Player_Prev').style.display='none';
+				CommonTool.byId('J_Player_Next').style.display='none';
+			}
+			
+			this.initPlayer();
+			this.bind();
+		},
+		bind:function(){
+			var_this=this;
+			$("#J_Play_List").on("click",".J_Play_Itema",function(e){
+				e.preventDefault();
+				_this.playCurrent($(this));
+			});
+		},
+		initPlayer:function(){
+			var_this=this;
+			this.player=this.playVideo(this.flashConfig);
+			this.player.init(this.videoList[this.prev]);
+			this.player.on("playCompleted",function(){
+				_this.playNext();
+			});
+			this.playListNode.eq(0).addClass("selected");
+			this.titleNode.html(this.videoList[0].title);
+		},
+		playCurrent:function($this){
+			this.prev=this.current;
+			this.current=$this.parents(".J_Play_Item").index();
+			this.play(this.prev,this.current);
+		},
+		playNext:function(){
+			if(!this.contNode[0].checked){
+				return;
+			}
+			this.prev=this.current;
+			if(this.current>=this.length-1){
+				return;
+			}
+			this.current++;
+			this.play(this.prev,this.current);
+		},
+		play:function(prev,current){
+			this.player.playVideo(this.videoList[current]);
+			this.titleNode.html(this.videoList[current].title);
+			this.playListNode.eq(prev).removeClass("selected");
+			this.playListNode.eq(current).addClass("selected");
+		}
+	}
+	Play.init(flashConfig,videoList);
+})(jQuery);
+
+
+
+
+　　15岁女孩上班迟到被罚深蹲100个，后进了医院经抢救无效死亡
+　　来源：广东公共DV现场
+　　深蹲运动因为受场地限制较小
+　　且可以塑身、增强心肺功能
+　　增加下肢力量
+　　受到越来越多爱美人士的喜爱
+　　但是
+　　这位15岁女孩小飞（化名）
+　　却可能因为深蹲
+　　永远地离开了家人
+　　公司体罚员工，花季少女突然死亡
+　　蒋先生的女儿小飞，今年15岁，她在中山火炬开发区Q房网阳光花园分店做销售。十多天前，因小飞上班迟到被公司罚做深蹲。当天早上，小飞做了深蹲之后就觉得不舒服。
+
+　　当时小飞觉得身体不舒服，自己买了药吃，但是吃了药后不仅没有好转，甚至连双脚都动不了了，得知女儿病情后，刘女士马上帮女儿租了一辆车，让女儿回湖南，并且将她送去了当地的医院治疗，但是没想到……
+
+　　小飞回到湖南的医院看病，看了几次情况都没有好转。7月28日，小飞突然连手都抬不起来了，神智有点不清晰，她被送到中南大学湘雅二医院的ICU抢救，最终因救治无效死亡。
+
+　　在病案单上面着，小飞很有可能患了“格林-巴利综合征谱系疾病”，这是一种很罕见的病。而最后湖南当地医院出具的死亡证明书上写着，小飞的死亡原因是呼吸循环衰竭。
+
+
+　　借他人身份证入职已交由相关部门处理
+　　小飞家里排行老二，由于蒋先生身患尿毒症，为了帮父亲筹集医药费，去年下半年，小飞只身一人来到了中山工作，而小飞的姐姐和妹妹也都辍了学外出打工，家里只有最小的弟弟还在读书。
+　　今天中午，记者来到小飞上班的地产公司，电话联系上一名姓李的店长。而李店长也确认小飞当天有做深蹲。
+
+　　李店长：
+　　不是罚，是她自愿做（深蹲）的，他们工作是分小组的，这些都是他们小组自己规定的，销售业绩或者迟到，要怎样做，都是他们自己觉得。
+　　今天下午，Q房网法务部的王小姐告诉记者，开始的时候他们一直以为小飞叫吴某香，后来才知道小飞因为未满16岁，所以她借用了其他人的身份证来办入职。另外，王小姐否认小飞当天被罚做深蹲。
+
+　　律师说法
+　　因为她是未成年人，公司是有责任的。如果是因为体罚诱发她身体的疾病，公司也是有责任。公司拒绝承担责任的话，可以去找相关部门去跟公司协商，如果协商不成，可以去人民法院起诉他们。
+　　真是可怜，只有10几岁的孩子
+　　好端端的说走就走了
+　　究竟用人单位有没有对小飞进行体罚
+　　即使有体罚
+　　这个体罚和小飞的死
+　　有没有直接关系
+　　这个还不好说
+　　目前还难以下定论
+　　不过记者搜索发现
+　　因为过度深蹲
+　　而进了医院的新闻并不少
+
+　　那么深蹲到底能不能做？
+　　应该怎么做呢？
+　　那么，深蹲真有这么伤吗？
+　　一个下蹲的节奏大致是5至6秒钟（每分钟10个左右），到接近下蹲的最低位置时，有意放慢速度更好。
+　　第一次做下蹲运动应该在20个左右，一天还可分2~3次进行，比如每次下蹲20或30个，每天运动5~15分钟。
+　　下蹲时还要注意呼吸方法：下蹲时，吸气；站起来，呼气。
+
+　　运动量的大小，要自己把握好，在每次活动之后稍有气喘，脉搏跳动1分钟在120次以内，全身感到舒适最好。
+　　医生还提醒，不是所有的人都适合做下蹲运动。
+　　患有高血压、糖尿病等体质虚弱的老人；有关节疾患者，如半月板软骨损伤、交叉韧带损伤，此外女性孕期经期也不宜。
+
+
+
+
+
+
+
+
+
+进入【新浪财经股吧】讨论
