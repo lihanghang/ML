@@ -54,16 +54,16 @@
 ## 日常基于Python的模型开发项目目录结构
 > project_name
 >> conf（相关路径配置）
->>> conf.ini
->> logs（输出日志）
->> dataSets（数据集）
->> save_model(模型保存路径）
->> config.py（模型参数配置）
->> model.py
->> test.py
->> train.py
->> utils.py（数据预处理等）
->> README.md（项目说明）
+>>> conf.ini  
+>> logs（输出日志）  
+>> dataSets（数据集）  
+>> save_model(模型保存路径）  
+>> config.py（模型参数配置）  
+>> model.py  
+>> test.py  
+>> train.py  
+>> utils.py（数据预处理等）  
+>> README.md（项目说明）  
 
 ---
 [个人文章地址](http://lihanghang.top)
