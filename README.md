@@ -53,16 +53,16 @@
 - - -
 ## 日常基于Python的模型开发项目目录结构
 ├── conf  
-   │ ├── conf.ini  // 相关路径配置 
-├── logs  // 输出日志目录 
-├── dataSets  // 数据集 
-├── save_model  // 模型保存目录
-├── config.py  // 模型参数配置 
-├── model.py  // 模型文件 
-├── train.py  // 训练文件 
-├── test.py  // 测试文件
-├── utils.py  // 数据预处理等组件 
-├── README.md  // 项目说明
+   │ ├── conf.ini  // 相关路径配置  
+├── logs  // 输出日志目录  
+├── dataSets  // 数据集  
+├── save_model  // 模型保存目录  
+├── config.py  // 模型参数配置  
+├── model.py  // 模型文件  
+├── train.py  // 训练文件  
+├── test.py  // 测试文件  
+├── utils.py  // 数据预处理等组件  
+├── README.md  // 项目说明  
 
 ---
 [个人文章地址](http://lihanghang.top)
