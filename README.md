@@ -52,10 +52,18 @@
 - [王泛森院士：研究生和本科生的区别](http://www.folo.cn/user1/18593/archives/2009/79758.html)
 - - -
 ## 日常基于Python的模型开发项目目录结构
-├── conf  │ ├── conf.ini // 相关路径配置 ├── logs // 输出日志目录 ├── dataSets // 数据集 ├── save_model // 模型保存目录
-├── config.py // 模型参数配置 ├── model.py // 模型文件 ├── train.py // 训练文件 ├── test.py // 测试文件
-├── utils.py // 数据预处理等组件 ├── README.md // 项目说明
-├── build // webpack配置文件 ├── config // 项目打包路径 ├── elm // 上线项目文件，放在服务器即可正常访问 ├── screenshots // 项目截图 ├── src // 源码目录 │ ├── components // 组件 │ │ ├── common // 公共组件 │ │ │ ├── alertTip.vue // 弹出框组件 │ │ │ ├── buyCart.vue // 购物车组件 │ │ │ ├── computeTime.vue // 倒计时组件 │ │ │ ├── loading.vue // 页面初始化加载数据的动画组件 │ │ │ ├── mixin.js // 组件混合(包括：指令-下拉加载更多，处理图片地址) │ │ │ ├── ratingStar.vue // 评论的五颗星组件 │ │ │ └── shoplist.vue // msite和shop页面的餐馆列表公共组件 │ │ ├── footer │ │ │ └── footGuide.vue // 底部公共组件 │ │ └── header │ │ └── head.vue // 头部公共组件 │ ├── config // 基本配置 │ │ ├── env.js // 环境切换配置 │ │ ├── fetch.js // 获取数据 │ │ ├── mUtils.js // 常用的js方法 │ │ └── rem.js // px转换rem │ ├── images // 公共图片 │ ├── page │ │ ├── balance │ │ │ ├── balance.vue // 余额页 │ │ │ └── children │ │ │ └── detail.vue // 余额说明 │ │ ├── benefit │ │ │ ├── benefit.vue // 红包页 │ │ │ └── children │ │ │ ├── commend.vue // 推荐有奖 │ │ │ ├── coupon.vue // 代金券说明 │ │ │ ├── exchange.vue // 兑换红包 │ │ │ ├── hbDescription.vue // 红包说明 │ │ │ └── hbHistory.vue // 历史红包 │ │ ├── city
+├── conf  
+   │ ├── conf.ini  // 相关路径配置 
+├── logs  // 输出日志目录 
+├── dataSets  // 数据集 
+├── save_model  // 模型保存目录
+├── config.py  // 模型参数配置 
+├── model.py  // 模型文件 
+├── train.py  // 训练文件 
+├── test.py  // 测试文件
+├── utils.py  // 数据预处理等组件 
+├── README.md  // 项目说明
+
 ---
 [个人文章地址](http://lihanghang.top)
 * 备注：本仓库代码仅为工程项目实验调试时的整理，仅供参考！*
