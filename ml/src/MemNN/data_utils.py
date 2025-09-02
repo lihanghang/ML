@@ -12,21 +12,23 @@ import re
 import numpy as np
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+
+
 def load_task(data_dir, task_id, only_supporting=False):
 
     assert task_id > 0 and task_id < 21
     files = os.listdir(data_dir)
     files = [os.path.join(data_dir, f) for f in files]
-    s = 'qa{}_'.format(task_id)
-    train_file = [f for f in files if s in f and 'train' in f][0]
-    test_file = [f for f in files if s in f and 'test' in f][0]
+    s = "qa{}_".format(task_id)
+    train_file = [f for f in files if s in f and "train" in f][0]
+    test_file = [f for f in files if s in f and "test" in f][0]
     train_data = get_stories(train_file, only_supporting)
     test_data = get_stories(test_file, only_supporting)
     return train_data, test_data
 
 
 def tokenize(sent):
-    return[x.strip() for x in re.split('(W+)?', sent) if x.strip()]
+    return [x.strip() for x in re.split("(W+)?", sent) if x.strip()]
 
 
 def parse_stories(lines, only_supporting=False):
@@ -34,12 +36,12 @@ def parse_stories(lines, only_supporting=False):
     story = []
     for line in lines:
         line = str.lower(line)
-        nid, line = line.split(' ', 1)
+        nid, line = line.split(" ", 1)
         nid = int(nid)
         if nid == 1:  # start new story
             story = []
-        if '\t' in line:  # find question
-            q, a, supporting = line.split('\t')
+        if "\t" in line:  # find question
+            q, a, supporting = line.split("\t")
             q = tokenize(q)
             a = [a]
             substory = None
@@ -53,7 +55,7 @@ def parse_stories(lines, only_supporting=False):
             else:
                 substory = [x for x in story if x]
             data.append((substory, q, a))
-            story.append('')
+            story.append("")
         else:
             sent = tokenize(line)
             if sent[-1] == ".":

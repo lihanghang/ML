@@ -34,24 +34,27 @@ def sentiment_classify(text):
     positive_prob	float	表示属于积极类别的概率 ，取值范围[0,1]
     negative_prob	float	表示属于消极类别的概率，取值范围[0,1]
     """
-    raw = {"text":"内容"}
-    raw['text'] = text
-    data = json.dumps(raw).encode('utf-8')
+    raw = {"text": "内容"}
+    raw["text"] = text
+    data = json.dumps(raw).encode("utf-8")
     AT = "xxxxxxxx"
-    host = "https://aip.baidubce.com/rpc/2.0/nlp/v1/sentiment_classify?charset=UTF-8&access_token="+AT
+    host = (
+        "https://aip.baidubce.com/rpc/2.0/nlp/v1/sentiment_classify?charset=UTF-8&access_token="
+        + AT
+    )
     request = urllib.request.Request(url=host, data=data)
-    request.add_header('Content-Type', 'application/json')
+    request.add_header("Content-Type", "application/json")
     response = urllib.request.urlopen(request)
-    content = response.read().decode('utf-8')
+    content = response.read().decode("utf-8")
     rdata = json.loads(content)
     return rdata
 
 
-news = '''
+news = """
 1月5日，一张海报在网上流传：抬头是小米和华润置地的logo，正文是“支持实体经济，助力产业发展”，
-海报下面几行小字写的是“恭贺小米科技携手华润置地荣摘昌平区沙河镇七里渠南北村公建混合住宅项目地块'''
+海报下面几行小字写的是“恭贺小米科技携手华润置地荣摘昌平区沙河镇七里渠南北村公建混合住宅项目地块"""
 res = sentiment_classify(news)
-lable = res['items'][0]['sentiment']
+lable = res["items"][0]["sentiment"]
 if lable == 0:
     print("情感偏负向！")
 elif lable == 1:
